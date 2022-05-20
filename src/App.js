@@ -47,8 +47,8 @@ function App() {
     <BrowserRouter>
       <TestRouting />
       <Routes>
-        <Route path="/" element={<UserApp />}></Route>
-        <Route path="/professor" element={<ProfessorApp />}></Route>
+        <Route path="/*" element={<UserApp />}></Route>
+        <Route path="/professor/*" element={<ProfessorApp />}></Route>
       </Routes>
     </BrowserRouter>
   );

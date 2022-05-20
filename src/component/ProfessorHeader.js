@@ -9,7 +9,7 @@ function ProfessorHeader() {
           WOOD IDE
         </Navbar.Brand>
         <Nav className="me-auto">
-          <Nav.Link as={Link} to="/professor">
+          <Nav.Link as={Link} to="/professor/set_submit">
             과제 출제
           </Nav.Link>
           {/* 로그인 시 삭제 예정 */}
