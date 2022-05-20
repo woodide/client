@@ -1,13 +1,15 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import ProfessorHeader from "../component/ProfessorHeader";
+import ProfessorPage from "../page/ProfessorPage";
+import SetSubmitPage from "../page/SetSubmitPage";
 function ProfessorApp() {
   return (
     <div>
       <ProfessorHeader />
       <Routes>
-        <Route path="/" element={<>123</>} />
-        <Route path="/set_submit" element={<>asd</>} />
+        <Route path="/" element={<ProfessorPage />} />
+        <Route path="/set_submit" element={<SetSubmitPage />} />
       </Routes>
     </div>
   );
