@@ -10,6 +10,7 @@ function UserApp() {
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/submit" element={<>과제 현황</>} />
+        <Route path="/login" element={<>로그인 컴포넌트 렌더링</>} />
       </Routes>
     </div>
   );
