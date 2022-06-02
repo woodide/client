@@ -3,16 +3,8 @@ import Panel from "../../component/Panel";
 import { Form, Button } from "react-bootstrap";
 import useForm from "../../hook/useForm";
 import Table from "../../component/Table";
-import styled from "styled-components";
-import { AiFillCloseCircle } from "react-icons/ai";
-
-function CheckBox({ checked, onChecked }) {
-  return (
-    <div style={{ marginLeft: "7px" }}>
-      <input type="checkbox" checked={checked} onChange={onChecked} />
-    </div>
-  );
-}
+import SelectBox, { SelectItem } from "../../component/SelectBox";
+import CheckBox from "../../component/CheckBox";
 
 function makeTableItem(addList, setAddList, id, name, email) {
   return {
@@ -40,46 +32,6 @@ function makeTableItem(addList, setAddList, id, name, email) {
       />
     ),
   };
-}
-
-const StyleSelectList = styled.div`
-  background: #e9ecef;
-  border: 1px solid #ced4da;
-  padding: 0.375rem 0.75rem;
-  color: #212529;
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5;
-  border-radius: 0.25rem;
-  height: 38px;
-`;
-
-const StyleSelectItem = styled.div`
-  cursor: pointer;
-  margin-right: 10px;
-  color: #212529;
-  display: inline-block;
-  user-select: none;
-
-  &:hover {
-    color: crimson;
-    svg {
-      color: crimson;
-    }
-  }
-`;
-
-function SelectItem({ value, onClick }) {
-  return (
-    <StyleSelectItem onClick={onClick}>
-      {value}
-      <AiFillCloseCircle style={{ marginLeft: "1px" }} />
-    </StyleSelectItem>
-  );
-}
-
-function SelectList({ children }) {
-  return <StyleSelectList>{children}</StyleSelectList>;
 }
 
 function CreateSubjectPage() {
@@ -182,13 +134,8 @@ function CreateSubjectPage() {
             onChange={handleChange}
           />
           <Form.Label style={{ marginTop: "10px" }}>학생 리스트</Form.Label>
-          {/* <Form.Control
-            value={Object.keys(addList).join(", ")}
-            type="text"
-            disabled
-            onChange={handleChange}
-          /> */}
-          <SelectList>
+
+          <SelectBox>
             {Object.keys(addList).map((select, i) => (
               <SelectItem
                 key={`select-${i}`}
@@ -202,7 +149,7 @@ function CreateSubjectPage() {
                 }}
               />
             ))}
-          </SelectList>
+          </SelectBox>
           <Table
             style={{ marginTop: "10px" }}
             columns={[
