@@ -50,7 +50,7 @@ function DefaultColumnFilter({
     />
   );
 }
-export default function Table({ columns, data, style }) {
+export default function Table({ columns, data, style, onItemClick }) {
   const filterTypes = React.useMemo(
     () => ({
       // Add a new fuzzyTextFilterFn filter type.
@@ -102,11 +102,6 @@ export default function Table({ columns, data, style }) {
     usePagination
   );
 
-  const [pageNum, setPageNum] = useState(0);
-
-  useEffect(() => {
-    console.log("num", pageNum, pageCount, pageIndex);
-  }, []);
   return (
     <div
       style={{
@@ -138,8 +133,21 @@ export default function Table({ columns, data, style }) {
           <tbody className="tableBody" {...getTableBodyProps()}>
             {page.map((_page, i) => {
               prepareRow(_page);
+              const passData = _page.cells.reduce((value, elem) => {
+                value[elem.column.id] = elem.value;
+                return value;
+              }, {});
               return (
-                <tr className="trBody" {..._page.getRowProps()} key={`p-${i}`}>
+                <tr
+                  className="trBody"
+                  {..._page.getRowProps()}
+                  key={`p-${i}`}
+                  style={{
+                    cursor: onItemClick ? "pointer" : "none",
+                    userSelect: onItemClick ? "none" : "default",
+                  }}
+                  onClick={() => onItemClick(passData)}
+                >
                   {_page.cells.map((cell, i) => (
                     <td
                       className="tdBody"
@@ -158,33 +166,24 @@ export default function Table({ columns, data, style }) {
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
         All Data: {data.length}
       </div>
-
+      {console.log(pageOptions)}
       <div>
         <Paginations>
           <div className="buttonWrap">
             <span id="buttonList">
-              {pageOptions
-                .filter((v) => {
-                  if (pageNum === 0) return 0 <= v && v <= LIST_NUM - 1;
-                  else {
-                    return (
-                      pageNum * LIST_NUM - 1 < v &&
-                      v <= LIST_NUM * (pageNum + 1) - 1
-                    );
-                  }
-                })
-                .map((v, i) => (
-                  <button
-                    className={`btnEach ${pageIndex === v ? "select" : ""}`}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      gotoPage(v);
-                    }}
-                    key={`b-${i}`}
-                  >
-                    {v + 1}
-                  </button>
-                ))}
+              {pageOptions.map((v, i) => (
+                <button
+                  className={`btnEach ${pageIndex === v ? "select" : ""}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    gotoPage(v);
+                  }}
+                  key={`b-${i}`}
+                  style={{ marginRight: "3px" }}
+                >
+                  {v + 1}
+                </button>
+              ))}
             </span>
           </div>
         </Paginations>

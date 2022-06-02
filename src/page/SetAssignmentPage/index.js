@@ -1,13 +1,14 @@
 import React, { useEffect, useMemo } from "react";
-import { Form, Dropdown, Button } from "react-bootstrap";
+import { Form, Dropdown, Button, Alert } from "react-bootstrap";
 import MDEditor from "@uiw/react-md-editor";
 import IconOption from "../../component/IconOption";
 import { GCC_VERSION, PYTHON_VERSION } from "../../data/version";
 
-function SetSubmitPage() {
+function SetAssignmentPage() {
   const [value, setValue] = React.useState("# PA2: Simulator");
   const [lang, setLang] = React.useState("cpp");
   const [version, setVersion] = React.useState("");
+  const [subject, setSubject] = React.useState(["운영체제", "컴퓨터구조"]);
 
   const versionList = useMemo(() => {
     if (lang === "cpp")
@@ -31,7 +32,26 @@ function SetSubmitPage() {
 
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
-      <Form style={{ width: "80%", marginTop: "10px" }}>
+      <Form style={{ marginTop: "10px" }}>
+        <Form.Label>과목 선택</Form.Label>
+        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+          <Dropdown>
+            <Dropdown.Toggle
+              id="dropdown-basic"
+              style={{ width: "100%" }}
+              variant="secondary"
+            >
+              {subject[0]}
+            </Dropdown.Toggle>
+            <Dropdown.Menu
+              style={{ width: "100%", overflow: "auto", maxHeight: "300px" }}
+            >
+              {subject.map((v, i) => (
+                <Dropdown.Item key={`python_v123er_${i}`}>{v}</Dropdown.Item>
+              ))}
+            </Dropdown.Menu>
+          </Dropdown>
+        </Form.Group>
         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
           <Form.Label>과제 이름</Form.Label>
           <Form.Control type="text" />
@@ -47,7 +67,9 @@ function SetSubmitPage() {
             />
           </div>
         </Form.Group>
-        <div style={{ display: "flex", justifyContent: "center" }}>
+        <div
+          style={{ display: "flex", justifyContent: "center", width: "80vw" }}
+        >
           <Form.Group
             className="mb-3"
             controlId="exampleForm.ControlTextarea1"
@@ -76,13 +98,16 @@ function SetSubmitPage() {
             <Form.Label>버전 이미지 선택</Form.Label>
             <Dropdown>
               <Dropdown.Toggle id="dropdown-basic">{version}</Dropdown.Toggle>
-              <Dropdown.Menu style={{ overflow: "auto", height: "300px" }}>
+              <Dropdown.Menu style={{ overflow: "auto", maxHeight: "300px" }}>
                 {versionList}
               </Dropdown.Menu>
             </Dropdown>
           </Form.Group>
         </div>
         <div>
+          <Alert key={"warning"} variant={"warning"}>
+            스켈레톤 코드와 테스트 케이스는 ZIP 파일만 지원합니다.
+          </Alert>
           <Form.Group controlId="skeletonFile" className="mb-3">
             <Form.Label>스켈레톤 코드 업로드</Form.Label>
             <Form.Control type="file" />
@@ -99,4 +124,4 @@ function SetSubmitPage() {
     </div>
   );
 }
-export default SetSubmitPage;
+export default SetAssignmentPage;

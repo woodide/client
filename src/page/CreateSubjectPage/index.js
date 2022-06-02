@@ -1,126 +1,12 @@
 import React, { useState, useMemo } from "react";
 import Panel from "../../component/Panel";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Alert } from "react-bootstrap";
 import useForm from "../../hook/useForm";
-import Table from "../../component/Table";
-import SelectBox, { SelectItem } from "../../component/SelectBox";
-import CheckBox from "../../component/CheckBox";
-
-function makeTableItem(addList, setAddList, id, name, email) {
-  return {
-    id,
-    name,
-    email,
-    check: (
-      <CheckBox
-        checked={addList[id]}
-        onChecked={() => {
-          if (addList[id]) {
-            setAddList((data) => {
-              const newData = { ...data };
-              delete newData[id];
-              return newData;
-            });
-          } else {
-            setAddList((data) => {
-              const newData = { ...data };
-              newData[id] = true;
-              return newData;
-            });
-          }
-        }}
-      />
-    ),
-  };
-}
+import StudentTable, { makeTableItem } from "../../widget/StudentTable";
 
 function CreateSubjectPage() {
-  const { value, handleChange } = useForm({ name: "" });
-
+  const { value, handleChange } = useForm({ name: "", code: "" });
   const [addList, setAddList] = useState({});
-
-  const temp = useMemo(
-    () => [
-      makeTableItem(
-        addList,
-        setAddList,
-        parseInt(Math.random() * 100000000),
-        "강선규",
-        "123"
-      ),
-      makeTableItem(
-        addList,
-        setAddList,
-        parseInt(Math.random() * 100000000),
-        "강선규",
-        "123"
-      ),
-      makeTableItem(
-        addList,
-        setAddList,
-        parseInt(Math.random() * 100000000),
-        "강선규",
-        "123"
-      ),
-      makeTableItem(
-        addList,
-        setAddList,
-        parseInt(Math.random() * 100000000),
-        "강선규",
-        "123"
-      ),
-      makeTableItem(
-        addList,
-        setAddList,
-        parseInt(Math.random() * 100000000),
-        "강선규",
-        "123"
-      ),
-      makeTableItem(
-        addList,
-        setAddList,
-        parseInt(Math.random() * 100000000),
-        "강선규",
-        "123"
-      ),
-      makeTableItem(
-        addList,
-        setAddList,
-        parseInt(Math.random() * 100000000),
-        "강선규",
-        "123"
-      ),
-      makeTableItem(
-        addList,
-        setAddList,
-        parseInt(Math.random() * 100000000),
-        "강선규",
-        "123"
-      ),
-      makeTableItem(
-        addList,
-        setAddList,
-        parseInt(Math.random() * 100000000),
-        "강선규",
-        "123"
-      ),
-      makeTableItem(
-        addList,
-        setAddList,
-        parseInt(Math.random() * 100000000),
-        "강선규",
-        "123"
-      ),
-      makeTableItem(
-        addList,
-        setAddList,
-        parseInt(Math.random() * 100000000),
-        "강선규",
-        "123"
-      ),
-    ],
-    []
-  );
 
   return (
     <Panel>
@@ -133,48 +19,15 @@ function CreateSubjectPage() {
             name="name"
             onChange={handleChange}
           />
-          <Form.Label style={{ marginTop: "10px" }}>학생 리스트</Form.Label>
-
-          <SelectBox>
-            {Object.keys(addList).map((select, i) => (
-              <SelectItem
-                key={`select-${i}`}
-                value={select}
-                onClick={() => {
-                  setAddList((data) => {
-                    const newData = { ...data };
-                    delete newData[select];
-                    return newData;
-                  });
-                }}
-              />
-            ))}
-          </SelectBox>
-          <Table
-            style={{ marginTop: "10px" }}
-            columns={[
-              {
-                accessor: "id",
-                Header: "학번",
-              },
-              {
-                accessor: "name",
-                Header: "이름",
-              },
-              {
-                accessor: "email",
-                Header: "이메일",
-              },
-              {
-                accessor: "check",
-                Header: "추가",
-              },
-            ]}
-            data={[
-              makeTableItem(addList, setAddList, "201820802", "강선규", "123"),
-              ...temp,
-            ]}
+          <Form.Label>과목 코드</Form.Label>
+          <Form.Control
+            value={value.code}
+            type="text"
+            name="code"
+            onChange={handleChange}
           />
+          <Form.Label style={{ marginTop: "10px" }}>학생 리스트</Form.Label>
+          <StudentTable addList={addList} setAddList={setAddList} />
           <Button
             as="input"
             type="submit"

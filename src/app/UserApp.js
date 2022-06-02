@@ -8,6 +8,8 @@ import RegisterPage from "../page/RegisterPage";
 
 export const Layout = styled.div`
   height: calc(100vh - 56px);
+  display: flex;
+  justify-content: center;
 `;
 
 function UserApp() {
