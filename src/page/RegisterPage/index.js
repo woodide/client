@@ -1,28 +1,14 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
-import styled from "styled-components";
-
-const RegisterPanel = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-`;
+import Panel from "../../component/Panel";
+import useForm from "../../hook/useForm";
 
 function RegisterPage({ professor }) {
-  const [value, setValue] = useState({
+  const { value, handleChange } = useForm({
     email: "",
     password: "",
     name: "",
   });
-
-  const handleChange = (e) =>
-    setValue({
-      ...value,
-      [e.target.name]: e.target.value,
-    });
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -30,7 +16,7 @@ function RegisterPage({ professor }) {
   };
 
   return (
-    <RegisterPanel>
+    <Panel>
       <div style={{ width: "360px" }}>
         <form onSubmit={handleLogin}>
           <Form.Label>Email</Form.Label>
@@ -62,7 +48,7 @@ function RegisterPage({ professor }) {
           />
         </form>
       </div>
-    </RegisterPanel>
+    </Panel>
   );
 }
 
