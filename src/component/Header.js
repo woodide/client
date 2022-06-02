@@ -14,6 +14,14 @@ function Header() {
           </Nav.Link>
           {/* 로그인 시 삭제 예정 */}
         </Nav>
+        <Nav>
+          <Nav.Link as={Link} to="/login">
+            로그인
+          </Nav.Link>
+          <Nav.Link as={Link} to="/register">
+            회원가입
+          </Nav.Link>
+        </Nav>
       </Container>
     </Navbar>
   );

@@ -1,15 +1,8 @@
-import logo from "./logo.svg";
+import React from "react";
 import "./App.css";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Link,
-  useLocation,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import UserApp from "./app/UserApp";
 import ProfessorApp from "./app/ProfessorApp";
-import Header from "./component/ProfessorHeader";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function TestRouting() {

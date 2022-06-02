@@ -1,4 +1,4 @@
-export const GCC_VERSION = ["gcc-11", "gcc-10", "gcc-9", "gcc-8", "gcc-7"];
+export const GCC_VERSION = ["11", "10", "9", "8", "7"];
 
 export const PYTHON_VERSION = [
   "3.11-dev",
