@@ -1,16 +1,33 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import Panel from "../../component/Panel";
 import useForm from "../../hook/useForm";
+import { FetchPost } from "../../model/Request";
 function LoginPage({ professor }) {
+  const navigate = useNavigate();
+
   const { value, handleChange } = useForm({
     email: "",
     password: "",
   });
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    console.log(value);
+
+    try {
+      const response = await FetchPost("/prof_login", value);
+      if (response.status === 200) {
+        localStorage["loginData"] = response.data;
+        navigate("/");
+        return;
+      } else {
+        toast.error("로그인 실패");
+      }
+    } catch (e) {
+      toast.error("로그인 실패");
+    }
   };
 
   return (

@@ -4,7 +4,8 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import UserApp from "./app/UserApp";
 import ProfessorApp from "./app/ProfessorApp";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function TestRouting() {
   // Test용 UI 로그인 권한 부여시 알아서 이동
   return (
@@ -43,6 +44,7 @@ function App() {
         <Route path="/*" element={<UserApp />}></Route>
         <Route path="/professor/*" element={<ProfessorApp />}></Route>
       </Routes>
+      <ToastContainer />
     </BrowserRouter>
   );
 }

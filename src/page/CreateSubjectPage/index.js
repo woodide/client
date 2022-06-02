@@ -1,12 +1,22 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import Panel from "../../component/Panel";
 import { Form, Button, Alert } from "react-bootstrap";
 import useForm from "../../hook/useForm";
 import StudentTable, { makeTableItem } from "../../widget/StudentTable";
+import axios from "axios";
+import { FetchGet } from "../../model/Request";
 
 function CreateSubjectPage() {
   const { value, handleChange } = useForm({ name: "", code: "" });
   const [addList, setAddList] = useState({});
+
+  useEffect(() => {
+    const fetch = async () => {
+      const response = await FetchGet("/user/student");
+      console.log(response.data);
+    };
+    fetch();
+  }, []);
 
   return (
     <Panel>
