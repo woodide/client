@@ -4,8 +4,6 @@ import styled from "styled-components";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { matchSorter } from "match-sorter";
 
-const LIST_NUM = 6;
-
 const StyleTable = styled.table`
   width: 100%;
   border-collapse: collapse;
@@ -38,7 +36,6 @@ function DefaultColumnFilter({
   column: { filterValue, preFilteredRows, setFilter },
 }) {
   const count = preFilteredRows.length;
-
   return (
     <input
       className="search"
@@ -50,12 +47,45 @@ function DefaultColumnFilter({
     />
   );
 }
-export default function Table({ columns, data, style, onItemClick }) {
+
+// Define a default UI for filtering
+export function GreaterColumnFilter({
+  column: { filterValue, preFilteredRows, setFilter },
+}) {
+  const count = preFilteredRows.length;
+  return (
+    <input
+      className="search"
+      value={filterValue || ""}
+      onChange={(e) => {
+        setFilter(e.target.value || undefined); // Set undefined to remove the filter entirely
+      }}
+      placeholder={"Search >= input number"}
+    />
+  );
+}
+
+function PercentGreaterThenFn(rows, id, filterValue) {
+  return rows.filter((row) => {
+    const rowValue = row.values[id];
+    return Number(rowValue.split(" ")[0]) >= Number(filterValue);
+  });
+}
+function GreaterThenFn(rows, id, filterValue) {
+  return rows.filter((row) => {
+    const rowValue = row.values[id];
+    return Number(rowValue) >= Number(filterValue);
+  });
+}
+
+function Table({ columns, data, style, onItemClick }) {
   const filterTypes = React.useMemo(
     () => ({
       // Add a new fuzzyTextFilterFn filter type.
       // Or, override the default text filter to use
       // "startWith"
+      percentGreater: PercentGreaterThenFn,
+      greater: GreaterThenFn,
       text: (rows, id, filterValue) => {
         return rows.filter((row) => {
           const rowValue = row.values[id];
@@ -120,7 +150,9 @@ export default function Table({ columns, data, style, onItemClick }) {
                     {column.render("Header")}
                     <div>
                       {console.log(column)}
-                      {column.id !== "check" && column.canFilter
+                      {column.id !== "check" &&
+                      column.id !== "codeView" &&
+                      column.canFilter
                         ? column.render("Filter")
                         : null}
                     </div>
@@ -143,10 +175,12 @@ export default function Table({ columns, data, style, onItemClick }) {
                   {..._page.getRowProps()}
                   key={`p-${i}`}
                   style={{
-                    cursor: onItemClick ? "pointer" : "none",
+                    cursor: onItemClick ? "pointer" : "default",
                     userSelect: onItemClick ? "none" : "default",
                   }}
-                  onClick={() => onItemClick(passData)}
+                  onClick={(e) => {
+                    onItemClick(passData);
+                  }}
                 >
                   {_page.cells.map((cell, i) => (
                     <td
@@ -241,3 +275,4 @@ const Paginations = styled.div`
     }
   }
 `;
+export default React.memo(Table);

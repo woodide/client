@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { AiFillCloseCircle } from "react-icons/ai";
 
 const StyleSelectList = styled.div`
+  overflow: scroll;
+  white-space: nowrap;
   background: #e9ecef;
   border: 1px solid #ced4da;
   padding: 0.375rem 0.75rem;
