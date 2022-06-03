@@ -101,8 +101,7 @@ function Assignment() {
   return (
     <div>
       <Accordion defaultActiveKey="0">
-        <SubjectList eventKey={"0"} title="운영체제" />
-        <SubjectList eventKey={"1"} title="컴퓨터구조" />
+        <SubjectList eventKey={"0"} title="MIPS Simulator" />
       </Accordion>
     </div>
   );

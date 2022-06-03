@@ -47,14 +47,6 @@ function AddAssignmentPage() {
   }, [language]);
 
   const handleSubmit = (e) => {
-    // const functionThatReturnPromise = () =>
-    //   FetchPost({
-    //     isProfessor: true,
-    //     url: "/professor/subject/addAssignment",
-    //     data: {
-    //       assignmentName,
-    //     },
-    //   });
     e.preventDefault();
 
     const testInput = e.target.testInput.files[0];
@@ -77,8 +69,24 @@ function AddAssignmentPage() {
     //   toast.error("테스트케이스 아웃풋을 업로드해주세요.");
     //   return;
     // }
+    const formData = new FormData();
+    formData.append("assignmentName", assignmentName);
+    formData.append("description", description);
+    formData.append("language", language);
+    formData.append("languageVersion", languageVersion);
+    formData.append("multipartFile", multipartFile);
+    formData.append("testInput", testInput);
+    formData.append("testOutput", testOutput);
 
-    console.log(testInput, testOutput, multipartFile);
+    const fetch = () =>
+      FetchPost({
+        isProfessor: true,
+        url: "/professor/subject/addAssignment",
+        data: formData,
+        config: {
+          headers: { "Content-Type": "multipart/form-data" },
+        },
+      });
 
     const functionThatReturnPromise = () =>
       new Promise((resolve) => {
@@ -176,11 +184,15 @@ function AddAssignmentPage() {
         </div>
         <div>
           <Alert key={"warning"} variant={"warning"}>
-            스켈레톤 코드와 테스트 케이스는 ZIP 파일만 지원합니다.
+            스켈레톤 코드는 ZIP 파일만 업로드 가능하며, 테스트케이스 코드는
+            텍스트 형식 파일만 업로드 가능합니다.
           </Alert>
           <Form.Group controlId="multipartFile" className="mb-3">
             <Form.Label>스켈레톤 코드 업로드</Form.Label>
-            <Form.Control type="file" />
+            <Form.Control
+              type="file"
+              accept="zip,application/octet-stream,application/zip,application/x-zip,application/x-zip-compressed"
+            />
           </Form.Group>
           <Form.Group controlId="testInput" className="mb-3">
             <Form.Label>테스트케이스 인풋 업로드</Form.Label>
