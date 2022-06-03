@@ -9,7 +9,7 @@ export function makeTableItem(addList, id, name, email) {
     id,
     name,
     email,
-    check: <CheckBox checked={addList[id]} />,
+    check: <CheckBox checked={addList[id]} style={{ marginLeft: "5px" }} />,
   };
 }
 

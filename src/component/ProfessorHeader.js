@@ -12,9 +12,6 @@ function ProfessorHeader() {
           <Nav.Link as={Link} to="/professor/create_subject">
             과목 생성
           </Nav.Link>
-          <Nav.Link as={Link} to="/professor/subject_list">
-            과목 현황
-          </Nav.Link>
           <Nav.Link as={Link} to="/professor/set_assignment">
             과제 출제
           </Nav.Link>

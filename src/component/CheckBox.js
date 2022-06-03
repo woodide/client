@@ -1,8 +1,15 @@
 import React from "react";
-function CheckBox({ checked, onChecked }) {
+function CheckBox({ checked, onChecked, label, style }) {
   return (
-    <div style={{ marginLeft: "7px" }}>
-      <input type="checkbox" checked={checked} onChange={onChecked} />
+    <div onClick={onChecked} style={{ cursor: "pointer", ...style }}>
+      {label && (
+        <label
+          style={{ marginRight: "5px", userSelect: "none", cursor: "pointer" }}
+        >
+          {label}
+        </label>
+      )}
+      <input type="checkbox" checked={checked} style={{ cursor: "pointer" }} />
     </div>
   );
 }

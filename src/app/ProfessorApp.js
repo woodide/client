@@ -8,7 +8,13 @@ import ProfessorPage from "../page/ProfessorPage";
 import RegisterPage from "../page/RegisterPage";
 import SetAssignmentPage from "../page/SetAssignmentPage";
 import SubjectListPage from "../page/SubjectListPage";
-import { Layout } from "./UserApp";
+import styled from "styled-components";
+
+export const Layout = styled.div`
+  height: calc(100vh - 56px);
+  display: flex;
+  justify-content: center;
+`;
 
 function ProfessorApp() {
   return (
@@ -16,11 +22,10 @@ function ProfessorApp() {
       <ProfessorHeader />
       <Layout>
         <Routes>
-          <Route path="/" element={<ProfessorPage />} />
+          <Route path="/" element={<SubjectListPage />} />
           <Route path="/login" element={<LoginPage professor />} />
           <Route path="/register" element={<RegisterPage professor />} />
           <Route path="/create_subject" element={<CreateSubjectPage />} />
-          <Route path="/subject_list" element={<SubjectListPage />} />
           <Route path="/set_assignment" element={<SetAssignmentPage />} />
           <Route path="/assignment_list" element={<AssignmentListPage />} />
         </Routes>

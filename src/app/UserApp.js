@@ -1,10 +1,11 @@
 import React from "react";
 import Header from "../component/Header";
 import { Routes, Route } from "react-router-dom";
-import MainPage from "../page/UserPage";
+import MainPage from "../page/MainPage";
 import styled from "styled-components";
 import LoginPage from "../page/LoginPage";
 import RegisterPage from "../page/RegisterPage";
+import { ListGroup } from "react-bootstrap";
 
 export const Layout = styled.div`
   height: calc(100vh - 56px);
@@ -18,7 +19,7 @@ function UserApp() {
       <Header />
       <Layout>
         <Routes>
-          <Route path="/" element={<MainPage />} />
+          <Route path="/*" element={<MainPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/submit" element={<>과제 현황</>} />

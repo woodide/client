@@ -3,13 +3,14 @@ import { Form, Dropdown, Button, Alert } from "react-bootstrap";
 import MDEditor from "@uiw/react-md-editor";
 import IconOption from "../../component/IconOption";
 import { GCC_VERSION, PYTHON_VERSION } from "../../data/version";
+import CheckBox from "../../component/CheckBox";
 
 function SetAssignmentPage() {
   const [value, setValue] = React.useState("# PA2: Simulator");
   const [lang, setLang] = React.useState("cpp");
   const [version, setVersion] = React.useState("");
   const [subject, setSubject] = React.useState(["운영체제", "컴퓨터구조"]);
-
+  const [isReport, setReport] = React.useState(false);
   const versionList = useMemo(() => {
     if (lang === "cpp")
       return GCC_VERSION.map((ver, i) => (
@@ -116,6 +117,13 @@ function SetAssignmentPage() {
             <Form.Label>테스트케이스 업로드</Form.Label>
             <Form.Control type="file" />
           </Form.Group>
+        </div>
+        <div style={{ marginBottom: "20px" }}>
+          <CheckBox
+            label={"보고서 제출 여부"}
+            checked={isReport}
+            onChecked={() => setReport(!isReport)}
+          />
         </div>
         <Button variant="primary" size="lg" style={{ width: "100%" }}>
           과제 제출
