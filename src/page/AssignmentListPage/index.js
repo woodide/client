@@ -9,7 +9,6 @@ import { TEST_CODE } from "./test";
 import MarkdownModalButton from "../../component/MarkdownModalButton";
 function CodeView({ code }) {
   const [isOpen, setOpen] = useState(false);
-  console.log(SyntaxHighlighter.supportedLanguages);
   return (
     <>
       <Button onClick={() => setOpen(true)}>코드 보기</Button>

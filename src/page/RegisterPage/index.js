@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Panel from "../../component/Panel";
 import useForm from "../../hook/useForm";
-import { FetchPost } from "../../model/Request";
+import { FetchPostWithoutAuth } from "../../model/Request";
 
 function RegisterPage({ professor }) {
   const navigate = useNavigate();
@@ -17,10 +17,12 @@ function RegisterPage({ professor }) {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    console.log(value);
     try {
-      const response = await FetchPost("/signup_p", value);
-      if (response.status === 200 && response.data === "sucess") {
+      const response = await FetchPostWithoutAuth(
+        professor ? "/signup/professor" : "/signup/student",
+        value
+      );
+      if (response.status === 200 && response.data === "success") {
         navigate("/login");
         return;
       } else {
@@ -35,27 +37,38 @@ function RegisterPage({ professor }) {
     <Panel>
       <div style={{ width: "360px" }}>
         <form onSubmit={handleRegister}>
-          <Form.Label>Email</Form.Label>
+          <Form.Label>이메일</Form.Label>
           <Form.Control
             value={value.email}
             type="text"
             name="email"
             onChange={handleChange}
           />
-          <Form.Label style={{ marginTop: "10px" }}>Password</Form.Label>
+          <Form.Label style={{ marginTop: "10px" }}>비밀번호</Form.Label>
           <Form.Control
             value={value.password}
             type="password"
             name="password"
             onChange={handleChange}
           />
-          <Form.Label style={{ marginTop: "10px" }}>Username</Form.Label>
+          <Form.Label style={{ marginTop: "10px" }}>이름</Form.Label>
           <Form.Control
             value={value.username}
             type="text"
             name="username"
             onChange={handleChange}
           />
+          {!professor && (
+            <>
+              <Form.Label style={{ marginTop: "10px" }}>학번</Form.Label>
+              <Form.Control
+                value={value.studentName}
+                type="text"
+                name="studentNumber"
+                onChange={handleChange}
+              />
+            </>
+          )}
           <Button
             as="input"
             type="submit"

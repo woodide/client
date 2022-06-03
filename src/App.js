@@ -5,6 +5,8 @@ import UserApp from "./app/UserApp";
 import ProfessorApp from "./app/ProfessorApp";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { ToastContainer, toast } from "react-toastify";
+import { QueryClientProvider } from "react-query";
+import queryClient from "./queries";
 import "react-toastify/dist/ReactToastify.css";
 import "react-datepicker/dist/react-datepicker.css";
 function TestRouting() {
@@ -39,14 +41,16 @@ function TestRouting() {
 
 function App() {
   return (
-    <BrowserRouter>
-      <TestRouting />
-      <Routes>
-        <Route path="/*" element={<UserApp />}></Route>
-        <Route path="/professor/*" element={<ProfessorApp />}></Route>
-      </Routes>
-      <ToastContainer />
-    </BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <TestRouting />
+        <Routes>
+          <Route path="/*" element={<UserApp />}></Route>
+          <Route path="/professor/*" element={<ProfessorApp />}></Route>
+        </Routes>
+        <ToastContainer />
+      </BrowserRouter>
+    </QueryClientProvider>
   );
 }
 

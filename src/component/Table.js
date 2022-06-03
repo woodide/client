@@ -149,7 +149,6 @@ function Table({ columns, data, style, onItemClick }) {
                   <th {...column.getHeaderProps()} key={`h2-${i}`}>
                     {column.render("Header")}
                     <div>
-                      {console.log(column)}
                       {column.id !== "check" &&
                       column.id !== "codeView" &&
                       column.id !== "report" &&
@@ -201,7 +200,6 @@ function Table({ columns, data, style, onItemClick }) {
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
         All Data: {data.length}
       </div>
-      {console.log(pageOptions)}
       <div>
         <Paginations>
           <div className="buttonWrap">

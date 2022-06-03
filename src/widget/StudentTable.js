@@ -3,88 +3,27 @@ import Table from "../component/Table";
 import SelectBox, { SelectItem } from "../component/SelectBox";
 import CheckBox from "../component/CheckBox";
 import { Form, Button } from "react-bootstrap";
+import { useQuery } from "react-query";
 
-export function makeTableItem(addList, id, name, email) {
-  return {
-    id,
-    name,
-    email,
-    check: <CheckBox checked={addList[id]} style={{ marginLeft: "5px" }} />,
-  };
+export function makeTableItem(addList, studentNumber, username, email) {
+  return;
 }
 
 function StudentTable({ addList, setAddList }) {
-  const temp = useMemo(
-    () => [
-      makeTableItem(
-        addList,
-        parseInt(Math.random() * 100000000),
-        "강선규",
-        "123"
+  const { data: student } = useQuery("student");
+
+  const tableItem =
+    student?.map(({ username, email, studentNumber }) => ({
+      studentNumber,
+      username,
+      email,
+      check: (
+        <CheckBox
+          checked={addList[studentNumber]}
+          style={{ marginLeft: "5px" }}
+        />
       ),
-      makeTableItem(
-        addList,
-        parseInt(Math.random() * 100000000),
-        "강선규",
-        "123"
-      ),
-      makeTableItem(
-        addList,
-        parseInt(Math.random() * 100000000),
-        "강선규",
-        "123"
-      ),
-      makeTableItem(
-        addList,
-        parseInt(Math.random() * 100000000),
-        "강선규",
-        "123"
-      ),
-      makeTableItem(
-        addList,
-        parseInt(Math.random() * 100000000),
-        "강선규",
-        "123"
-      ),
-      makeTableItem(
-        addList,
-        parseInt(Math.random() * 100000000),
-        "강선규",
-        "123"
-      ),
-      makeTableItem(
-        addList,
-        parseInt(Math.random() * 100000000),
-        "강선규",
-        "123"
-      ),
-      makeTableItem(
-        addList,
-        parseInt(Math.random() * 100000000),
-        "강선규",
-        "123"
-      ),
-      makeTableItem(
-        addList,
-        parseInt(Math.random() * 100000000),
-        "강선규",
-        "123"
-      ),
-      makeTableItem(
-        addList,
-        parseInt(Math.random() * 100000000),
-        "강선규",
-        "123"
-      ),
-      makeTableItem(
-        addList,
-        parseInt(Math.random() * 100000000),
-        "강선규",
-        "123"
-      ),
-    ],
-    []
-  );
+    })) ?? [];
 
   return (
     <div>
@@ -106,29 +45,29 @@ function StudentTable({ addList, setAddList }) {
       <Table
         style={{ marginTop: "10px" }}
         onItemClick={(_data) => {
-          const { id } = _data;
+          const { studentNumber } = _data;
           console.log(_data);
-          if (addList[id]) {
+          if (addList[studentNumber]) {
             setAddList((data) => {
               const newData = { ...data };
-              delete newData[id];
+              delete newData[studentNumber];
               return newData;
             });
           } else {
             setAddList((data) => {
               const newData = { ...data };
-              newData[id] = true;
+              newData[studentNumber] = true;
               return newData;
             });
           }
         }}
         columns={[
           {
-            accessor: "id",
+            accessor: "studentNumber",
             Header: "학번",
           },
           {
-            accessor: "name",
+            accessor: "username",
             Header: "이름",
           },
           {
@@ -140,7 +79,7 @@ function StudentTable({ addList, setAddList }) {
             Header: "추가",
           },
         ]}
-        data={[makeTableItem(addList, "201820802", "강선규", "123"), ...temp]}
+        data={tableItem}
       />
     </div>
   );

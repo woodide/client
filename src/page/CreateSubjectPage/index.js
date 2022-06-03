@@ -5,18 +5,10 @@ import useForm from "../../hook/useForm";
 import StudentTable, { makeTableItem } from "../../widget/StudentTable";
 import axios from "axios";
 import { FetchGet } from "../../model/Request";
-
+import { useQuery } from "react-query";
 function CreateSubjectPage() {
   const { value, handleChange } = useForm({ name: "", code: "" });
   const [addList, setAddList] = useState({});
-
-  useEffect(() => {
-    const fetch = async () => {
-      const response = await FetchGet("/user/student");
-      console.log(response.data);
-    };
-    fetch();
-  }, []);
 
   return (
     <Panel>
@@ -29,7 +21,7 @@ function CreateSubjectPage() {
             name="name"
             onChange={handleChange}
           />
-          <Form.Label>과목 코드</Form.Label>
+          <Form.Label style={{ marginTop: "10px" }}>과목 코드</Form.Label>
           <Form.Control
             value={value.code}
             type="text"

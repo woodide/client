@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Panel from "../../component/Panel";
 import useForm from "../../hook/useForm";
-import { FetchPost } from "../../model/Request";
+import { FetchPost, FetchPostWithoutAuth } from "../../model/Request";
 function LoginPage({ professor }) {
   const navigate = useNavigate();
 
@@ -17,9 +17,9 @@ function LoginPage({ professor }) {
     e.preventDefault();
 
     try {
-      const response = await FetchPost("/prof_login", value);
+      const response = await FetchPostWithoutAuth("/login", value);
       if (response.status === 200) {
-        localStorage["loginData"] = response.data;
+        localStorage[professor ? "professor" : "student"] = response.data.token;
         navigate("/");
         return;
       } else {
