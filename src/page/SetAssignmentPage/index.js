@@ -4,6 +4,7 @@ import MDEditor from "@uiw/react-md-editor";
 import IconOption from "../../component/IconOption";
 import { GCC_VERSION, PYTHON_VERSION } from "../../data/version";
 import CheckBox from "../../component/CheckBox";
+import DatePicker from "react-datepicker";
 
 function SetAssignmentPage() {
   const [value, setValue] = React.useState("# PA2: Simulator");
@@ -11,6 +12,7 @@ function SetAssignmentPage() {
   const [version, setVersion] = React.useState("");
   const [subject, setSubject] = React.useState(["운영체제", "컴퓨터구조"]);
   const [isReport, setReport] = React.useState(false);
+  const [endDate, setEndDate] = React.useState(new Date());
   const versionList = useMemo(() => {
     if (lang === "cpp")
       return GCC_VERSION.map((ver, i) => (
@@ -125,6 +127,16 @@ function SetAssignmentPage() {
             onChecked={() => setReport(!isReport)}
           />
         </div>
+        <div style={{ marginBottom: "20px" }}>
+          <label>과제 만기일 설정</label>
+          <DatePicker
+            dateFormat="yyyy-MM-dd hh:mm aa"
+            selected={endDate}
+            showTimeSelect
+            onChange={(date) => setEndDate(date)}
+          />
+        </div>
+
         <Button variant="primary" size="lg" style={{ width: "100%" }}>
           과제 제출
         </Button>

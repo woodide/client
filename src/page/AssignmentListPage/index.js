@@ -6,6 +6,7 @@ import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import ReactMarkdown from "react-markdown";
 import { TEST_CODE } from "./test";
+import MarkdownModalButton from "../../component/MarkdownModalButton";
 function CodeView({ code }) {
   const [isOpen, setOpen] = useState(false);
   console.log(SyntaxHighlighter.supportedLanguages);
@@ -20,22 +21,22 @@ function CodeView({ code }) {
     </>
   );
 }
-function ReportView({ report }) {
-  const [isOpen, setOpen] = useState(false);
-  return (
-    <>
-      <Button onClick={() => setOpen(true)}>보고서 보기</Button>
-      <Modal isOpen={isOpen} onClose={() => setOpen(false)}>
-        <ReactMarkdown>{`
-# Hello
-* ASd
-        
-        
-        `}</ReactMarkdown>
-      </Modal>
-    </>
-  );
-}
+
+// function ReportView({ report }) {
+//   const [isOpen, setOpen] = useState(false);
+//   return (
+//     <>
+//       <Button onClick={() => setOpen(true)}>보고서 보기</Button>
+//       <Modal isOpen={isOpen} onClose={() => setOpen(false)}>
+//         <ReactMarkdown>{`
+// # Hello
+// * ASd
+
+//         `}</ReactMarkdown>
+//       </Modal>
+//     </>
+//   );
+// }
 
 function SubjectList({ eventKey, title }) {
   const [addList, setAddList] = useState([]);
@@ -82,7 +83,9 @@ function SubjectList({ eventKey, title }) {
               percent: 70 + " %",
               count: 10,
               codeView: <CodeView code={"ASDASD"} />,
-              report: <ReportView report={"ASDASD"} />,
+              report: (
+                <MarkdownModalButton title={"보고서 보기"} value={"ASDASD"} />
+              ),
             },
           ]}
         />

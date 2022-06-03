@@ -17,7 +17,7 @@ function SideBar({ subjects }) {
       <ListGroup>
         <ListGroup.Item
           as={"div"}
-          style={{ cursor: "default", background: "rgba(0,0,0,0.1)" }}
+          style={{ cursor: "default", background: "#F7F7F7" }}
         >
           수강중인 수업
         </ListGroup.Item>
