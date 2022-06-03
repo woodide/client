@@ -152,6 +152,7 @@ function Table({ columns, data, style, onItemClick }) {
                       {console.log(column)}
                       {column.id !== "check" &&
                       column.id !== "codeView" &&
+                      column.id !== "report" &&
                       column.canFilter
                         ? column.render("Filter")
                         : null}

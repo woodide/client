@@ -4,6 +4,7 @@ import Modal from "../../component/Modal";
 import Table, { GreaterColumnFilter } from "../../component/Table";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import SyntaxHighlighter from "react-syntax-highlighter";
+import ReactMarkdown from "react-markdown";
 import { TEST_CODE } from "./test";
 function CodeView({ code }) {
   const [isOpen, setOpen] = useState(false);
@@ -15,6 +16,22 @@ function CodeView({ code }) {
         <SyntaxHighlighter language="c" style={docco}>
           {TEST_CODE}
         </SyntaxHighlighter>
+      </Modal>
+    </>
+  );
+}
+function ReportView({ report }) {
+  const [isOpen, setOpen] = useState(false);
+  return (
+    <>
+      <Button onClick={() => setOpen(true)}>보고서 보기</Button>
+      <Modal isOpen={isOpen} onClose={() => setOpen(false)}>
+        <ReactMarkdown>{`
+# Hello
+* ASd
+        
+        
+        `}</ReactMarkdown>
       </Modal>
     </>
   );
@@ -53,6 +70,10 @@ function SubjectList({ eventKey, title }) {
               accessor: "codeView",
               Header: "코드 보기",
             },
+            {
+              accessor: "report",
+              Header: "보고서 보기",
+            },
           ]}
           data={[
             {
@@ -61,6 +82,7 @@ function SubjectList({ eventKey, title }) {
               percent: 70 + " %",
               count: 10,
               codeView: <CodeView code={"ASDASD"} />,
+              report: <ReportView report={"ASDASD"} />,
             },
           ]}
         />
