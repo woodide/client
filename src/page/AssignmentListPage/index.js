@@ -7,6 +7,8 @@ import SyntaxHighlighter from "react-syntax-highlighter";
 import ReactMarkdown from "react-markdown";
 import { TEST_CODE } from "./test";
 import MarkdownModalButton from "../../component/MarkdownModalButton";
+import SideBar, { Main } from "../../component/SideBar";
+import { Route, Routes, useParams } from "react-router-dom";
 function CodeView({ code }) {
   const [isOpen, setOpen] = useState(false);
   return (
@@ -93,9 +95,11 @@ function SubjectList({ eventKey, title }) {
   );
 }
 
-function AssignmentListPage() {
+function Assignment() {
+  const { code } = useParams();
+
   return (
-    <div style={{ width: "80vw", marginTop: "20px" }}>
+    <div>
       <Accordion defaultActiveKey="0">
         <SubjectList eventKey={"0"} title="운영체제" />
         <SubjectList eventKey={"1"} title="컴퓨터구조" />
@@ -103,5 +107,30 @@ function AssignmentListPage() {
     </div>
   );
 }
+
+function AssignmentListPage() {
+  return (
+    <div style={{ width: "100%" }}>
+      <SideBar
+        title="진행중인 수업"
+        subjects={[
+          { name: "운영체제", link: "/professor/assignment/F092" },
+          { name: "컴퓨터구조", link: "/professor/assignment/F093" },
+        ]}
+      />
+      <Main>
+        <Routes>
+          <Route path=":code" element={<Assignment />} />
+        </Routes>
+      </Main>
+    </div>
+  );
+}
+
+/**
+ * 
+ * 
+   
+ */
 
 export default AssignmentListPage;

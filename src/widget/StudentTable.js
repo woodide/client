@@ -9,11 +9,16 @@ export function makeTableItem(addList, studentNumber, username, email) {
   return;
 }
 
-function StudentTable({ addList, setAddList }) {
-  const { data: student } = useQuery("student");
-
+function StudentTable({ addList, setAddList, subject }) {
+  const { data: allStudents } = useQuery(["professor", "all_student"]);
+  // const { data: students } = useQuery([
+  //   "professor",
+  //   "subject",
+  //   "student",
+  //   "F091",
+  // ]);
   const tableItem =
-    student?.map(({ username, email, studentNumber }) => ({
+    allStudents?.map(({ username, email, studentNumber }) => ({
       studentNumber,
       username,
       email,

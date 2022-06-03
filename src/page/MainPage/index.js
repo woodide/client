@@ -1,18 +1,12 @@
 import React, { useState } from "react";
-import SideBar from "../../component/SideBar";
+import SideBar, { Main } from "../../component/SideBar";
 import styled from "styled-components";
 import { Routes, Route, useParams } from "react-router-dom";
 import { Card, Button } from "react-bootstrap";
 import MarkdownModalButton from "../../component/MarkdownModalButton";
 
-const Main = styled.div`
-  margin-left: 260px;
-  height: 100%;
-  padding: 14px;
-`;
-
 function Subject() {
-  const { id } = useParams();
+  const { code } = useParams();
   return (
     <div>
       <Card style={{ width: "100%" }}>
@@ -48,6 +42,7 @@ function MainPage() {
   return (
     <div style={{ width: "100%" }}>
       <SideBar
+        title="수강중인 수업"
         subjects={[
           { name: "운영체제", link: "/subject/F092" },
           { name: "컴퓨터구조", link: "/subject/F093" },
@@ -55,7 +50,7 @@ function MainPage() {
       />
       <Main>
         <Routes>
-          <Route path="/subject/:id" element={<Subject />} />
+          <Route path="/subject/:code" element={<Subject />} />
         </Routes>
       </Main>
     </div>

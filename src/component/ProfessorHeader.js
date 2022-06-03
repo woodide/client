@@ -12,10 +12,10 @@ function ProfessorHeader() {
           <Nav.Link as={Link} to="/professor/create_subject">
             과목 생성
           </Nav.Link>
-          <Nav.Link as={Link} to="/professor/set_assignment">
+          <Nav.Link as={Link} to="/professor/add_assignment">
             과제 출제
           </Nav.Link>
-          <Nav.Link as={Link} to="/professor/assignment_list">
+          <Nav.Link as={Link} to="/professor/assignment">
             출제 된 과제 현황
           </Nav.Link>
           {/* 로그인 시 삭제 예정 */}

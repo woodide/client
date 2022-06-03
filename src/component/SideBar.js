@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { ListGroup } from "react-bootstrap";
-import { Link, useLocation, useMatch, useParams } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { useQuery } from "react-query";
 
 const StyleSideBar = styled.div`
   width: 230px;
@@ -10,8 +11,17 @@ const StyleSideBar = styled.div`
   left: 20px;
 `;
 
-function SideBar({ subjects }) {
+export const Main = styled.div`
+  margin-left: 260px;
+  height: 100%;
+  padding: 14px;
+`;
+
+function SideBar({ title, subjects }) {
   const location = useLocation();
+
+  const { data: list } = useQuery(["student", "subject"]);
+  console.log(list);
   return (
     <StyleSideBar>
       <ListGroup>
@@ -19,7 +29,7 @@ function SideBar({ subjects }) {
           as={"div"}
           style={{ cursor: "default", background: "#F7F7F7" }}
         >
-          수강중인 수업
+          {title}
         </ListGroup.Item>
         {subjects.map((subject, i) => (
           <ListGroup.Item

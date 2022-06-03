@@ -20,8 +20,13 @@ function LoginPage({ professor }) {
       const response = await FetchPostWithoutAuth("/login", value);
       if (response.status === 200) {
         localStorage[professor ? "professor" : "student"] = response.data.token;
-        navigate("/");
-        return;
+        if (!professor) {
+          navigate("/");
+          return;
+        } else {
+          navigate("/professor");
+          return;
+        }
       } else {
         toast.error("로그인 실패");
       }

@@ -6,9 +6,9 @@ import CreateSubjectPage from "../page/CreateSubjectPage";
 import LoginPage from "../page/LoginPage";
 import ProfessorPage from "../page/ProfessorPage";
 import RegisterPage from "../page/RegisterPage";
-import SetAssignmentPage from "../page/SetAssignmentPage";
 import SubjectListPage from "../page/SubjectListPage";
 import styled from "styled-components";
+import AddAssignmentPage from "../page/AddAssignmentPage";
 
 export const Layout = styled.div`
   height: calc(100vh - 56px);
@@ -26,8 +26,8 @@ function ProfessorApp() {
           <Route path="/login" element={<LoginPage professor />} />
           <Route path="/register" element={<RegisterPage professor />} />
           <Route path="/create_subject" element={<CreateSubjectPage />} />
-          <Route path="/set_assignment" element={<SetAssignmentPage />} />
-          <Route path="/assignment_list" element={<AssignmentListPage />} />
+          <Route path="/add_assignment" element={<AddAssignmentPage />} />
+          <Route path="/assignment/*" element={<AssignmentListPage />} />
         </Routes>
       </Layout>
     </div>

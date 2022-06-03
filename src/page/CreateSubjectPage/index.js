@@ -4,16 +4,34 @@ import { Form, Button, Alert } from "react-bootstrap";
 import useForm from "../../hook/useForm";
 import StudentTable, { makeTableItem } from "../../widget/StudentTable";
 import axios from "axios";
-import { FetchGet } from "../../model/Request";
+import { FetchGet, FetchPost } from "../../model/Request";
 import { useQuery } from "react-query";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 function CreateSubjectPage() {
   const { value, handleChange } = useForm({ name: "", code: "" });
   const [addList, setAddList] = useState({});
+  const navigate = useNavigate();
+
+  const handleCreateSubject = async (e) => {
+    e.preventDefault();
+    const response = await FetchPost({
+      isProfessor: true,
+      url: "/professor/subject",
+      data: value,
+    });
+    if (response.status === 200) {
+      toast(`${value.name} 과목 생성 완료`);
+      navigate("/professor");
+    } else {
+      toast.error(`${value.name} 과목 생성 실패`);
+    }
+  };
 
   return (
     <Panel>
       <div style={{ width: "720px" }}>
-        <form>
+        <form onSubmit={handleCreateSubject}>
           <Form.Label>과목 이름</Form.Label>
           <Form.Control
             value={value.name}
