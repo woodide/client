@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import SideBar, { Main } from "../../component/SideBar";
 import styled from "styled-components";
-import { Routes, Route, useParams } from "react-router-dom";
+import {Routes, Route, useParams, useNavigate} from "react-router-dom";
 import { Card, Button } from "react-bootstrap";
 import MarkdownModalButton from "../../component/MarkdownModalButton";
 
 function Subject() {
+  const navigate = useNavigate();
   const { code } = useParams();
   return (
     <div>
@@ -20,7 +21,7 @@ function Subject() {
           <Card.Text style={{ color: "rgba(0,0,0,0.5)" }}>
             {"최근 작업일 : 2022-07-01 20:15:38"}
           </Card.Text>
-          <Button variant="primary">IDE 이동</Button>
+          <Button variant="primary" onClick={() => navigate("/ide/123")}>IDE 이동</Button>
           <MarkdownModalButton
             title="과제 설명 보기"
             value={`#Hello`}
@@ -29,7 +30,7 @@ function Subject() {
           <Button variant="primary" style={{ marginLeft: "5px" }}>
             Test Case (2 / 4)
           </Button>
-          <Button variant="primary" style={{ marginLeft: "5px" }}>
+          <Button variant="primary" style={{ marginLeft: "5px" }} onClick={() => navigate("/report/123")}>
             보고서 작성
           </Button>
         </Card.Body>
