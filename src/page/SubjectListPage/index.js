@@ -6,7 +6,7 @@ import {FetchPost} from "../../model/Request";
 import {toast} from "react-toastify";
 
 function SubjectList({ code, name }) {
-  const [addList, setAddList] = useState([]);
+  const [addList, setAddList] = useState({});
   const {data: subjectStudent} = useQuery(["professor","subject","student", code])
 
     console.log(subjectStudent);

@@ -39,9 +39,9 @@ function IconOption({ type, select, onClick, style }) {
       style={style}
     >
       <div className={"wrap"}>
-        {type === "cpp" && <img src="/cpp_logo.svg" />}
+        {type === "gcc" && <img src="/cpp_logo.svg" />}
         {type === "python" && <img src="/python_logo.svg" />}
-        <div className="label">{type === "cpp" ? "C / C++" : "Python"}</div>
+        <div className="label">{type === "gcc" ? "C / C++" : "Python"}</div>
       </div>
     </StyleIconOption>
   );

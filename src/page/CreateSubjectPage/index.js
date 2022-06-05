@@ -21,6 +21,17 @@ function CreateSubjectPage() {
       data: value,
     });
     if (response.status === 200) {
+      console.log("AA",addList);
+      if(Object.keys(addList).length > 0) {
+        await FetchPost({
+          isProfessor:true,
+          url:"/professor/subject/addStudent",
+          data: {
+            subjectCode: value.code,
+            studentNumberList: Object.keys(addList),
+          }
+        });
+      }
       toast(`${value.name} 과목 생성 완료`);
       navigate("/professor");
     } else {

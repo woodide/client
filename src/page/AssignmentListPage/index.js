@@ -42,55 +42,59 @@ function CodeView({code}) {
 // }
 
 function SubjectList({eventKey, title}) {
-    const [addList, setAddList] = useState([]);
+    const [addList, setAddList] = useState({});
 
+    const coulumns = useMemo(() => [
+        {
+            accessor: "id",
+            Header: "학번",
+        },
+        {
+            accessor: "name",
+            Header: "이름",
+        },
+        {
+            accessor: "percent",
+            Header: "과제 진행률",
+            filter: "percentGreater",
+            Filter: GreaterColumnFilter,
+        },
+        {
+            accessor: "count",
+            Header: "과제 제출 횟수",
+            filter: "greater",
+            Filter: GreaterColumnFilter,
+        },
+        {
+            accessor: "codeView",
+            Header: "코드 보기",
+        },
+        {
+            accessor: "report",
+            Header: "보고서 보기",
+        },
+    ], []);
+
+
+    const data = useMemo(() => [
+        {
+            id: "201820802",
+            name: "강선규",
+            percent: 70 + " %",
+            count: 10,
+            codeView: <CodeView code={"ASDASD"}/>,
+            report: (
+                <MarkdownModalButton title={"보고서 보기"} value={"ASDASD"}/>
+            ),
+        },
+    ], []);
     return (
         <Accordion.Item eventKey={eventKey}>
             <Accordion.Header>{title}</Accordion.Header>
             <Accordion.Body>
                 <Table
-                    columns={[
-                        {
-                            accessor: "id",
-                            Header: "학번",
-                        },
-                        {
-                            accessor: "name",
-                            Header: "이름",
-                        },
-                        {
-                            accessor: "percent",
-                            Header: "과제 진행률",
-                            filter: "percentGreater",
-                            Filter: GreaterColumnFilter,
-                        },
-                        {
-                            accessor: "count",
-                            Header: "과제 제출 횟수",
-                            filter: "greater",
-                            Filter: GreaterColumnFilter,
-                        },
-                        {
-                            accessor: "codeView",
-                            Header: "코드 보기",
-                        },
-                        {
-                            accessor: "report",
-                            Header: "보고서 보기",
-                        },
-                    ]}
-                    data={[
-                        {
-                            id: "201820802",
-                            name: "강선규",
-                            percent: 70 + " %",
-                            count: 10,
-                            codeView: <CodeView code={"ASDASD"}/>,
-                            report: (
-                                <MarkdownModalButton title={"보고서 보기"} value={"ASDASD"}/>
-                            ),
-                        },
-                    ]}
+                    columns={coulumns}
+                    data={data}
                 />
             </Accordion.Body>
         </Accordion.Item>
@@ -103,10 +107,13 @@ function Assignment() {
 
     console.log(assignmentList);
 
+    const assignmentData = useMemo(() => assignmentList?.map(({assignmentName, description, dueDate, imageName},idx) =>
+        <SubjectList key={`subjectList-${idx}`} eventKey={imageName} title={assignmentName}/>) ?? [] , [assignmentList]);
+
     return (
         <div>
             <Accordion defaultActiveKey="0">
-                <SubjectList eventKey={"0"} title="MIPS Simulator"/>
+                {assignmentData}
             </Accordion>
         </div>
     );
@@ -115,10 +122,10 @@ function Assignment() {
 function AssignmentListPage() {
     const {data: subjectList} = useQuery(["professor", "subject"]);
 
-    const subjects = useMemo(() => subjectList.map(({name, code}) => ({
+    const subjects = useMemo(() => subjectList?.map(({name, code}) => ({
         name,
         link: `/professor/assignment/${code}`
-    })), [subjectList]);
+    })) ?? [], [subjectList]);
 
 
     return (

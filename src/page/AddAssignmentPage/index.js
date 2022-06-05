@@ -16,7 +16,7 @@ function AddAssignmentPage() {
 
     const [assignmentName, setAssignmentName] = React.useState("");
     const [description, setDescription] = React.useState("# PA2: Simulator");
-    const [language, setLanguage] = React.useState("cpp");
+    const [language, setLanguage] = React.useState("gcc");
     const [languageVersion, setLanguageVersion] = React.useState("");
     const [subject, setSubject] = React.useState({
         code: "",
@@ -35,10 +35,10 @@ function AddAssignmentPage() {
     }, [subjectList]);
 
     const versionList = useMemo(() => {
-        if (language === "cpp")
+        if (language === "gcc")
             return GCC_VERSION.map((ver, i) => (
                 <Dropdown.Item
-                    key={`cpp_ver_${i}`}
+                    key={`gcc_ver_${i}`}
                     onClick={() => setLanguageVersion(ver)}
                 >
                     {ver}
@@ -56,7 +56,7 @@ function AddAssignmentPage() {
     }, [language]);
 
     useEffect(() => {
-        if (language === "cpp") setLanguageVersion(GCC_VERSION[0]);
+        if (language === "gcc") setLanguageVersion(GCC_VERSION[0]);
         else if (language === "python") setLanguageVersion(PYTHON_VERSION[0]);
     }, [language]);
 
@@ -168,10 +168,10 @@ function AddAssignmentPage() {
                         <Form.Label>언어 선택</Form.Label>
                         <div>
                             <IconOption
-                                type={"cpp"}
+                                type={"gcc"}
                                 style={{marginRight: "10px"}}
-                                select={language === "cpp" ? true : false}
-                                onClick={() => setLanguage("cpp")}
+                                select={language === "gcc" ? true : false}
+                                onClick={() => setLanguage("gcc")}
                             />
                             <IconOption
                                 type={"python"}

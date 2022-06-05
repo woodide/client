@@ -171,7 +171,7 @@ function ChattingMain({title, onClose}) {
     return <StyleChattingMain>
             <div className={"appbar"}>
                 <div className={"title"}>
-                    {title}MIPS Simulator
+                    {title}
                 </div>
                 <AiOutlineClose onClick={onClose} className={"close"}/>
             </div>
