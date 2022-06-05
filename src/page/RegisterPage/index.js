@@ -22,7 +22,7 @@ function RegisterPage({ professor }) {
         professor ? "/signup/professor" : "/signup/student",
         value
       );
-      if (response.status === 200 && response.data === "success") {
+      if (response.status === 200 && response.data?.status === "SUCCESS") {
         navigate("/login");
         return;
       } else {

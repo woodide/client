@@ -7,7 +7,7 @@ queryClient.setQueryDefaults(["professor", "all_student"], {
   queryFn: () =>
     FetchGet({
       isProfessor: true,
-      url: "/student",
+      url: "/list/student",
     }),
   select: (response) => {
     return (

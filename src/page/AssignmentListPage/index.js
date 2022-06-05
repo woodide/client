@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useMemo, useState} from "react";
 import { Accordion, Button } from "react-bootstrap";
 import Modal from "../../component/Modal";
 import Table, { GreaterColumnFilter } from "../../component/Table";
@@ -9,6 +9,7 @@ import { TEST_CODE } from "./test";
 import MarkdownModalButton from "../../component/MarkdownModalButton";
 import SideBar, { Main } from "../../component/SideBar";
 import { Route, Routes, useParams } from "react-router-dom";
+import {useQuery} from "react-query";
 function CodeView({ code }) {
   const [isOpen, setOpen] = useState(false);
   return (
@@ -108,14 +109,16 @@ function Assignment() {
 }
 
 function AssignmentListPage() {
-  return (
+    const {data: subjectList} = useQuery(["professor", "subject"]);
+
+    const subjects = useMemo(() => subjectList.map(({name,code}) => ({name,link:`/professor/assignment/${code}`})),[subjectList]);
+
+
+    return (
     <div style={{ width: "100%" }}>
       <SideBar
         title="진행중인 수업"
-        subjects={[
-          { name: "운영체제", link: "/professor/assignment/F092" },
-          { name: "컴퓨터구조", link: "/professor/assignment/F093" },
-        ]}
+        subjects={subjects}
       />
       <Main>
         <Routes>

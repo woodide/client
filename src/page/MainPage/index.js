@@ -4,6 +4,7 @@ import styled from "styled-components";
 import {Routes, Route, useParams, useNavigate} from "react-router-dom";
 import { Card, Button } from "react-bootstrap";
 import MarkdownModalButton from "../../component/MarkdownModalButton";
+import {useQuery} from "react-query";
 
 function Subject() {
   const navigate = useNavigate();

@@ -5,10 +5,6 @@ import CheckBox from "../component/CheckBox";
 import { Form, Button } from "react-bootstrap";
 import { useQuery } from "react-query";
 
-export function makeTableItem(addList, studentNumber, username, email) {
-  return;
-}
-
 function StudentTable({ addList, setAddList, subject }) {
   const { data: allStudents } = useQuery(["professor", "all_student"]);
   // const { data: students } = useQuery([
