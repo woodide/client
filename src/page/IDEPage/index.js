@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import ButtonChat from "../../component/ButtonChat";
+import Chatting from "../../component/Chatting";
 
 const IDEFrame = styled.iframe`
   width:100%;
@@ -8,9 +8,10 @@ const IDEFrame = styled.iframe`
 `;
 
 function IDEPage() {
+
   return <div style={{width:"100%"}}>
       <IDEFrame src={"http://localhost:8443/?folder=/config/workspace"} />
-      <ButtonChat />
+      <Chatting />
   </div>;
 }
 
