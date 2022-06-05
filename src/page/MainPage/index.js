@@ -1,62 +1,97 @@
-import React, { useState } from "react";
-import SideBar, { Main } from "../../component/SideBar";
+import React, {useMemo, useState} from "react";
+import SideBar, {Main} from "../../component/SideBar";
 import styled from "styled-components";
 import {Routes, Route, useParams, useNavigate} from "react-router-dom";
-import { Card, Button } from "react-bootstrap";
+import {Card, Button} from "react-bootstrap";
 import MarkdownModalButton from "../../component/MarkdownModalButton";
 import {useQuery} from "react-query";
+import moment from "moment";
+import {FetchPost} from "../../model/Request";
+import {toast} from "react-toastify";
 
-function Subject() {
-  const navigate = useNavigate();
-  const { code } = useParams();
-  return (
-    <div>
-      <Card style={{ width: "100%" }}>
+function AssignmentItem({assignmentName, description, dueDate, imageName}) {
+    const navigate = useNavigate();
+
+    const handleConnectContainer = async () => {
+        const response = await FetchPost({
+            isProfessor: false,
+            url: "/container",
+            data: {
+                imageName
+            }
+        });
+        if(response.status !== 201) {
+            toast.error("컨테이너 생성 실패");
+            return;
+        }
+        navigate(`/ide/${response.data?.message}`);
+    }
+
+
+    return <Card style={{width: "100%"}}>
         <Card.Header>Assignment</Card.Header>
         <Card.Body>
-          <Card.Title>PA 2 : MIPS Simulator</Card.Title>
+            <Card.Title>{assignmentName}</Card.Title>
 
-          <Card.Text style={{ color: "rgba(0,0,0,0.5)", marginBottom: "0px" }}>
-            {"과제 만료일 : 2022-07-01 20:15:38"}
-          </Card.Text>
-          <Card.Text style={{ color: "rgba(0,0,0,0.5)" }}>
-            {"최근 작업일 : 2022-07-01 20:15:38"}
-          </Card.Text>
-          <Button variant="primary" onClick={() => navigate("/ide/123")}>IDE 이동</Button>
-          <MarkdownModalButton
-            title="과제 설명 보기"
-            value={`#Hello`}
-            style={{ marginLeft: "5px" }}
-          />
-          <Button variant="primary" style={{ marginLeft: "5px" }}>
-            Test Case (2 / 4)
-          </Button>
-          <Button variant="primary" style={{ marginLeft: "5px" }} onClick={() => navigate("/report/123")}>
-            보고서 작성
-          </Button>
+            <Card.Text style={{color: "rgba(0,0,0,0.5)", marginBottom: "0px"}}>
+                {`과제 만료일 : ${moment(dueDate).format("yyyy-MM-DD HH:mm")}`}
+            </Card.Text>
+            <Card.Text style={{color: "rgba(0,0,0,0.5)"}}>ㅈ
+                {"최근 작업일 : 2022-07-01 20:15:38"}
+            </Card.Text>
+            <Button variant="primary" onClick={handleConnectContainer}>IDE 이동</Button>
+            <MarkdownModalButton
+                title="과제 설명 보기"
+                value={description}
+                style={{marginLeft: "5px"}}
+            />
+            <Button variant="primary" style={{marginLeft: "5px"}}>
+                Test Case (2 / 4)
+            </Button>
+            <Button variant="primary" style={{marginLeft: "5px"}} onClick={() => navigate("/report/123")}>
+                보고서 작성
+            </Button>
         </Card.Body>
-      </Card>
-    </div>
-  );
+    </Card>
+}
+
+function Subject() {
+
+    const {code} = useParams();
+
+    const {data: assignmentList} = useQuery(["student", "assignment", code]);
+
+    const assignmentElem = useMemo(() => assignmentList?.map((assignment, idx) => <AssignmentItem
+        key={`assign-${idx}`} {...assignment} />), [assignmentList]);
+
+    return (
+        <div>
+            {assignmentElem}
+        </div>
+    );
 }
 
 function MainPage() {
-  return (
-    <div style={{ width: "100%" }}>
-      <SideBar
-        title="수강중인 수업"
-        subjects={[
-          { name: "운영체제", link: "/subject/F092" },
-          { name: "컴퓨터구조", link: "/subject/F093" },
-        ]}
-      />
-      <Main>
-        <Routes>
-          <Route path="/subject/:code" element={<Subject />} />
-        </Routes>
-      </Main>
-    </div>
-  );
+    const {data: subjectList} = useQuery(["student", "subject"]);
+
+    const subjects = useMemo(() => subjectList?.map(({name, code}) => ({
+        name,
+        link: `/subject/${code}`
+    })) ?? [], [subjectList]);
+
+    return (
+        <div style={{width: "100%"}}>
+            <SideBar
+                title="수강중인 수업"
+                subjects={subjects}
+            />
+            <Main>
+                <Routes>
+                    <Route path="/subject/:code" element={<Subject/>}/>
+                </Routes>
+            </Main>
+        </div>
+    );
 }
 
 export default MainPage;

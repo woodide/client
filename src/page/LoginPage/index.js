@@ -18,9 +18,10 @@ function LoginPage({ professor }) {
 
     try {
       const response = await FetchPostWithoutAuth("/login", value);
-      if (response.status === 200) {
-        localStorage[professor ? "professor" : "student"] = response.data.token;
-        if (!professor) {
+      const _professor = professor ? true : false;
+      if (response.status === 200 && _professor === response.data?.isProfessor) {
+        localStorage[_professor ? "professor" : "student"] = response.data.token;
+        if (!_professor) {
           navigate("/");
           return;
         } else {

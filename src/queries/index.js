@@ -68,4 +68,33 @@ queryClient.setQueryDefaults(["professor", "subject"], {
   },
 });
 
+
+queryClient.setQueryDefaults(["student", "subject"], {
+    queryFn: () =>
+        FetchGet({
+            isProfessor: false,
+            url: "/student/subject",
+        }),
+    select: (response) => {
+        return response?.data;
+    },
+});
+
+queryClient.setQueryDefaults(["student", "assignment"], {
+    queryFn: ({ queryKey }) => {
+        const code = queryKey[2];
+        return FetchGet({
+            isProfessor: false,
+            url: "/student/subject/assignment",
+            config: {
+                params: {
+                    code,
+                },
+            },
+        });
+    },
+    select: (response) => {
+        return response?.data;
+    },
+});
 export default queryClient;

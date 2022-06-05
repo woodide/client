@@ -48,7 +48,7 @@ function SubjectList({ code, name }) {
             marginTop: "30px",
           }}
         >
-          <Button as="input" value="저장" onClick={handleAdd}/>
+            <Button onClick={handleAdd} style={{width:"2햣 ㅁ00px"}}>저장</Button>
         </div>
       </Accordion.Body>
     </Accordion.Item>

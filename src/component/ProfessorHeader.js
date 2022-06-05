@@ -21,12 +21,18 @@ function ProfessorHeader() {
           {/* 로그인 시 삭제 예정 */}
         </Nav>
         <Nav>
-          <Nav.Link as={Link} to="/professor/login">
-            로그인
-          </Nav.Link>
-          <Nav.Link as={Link} to="/professor/register">
-            회원가입
-          </Nav.Link>
+          {!localStorage['professor'] ? (
+              <>
+                <Nav.Link as={Link} to="/professor/login">
+                  로그인
+                </Nav.Link>
+                <Nav.Link as={Link} to="/professor/register">
+                  회원가입
+                </Nav.Link>
+              </>
+          ) : <Nav.Link as={"div"} style={{cursor:"pointer"}} onClick={() =>  delete localStorage['professor']}>
+            로그아웃
+          </Nav.Link>}
         </Nav>
       </Container>
     </Navbar>

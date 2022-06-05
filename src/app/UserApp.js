@@ -25,7 +25,7 @@ function UserApp() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/report/:id" element={<ReportPage />} />
-          <Route path="/ide/:id" element={<IDEPage />} />
+          <Route path="/ide/:port" element={<IDEPage />} />
           <Route path="/submit" element={<>과제 현황</>} />
           <Route path="/login" element={<>로그인 컴포넌트 렌더링</>} />
         </Routes>
