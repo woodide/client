@@ -9,8 +9,7 @@ import {toast} from "react-toastify";
 import {FetchPost} from "../../model/Request";
 import {useNavigate} from "react-router-dom";
 import {useQuery} from "react-query";
-import subjectListPage from "../SubjectListPage";
-
+import moment from "moment";
 function AddAssignmentPage() {
     const navigate = useNavigate();
 
@@ -90,10 +89,11 @@ function AddAssignmentPage() {
         formData.append("language", language);
         formData.append("languageVersion", languageVersion);
         formData.append("subjectCode", subject.code);
-        formData.append("dueDate", subject.code);
+        formData.append("dueDate", moment(dueDate).format("yyyy-MM-DD HH:mm:ss"));
         formData.append("multipartFile", multipartFile);
         formData.append("testInput", testInput);
         formData.append("testOutput", testOutput);
+
 
         const fetch = async () => {
             const response = await FetchPost({

@@ -20,8 +20,6 @@ export const Main = styled.div`
 function SideBar({ title, subjects }) {
   const location = useLocation();
 
-  const { data: list } = useQuery(["student", "subject"]);
-  console.log(list);
   return (
     <StyleSideBar>
       <ListGroup>
