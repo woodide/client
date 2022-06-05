@@ -1,8 +1,39 @@
-import React from "react";
-import {Navbar, Container, Nav} from "react-bootstrap";
-import {Link} from "react-router-dom";
+import React, {useEffect} from "react";
+import {Navbar, Container, Nav, Button} from "react-bootstrap";
+import {Link, useLocation, useNavigate} from "react-router-dom";
+import {useRecoilState, useRecoilValue} from "recoil";
+import {assignmentState} from "../atom/user";
+import MarkdownModalButton from "./MarkdownModalButton";
+import useRemainTimer from "../hook/useRemainTimer";
+
+function AssignmentBar() {
+    const {assignmentName, dueDate ,description} = useRecoilValue(assignmentState);
+    const navigate = useNavigate();
+
+    console.log(dueDate);
+    const remainDueDate = useRemainTimer(new Date(dueDate));
+    return <>
+        <Nav.Link as={"div"}>
+            진행중인 과제 : {assignmentName}
+        </Nav.Link>
+        <Nav.Link as={"div"}>
+           남은 시간 {remainDueDate}
+        </Nav.Link>
+        <Nav.Link as={"div"} style={{cursor: "pointer"}}
+                  onClick={() => navigate(-1)}>
+            뒤로가기
+        </Nav.Link>
+        <MarkdownModalButton title={"과제 설명 보기"} value={description}/>
+    </>
+}
+
 
 function Header() {
+    const location = useLocation();
+    useEffect(() => {
+
+    }, []);
+
     return (
         <Navbar bg="dark" variant="dark">
             <Container>
@@ -25,9 +56,14 @@ function Header() {
                                 회원가입
                             </Nav.Link>
                         </>
-                    ) : <Nav.Link as={"div"} style={{cursor:"pointer"}}  onClick={() =>  delete localStorage['student']}>
-                        로그아웃
-                    </Nav.Link>}
+                    ) : <>
+                        {location.pathname.includes("/ide") ? <AssignmentBar/> :
+                            <Nav.Link as={"div"} style={{cursor: "pointer"}}
+                                      onClick={() => delete localStorage['student']}>
+                                로그아웃
+                            </Nav.Link>}
+
+                    </>}
                 </Nav>
             </Container>
         </Navbar>

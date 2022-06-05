@@ -8,10 +8,12 @@ import {useQuery} from "react-query";
 import moment from "moment";
 import {FetchPost} from "../../model/Request";
 import {toast} from "react-toastify";
+import { useSetRecoilState} from "recoil";
+import {assignmentState} from "../../atom/user";
 
 function AssignmentItem({assignmentName, description, dueDate, imageName}) {
     const navigate = useNavigate();
-
+    const setAssignment = useSetRecoilState(assignmentState);
     const handleConnectContainer = async () => {
         const response = await FetchPost({
             isProfessor: false,
@@ -20,10 +22,14 @@ function AssignmentItem({assignmentName, description, dueDate, imageName}) {
                 imageName
             }
         });
-        if(response.status !== 201) {
+
+        if (response.status !== 201) {
             toast.error("컨테이너 생성 실패");
             return;
         }
+        setAssignment({
+            assignmentName, description, dueDate
+        })
         navigate(`/ide/${response.data?.message}`);
     }
 
@@ -34,7 +40,7 @@ function AssignmentItem({assignmentName, description, dueDate, imageName}) {
             <Card.Title>{assignmentName}</Card.Title>
 
             <Card.Text style={{color: "rgba(0,0,0,0.5)", marginBottom: "0px"}}>
-                {`과제 만료일 : ${moment(dueDate).format("yyyy-MM-DD HH:mm")}`}
+                {`과제 만료일 : ${moment(dueDate).format("yyyy-MM-DD H:mm")}`}
             </Card.Text>
             <Card.Text style={{color: "rgba(0,0,0,0.5)"}}>ㅈ
                 {"최근 작업일 : 2022-07-01 20:15:38"}
