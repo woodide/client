@@ -2,22 +2,21 @@ import React, {useEffect} from "react";
 import {Navbar, Container, Nav, Button} from "react-bootstrap";
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import {useRecoilState, useRecoilValue} from "recoil";
-import {assignmentState} from "../atom/user";
+import {assignmentState, studentState} from "../atom/user";
 import MarkdownModalButton from "./MarkdownModalButton";
 import useRemainTimer from "../hook/useRemainTimer";
 
 function AssignmentBar() {
-    const {assignmentName, dueDate ,description} = useRecoilValue(assignmentState);
+    const {assignmentName, dueDate, description} = useRecoilValue(assignmentState);
     const navigate = useNavigate();
 
-    console.log(dueDate);
     const remainDueDate = useRemainTimer(new Date(dueDate));
     return <>
         <Nav.Link as={"div"}>
             진행중인 과제 : {assignmentName}
         </Nav.Link>
         <Nav.Link as={"div"}>
-           남은 시간 {remainDueDate}
+            남은 시간 {remainDueDate}
         </Nav.Link>
         <Nav.Link as={"div"} style={{cursor: "pointer"}}
                   onClick={() => navigate(-1)}>
@@ -30,9 +29,7 @@ function AssignmentBar() {
 
 function Header() {
     const location = useLocation();
-    useEffect(() => {
-
-    }, []);
+    const [student, setStudent] = useRecoilState(studentState);
 
     return (
         <Navbar bg="dark" variant="dark">
@@ -47,7 +44,7 @@ function Header() {
                     {/* 로그인 시 삭제 예정 */}
                 </Nav>
                 <Nav>
-                    {!localStorage['student'] ? (
+                    {!student ? (
                         <>
                             <Nav.Link as={Link} to="/login">
                                 로그인
@@ -59,7 +56,11 @@ function Header() {
                     ) : <>
                         {location.pathname.includes("/ide") ? <AssignmentBar/> :
                             <Nav.Link as={"div"} style={{cursor: "pointer"}}
-                                      onClick={() => delete localStorage['student']}>
+                                      onClick={() => {
+                                          delete localStorage['student'];
+                                          setStudent(null);
+                                      }
+                                      }>
                                 로그아웃
                             </Nav.Link>}
 

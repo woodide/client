@@ -8,3 +8,13 @@ export const assignmentState = atom({
         description: "",
     }, // default value (aka initial value)
 });
+
+export const studentState = atom({
+    key: 'studentState', // unique ID (with respect to other atoms/selectors)
+    default: null, // default value (aka initial value)
+});
+
+export const professorState = atom({
+    key: 'professorState', // unique ID (with respect to other atoms/selectors)
+    default: null, // default value (aka initial value)
+});

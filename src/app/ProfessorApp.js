@@ -1,5 +1,5 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
+import React, {useEffect} from "react";
+import {Routes, Route} from "react-router-dom";
 import ProfessorHeader from "../component/ProfessorHeader";
 import AssignmentListPage from "../page/AssignmentListPage";
 import CreateSubjectPage from "../page/CreateSubjectPage";
@@ -9,6 +9,8 @@ import RegisterPage from "../page/RegisterPage";
 import SubjectListPage from "../page/SubjectListPage";
 import styled from "styled-components";
 import AddAssignmentPage from "../page/AddAssignmentPage";
+import {useRecoilState} from "recoil";
+import {professorState, studentState} from "../atom/user";
 
 export const Layout = styled.div`
   height: calc(100vh - 56px);
@@ -17,21 +19,29 @@ export const Layout = styled.div`
 `;
 
 function ProfessorApp() {
-  return (
-    <div>
-      <ProfessorHeader />
-      <Layout>
-        <Routes>
-          <Route path="/" element={<SubjectListPage />} />
-          <Route path="/login" element={<LoginPage professor />} />
-          <Route path="/register" element={<RegisterPage professor />} />
-          <Route path="/create_subject" element={<CreateSubjectPage />} />
-          <Route path="/add_assignment" element={<AddAssignmentPage />} />
-          <Route path="/assignment/*" element={<AssignmentListPage />} />
-        </Routes>
-      </Layout>
-    </div>
-  );
+
+    const [professor, setProfessor] = useRecoilState(professorState);
+    useEffect(() => {
+        if (professor === null && localStorage['professor']) {
+            setProfessor(JSON.parse(localStorage['professor']));
+        }
+    }, []);
+
+    return (
+        <div>
+            <ProfessorHeader/>
+            <Layout>
+                <Routes>
+                    <Route path="/" element={<SubjectListPage/>}/>
+                    <Route path="/login" element={<LoginPage professor/>}/>
+                    <Route path="/register" element={<RegisterPage professor/>}/>
+                    <Route path="/create_subject" element={<CreateSubjectPage/>}/>
+                    <Route path="/add_assignment" element={<AddAssignmentPage/>}/>
+                    <Route path="/assignment/*" element={<AssignmentListPage/>}/>
+                </Routes>
+            </Layout>
+        </div>
+    );
 }
 
 export default ProfessorApp;

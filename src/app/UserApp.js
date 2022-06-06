@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Header from "../component/Header";
 import {Routes, Route} from "react-router-dom";
 import MainPage from "../page/MainPage";
@@ -8,7 +8,8 @@ import RegisterPage from "../page/RegisterPage";
 import {ListGroup} from "react-bootstrap";
 import IDEPage from "../page/IDEPage";
 import ReportPage from "../page/ReportPage";
-import {RecoilRoot} from "recoil";
+import {RecoilRoot, useRecoilState} from "recoil";
+import {studentState} from "../atom/user";
 
 export const Layout = styled.div`
   height: calc(100vh - 56px);
@@ -17,8 +18,15 @@ export const Layout = styled.div`
 `;
 
 function UserApp() {
+
+    const [student, setStudent] = useRecoilState(studentState);
+    useEffect(() => {
+        if (student === null && localStorage['student']) {
+            setStudent(JSON.parse(localStorage['student']));
+        }
+    }, []);
+
     return (
-        <RecoilRoot>
             <div>
                 <Header/>
                 <Layout>
@@ -27,13 +35,12 @@ function UserApp() {
                         <Route path="/login" element={<LoginPage/>}/>
                         <Route path="/register" element={<RegisterPage/>}/>
                         <Route path="/report/:id" element={<ReportPage/>}/>
-                        <Route path="/ide/:port" element={<IDEPage/>}/>
+                        <Route path="/ide/:imageName/:port" element={<IDEPage/>}/>
                         <Route path="/submit" element={<>과제 현황</>}/>
                         <Route path="/login" element={<>로그인 컴포넌트 렌더링</>}/>
                     </Routes>
                 </Layout>
             </div>
-        </RecoilRoot>
     );
 }
 

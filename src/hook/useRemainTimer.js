@@ -1,6 +1,6 @@
 import {useEffect, useRef, useState} from "react";
 
-function useRemainTimer(endDate, callback) {
+function useRemainTimer(endDate) {
     const [remain, setRemain] = useState({
         h: "00",
         m: "00",
@@ -22,7 +22,6 @@ function useRemainTimer(endDate, callback) {
                 s: `${sec >= 10 ? sec : "0" + sec}`,
             });
             if (new Date() > new Date(endDate)) {
-                callback();
                 clearInterval(timeRef.current);
             }
         }, 1000);

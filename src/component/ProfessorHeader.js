@@ -1,7 +1,11 @@
 import React from "react";
 import { Navbar, Container, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import {useRecoilState, useRecoilValue} from "recoil";
+import {professorState, studentState} from "../atom/user";
 function ProfessorHeader() {
+  const [professor, setProfessor] = useRecoilState(professorState);
+
   return (
     <Navbar bg="dark" variant="dark">
       <Container>
@@ -21,7 +25,7 @@ function ProfessorHeader() {
           {/* 로그인 시 삭제 예정 */}
         </Nav>
         <Nav>
-          {!localStorage['professor'] ? (
+          {!professor ? (
               <>
                 <Nav.Link as={Link} to="/professor/login">
                   로그인
@@ -30,7 +34,10 @@ function ProfessorHeader() {
                   회원가입
                 </Nav.Link>
               </>
-          ) : <Nav.Link as={"div"} style={{cursor:"pointer"}} onClick={() =>  delete localStorage['professor']}>
+          ) : <Nav.Link as={"div"} style={{cursor:"pointer"}} onClick={() =>  {
+            delete localStorage['professor'];
+            setProfessor(null);
+          }}>
             로그아웃
           </Nav.Link>}
         </Nav>

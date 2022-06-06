@@ -30,7 +30,7 @@ function AssignmentItem({assignmentName, description, dueDate, imageName}) {
         setAssignment({
             assignmentName, description, dueDate
         })
-        navigate(`/ide/${response.data?.message}`);
+        navigate(`/ide/${imageName}/${response.data?.message}`);
     }
 
 

@@ -1,9 +1,12 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import { BsFillChatRightDotsFill } from "react-icons/bs";
 import {AiOutlineClose} from "react-icons/ai";
 import {IoMdSend} from "react-icons/io";
 import ReactMarkdown from "react-markdown";
+import useChat from "../hook/useChat";
+import {useRecoilValue} from "recoil";
+import {studentState} from "../atom/user";
 
 const StyleButtonChat = styled.div`
   user-select: none;
@@ -167,7 +170,29 @@ function ToMessage({name,children,me}) {
             </div>
     </StyleMessage>
 }
-function ChattingMain({title, onClose}) {
+function ChattingMain({title, onClose, imageName}) {
+
+    const student = useRecoilValue(studentState);
+    const {chatList, send} = useChat(imageName);
+
+    const [text,setText] = useState("");
+
+    useEffect(() => {
+            console.log(chatList);
+    }, [chatList]);
+
+    const handleSend = () => {
+        send({from: student.username, text });
+        setText("");
+    }
+
+    const safeEnter = (e) =>  {
+        if(e.key === "Enter" && !e.shiftKey) { // Shift + Enter
+            e.preventDefault();
+            handleSend();
+        }
+    };
+
     return <StyleChattingMain>
             <div className={"appbar"}>
                 <div className={"title"}>
@@ -193,13 +218,8 @@ function ChattingMain({title, onClose}) {
             </ToMessage>
         </div>
         <div className={"send"}>
-            <textarea placeholder={"Send Message"} onKeyDown={(e) =>  {
-                if(e.key === "Enter" && !e.shiftKey) {
-                    e.preventDefault();
-                }
-            }
-            }/>
-            <button className={"sendButton"}>
+            <textarea placeholder={"Send Message"} value={text} onChange={(e) => setText((e.target.value))} onKeyDown={safeEnter}/>
+            <button className={"sendButton"} onClick={handleSend}>
                 <IoMdSend />
             </button>
         </div>
@@ -207,12 +227,13 @@ function ChattingMain({title, onClose}) {
 }
 
 
-function Chatting({title}) {
+function Chatting({title,imageName}) {
     const [isOpen,setOpen] = useState(false);
-      return (
+
+    return (
         <StyleButtonChat className={isOpen ? "show" : "hide"} onClick={() => !isOpen && setOpen(true)} >
             {!isOpen && <BsFillChatRightDotsFill />}
-            {isOpen && <ChattingMain onClose={() => setOpen(false)} title={title}/>}
+            {isOpen && <ChattingMain onClose={() => setOpen(false)} title={title} imageName={imageName}/>}
         </StyleButtonChat>
       );
 }

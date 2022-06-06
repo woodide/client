@@ -5,6 +5,8 @@ import { toast } from "react-toastify";
 import Panel from "../../component/Panel";
 import useForm from "../../hook/useForm";
 import { FetchPost, FetchPostWithoutAuth } from "../../model/Request";
+import {useRecoilState, useSetRecoilState} from "recoil";
+import {studentState,professorState} from "../../atom/user";
 function LoginPage({ professor }) {
   const navigate = useNavigate();
 
@@ -13,6 +15,9 @@ function LoginPage({ professor }) {
     password: "",
   });
 
+  const setStudent = useSetRecoilState(studentState);
+  const setProfessor = useSetRecoilState(professorState);
+
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -20,7 +25,20 @@ function LoginPage({ professor }) {
       const response = await FetchPostWithoutAuth("/login", value);
       const _professor = professor ? true : false;
       if (response.status === 200 && _professor === response.data?.isProfessor) {
-        localStorage[_professor ? "professor" : "student"] = response.data.token;
+        // localStorage[_professor ? "professor" : "student"] = response.data.token;
+        const {token,username,email,isProfessor} = response.data;
+        localStorage[_professor ? "professor" : "student"] = JSON.stringify(response.data);
+        if(_professor) {
+          setProfessor({
+            token, username, email, isProfessor
+          });
+        } else {
+          if(_professor) {
+            setStudent({
+              token, username, email, isProfessor
+            });
+          }
+        }
         if (!_professor) {
           navigate("/");
           return;
