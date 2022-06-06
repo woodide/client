@@ -3,7 +3,7 @@ import * as SockJS from "sockjs-client";
 import {Client} from "@stomp/stompjs";
 import {SERVER_URL} from "../config";
 
-function useChat(roomId) {
+function useChat({isProfessor, roomId}) {
     const stompRef = useRef(null);
     const [chatList, setChatList] = useState([]);
 
@@ -14,7 +14,7 @@ function useChat(roomId) {
         }
         stompRef.current.publish({
             destination: `/assignment/send/${roomId}`,
-            body: JSON.stringify({from, text}),
+            body: JSON.stringify({from, text, isProfessor}),
         });
 
     }, [stompRef]);
@@ -38,7 +38,6 @@ function useChat(roomId) {
                 console.error(frame);
             },
         });
-
         stompRef.current.activate();
 
         return () => {

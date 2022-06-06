@@ -155,11 +155,11 @@ const StyleMessage = styled.div`
 `
 
 
-function ToMessage({name,children,time,me}) {
+function ToMessage({isProfessor, name,children,time,me}) {
     return <StyleMessage>
         <div className={`message ${me && "me"}`}>
                 <div className={"name"}>
-                    {name}님
+                    {isProfessor ? `${name} 교수님` : "익명님"}
                 </div>
                 <ReactMarkdown>
                     {children}
@@ -171,9 +171,8 @@ function ToMessage({name,children,time,me}) {
     </StyleMessage>
 }
 function ChattingMain({title, onClose, imageName}) {
-
     const student = useRecoilValue(studentState);
-    const {chatList, send} = useChat(imageName);
+    const {chatList, send} = useChat({ isProfessor: false,roomId:imageName});
 
     const [text,setText] = useState("");
     const [block,setBlock] = useState(false);
@@ -219,7 +218,7 @@ function ChattingMain({title, onClose, imageName}) {
             </div>
 
         <div className={"content"}>
-            {chatList.map((chat,idx) => <ToMessage key={`chat-${idx}`} name={chat.from} me={chat.from === student.username} time={chat.time}>{chat.text}</ToMessage>)}
+            {chatList.map((chat,idx) => <ToMessage key={`chat-${idx}`} isProfessor={chat.isProfessor} name={chat.from} me={chat.from === student.username} time={chat.time}>{chat.text}</ToMessage>)}
             <div ref={chatRef}/>
         </div>
         <div className={"send"}>
