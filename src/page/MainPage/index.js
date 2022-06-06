@@ -42,7 +42,7 @@ function AssignmentItem({assignmentName, description, dueDate, imageName}) {
             <Card.Text style={{color: "rgba(0,0,0,0.5)", marginBottom: "0px"}}>
                 {`과제 만료일 : ${moment(dueDate).format("yyyy-MM-DD H:mm")}`}
             </Card.Text>
-            <Card.Text style={{color: "rgba(0,0,0,0.5)"}}>ㅈ
+            <Card.Text style={{color: "rgba(0,0,0,0.5)"}}>
                 {"최근 작업일 : 2022-07-01 20:15:38"}
             </Card.Text>
             <Button variant="primary" onClick={handleConnectContainer}>IDE 이동</Button>

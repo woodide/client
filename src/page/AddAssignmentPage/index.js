@@ -29,10 +29,10 @@ function AddAssignmentPage() {
     const {data: subjectList} = useQuery(["professor", "subject"]);
 
 
-    useEffect(() => {
-        if (!subjectList || subjectList?.length === 0) return;
-        setSubject(subjectList[0]);
-    }, [subjectList]);
+        useEffect(() => {
+                console.log(subject);
+        }, [subject]);
+
 
     const versionList = useMemo(() => {
         if (language === "gcc")
@@ -133,7 +133,7 @@ function AddAssignmentPage() {
                             style={{width: "100%", overflow: "auto", maxHeight: "300px"}}
                         >
                             {subjectList?.map((v, i) => (
-                                <Dropdown.Item key={`python_v123er_${i}`}>{v.name}</Dropdown.Item>
+                                <Dropdown.Item key={`python_v123er_${i}`} onClick={() => setSubject({...v})}>{v.name}</Dropdown.Item>
                             ))}
                         </Dropdown.Menu>
                     </Dropdown>
