@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import styled from "styled-components";
 import { BsFillChatRightDotsFill } from "react-icons/bs";
 import {AiOutlineClose} from "react-icons/ai";
@@ -155,7 +155,7 @@ const StyleMessage = styled.div`
 `
 
 
-function ToMessage({name,children,me}) {
+function ToMessage({name,children,time,me}) {
     return <StyleMessage>
         <div className={`message ${me && "me"}`}>
                 <div className={"name"}>
@@ -165,7 +165,7 @@ function ToMessage({name,children,me}) {
                     {children}
                 </ReactMarkdown>
                 <div className={"timestamp"}>
-                    2021-06-01 18:05:35
+                    {time}
                 </div>
             </div>
     </StyleMessage>
@@ -176,14 +176,24 @@ function ChattingMain({title, onClose, imageName}) {
     const {chatList, send} = useChat(imageName);
 
     const [text,setText] = useState("");
+    const [block,setBlock] = useState(false);
+
 
     useEffect(() => {
             console.log(chatList);
     }, [chatList]);
 
     const handleSend = () => {
-        send({from: student.username, text });
         setText("");
+        if(block === true) return;
+        if(text === "") return;
+
+        setBlock(true);
+        send({from: student.username, text });
+
+        setTimeout(() => { // 메시지 빠르게 보내기 금지.
+            setBlock(false);
+        }, 500);
     }
 
     const safeEnter = (e) =>  {
@@ -192,6 +202,13 @@ function ChattingMain({title, onClose, imageName}) {
             handleSend();
         }
     };
+
+    const chatRef = useRef(null);
+
+    useEffect(() => {
+        chatRef.current.scrollIntoView({ behavior: 'smooth' });
+    });
+
 
     return <StyleChattingMain>
             <div className={"appbar"}>
@@ -202,20 +219,8 @@ function ChattingMain({title, onClose, imageName}) {
             </div>
 
         <div className={"content"}>
-            <ToMessage name={"강선규"} me>
-                안녕하세요.
-                안녕하세요.
-                안녕하세요.
-                안녕하세요.
-                v  안녕하세요.
-
-            </ToMessage>
-            <ToMessage name={"강선규"} >
-                {"```jsx\nconsole.log('hllow');\n```\n\n\n\n\n\nasd"}
-            </ToMessage>
-            <ToMessage name={"강선규"} >
-                {`123\n123  1233  123  123  44 5 `}
-            </ToMessage>
+            {chatList.map((chat,idx) => <ToMessage key={`chat-${idx}`} name={chat.from} me={chat.from === student.username} time={chat.time}>{chat.text}</ToMessage>)}
+            <div ref={chatRef}/>
         </div>
         <div className={"send"}>
             <textarea placeholder={"Send Message"} value={text} onChange={(e) => setText((e.target.value))} onKeyDown={safeEnter}/>
