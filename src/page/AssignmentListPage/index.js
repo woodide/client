@@ -129,7 +129,8 @@ function AssignmentListPage() {
 
 
     return (
-        <div style={{width: "80vw"}}>
+
+        <div style={{width: "80vw", marginTop:"20px"}}>
             <Routes>
                 <Route path=":code" element={<Assignment/>}/>
             </Routes>
