@@ -12,18 +12,18 @@ function StudentTable({ addList, setAddList, subject }) {
   //   "student",
   //   "F091",
   // ]);
-  const tableItem =
-    allStudents?.map(({ username, email, studentNumber }) => ({
+  const tableItem = useMemo(() => allStudents?.map(({ username, email, studentNumber }) => ({
       studentNumber,
       username,
       email,
       check: (
-        <CheckBox
-          checked={addList[studentNumber]}
-          style={{ marginLeft: "5px" }}
-        />
+          <CheckBox
+              checked={addList[studentNumber]}
+              style={{ marginLeft: "5px" }}
+          />
       ),
-    })) ?? [];
+  })) ?? [], [allStudents,addList]);
+
 
   return (
     <div>

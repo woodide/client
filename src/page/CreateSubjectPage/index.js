@@ -82,37 +82,6 @@ function CreateSubjectPage() {
         </Stack>
       </Flex>
   );
-  //
-  // return (
-  //   <Panel>
-  //     <div style={{ width: "720px" }}>
-  //       <form onSubmit={handleCreateSubject}>
-  //         <Form.Label>과목 이름</Form.Label>
-  //         <Form.Control
-  //           value={value.name}
-  //           type="text"
-  //           name="name"
-  //           onChange={handleChange}
-  //         />
-  //         <Form.Label style={{ marginTop: "10px" }}>과목 코드</Form.Label>
-  //         <Form.Control
-  //           value={value.code}
-  //           type="text"
-  //           name="code"
-  //           onChange={handleChange}
-  //         />
-  //         <Form.Label style={{ marginTop: "10px" }}>학생 리스트</Form.Label>
-  //         <StudentTable addList={addList} setAddList={setAddList} />
-  //         <Button
-  //           as="input"
-  //           type="submit"
-  //           style={{ width: "100%", marginTop: "20px" }}
-  //           value="과목 생성"
-  //         />
-  //       </form>
-  //     </div>
-  //   </Panel>
-  // );
 }
 
 export default CreateSubjectPage;
