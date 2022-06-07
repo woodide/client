@@ -5,19 +5,14 @@ import {ListGroup} from "react-bootstrap";
 import {Link as ReactLink, useLocation} from "react-router-dom";
 import {useQuery} from "react-query";
 import {
-    IconButton,
     Link,
     Box,
-    CloseButton,
+    Button,
     Flex,
     Icon,
     useColorModeValue,
-    Drawer,
-    DrawerContent,
     Text,
-    useDisclosure,
-    BoxProps,
-    FlexProps,
+    Menu, MenuButton, MenuItem, MenuList,
 } from '@chakra-ui/react';
 import {
     FiHome,
@@ -54,8 +49,8 @@ const LinkItems = [
     {name: '메인', icon: FiHome, to: "/professor"},
     {name: '과목 생성', icon: GrAdd, to: "/professor/create_subject"},
     {name: '과제 출제', icon: GrChapterAdd, to: "/professor/add_assignment"},
-    {name: '출제된 과제 현황', icon: RiFileListLine, to: "/professor/assignment"},
-    {name: '과제 채팅 관리', icon: BsChatLeftDots, to: "/professor/chat"},
+    // {name: '출제된 과제 현황', icon: RiFileListLine, to: "/professor/assignment"},
+    // {name: '과제 채팅 관리', icon: BsChatLeftDots, to: "/professor/chat"},
 ];
 const NavItem = ({icon, children, as, to, ...rest}) => {
     const location = useLocation();
@@ -116,6 +111,30 @@ const SidebarContent = ({...rest}) => {
                     {link.name}
                 </NavItem>
             ))}
+            <Menu>
+                <MenuButton as={NavItem} icon={RiFileListLine} to={"/professor"} >
+                    출제된 과제 현황
+                </MenuButton>
+                <MenuList>
+                    <MenuItem>Download</MenuItem>
+                    <MenuItem>Create a Copy</MenuItem>
+                    <MenuItem>Mark as Draft</MenuItem>
+                    <MenuItem>Delete</MenuItem>
+                    <MenuItem>Attend a Workshop</MenuItem>
+                </MenuList>
+            </Menu>
+            <Menu >
+                <MenuButton as={NavItem} icon={BsChatLeftDots} to={"/professor"} >
+                    과제 채팅 관리
+                </MenuButton>
+                <MenuList >
+                    <MenuItem>Download</MenuItem>
+                    <MenuItem>Create a Copy</MenuItem>
+                    <MenuItem>Mark as Draft</MenuItem>
+                    <MenuItem>Delete</MenuItem>
+                    <MenuItem>Attend a Workshop</MenuItem>
+                </MenuList>
+            </Menu>
             {!professor ? (<>
                 <NavItem as={ReactLink} key={"로그인"} icon={TbLogin} to={"/professor/login"}>
                     로그인

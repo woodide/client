@@ -1,5 +1,5 @@
 import React, {useEffect, useMemo} from "react";
-import {Form, Dropdown, Alert} from "react-bootstrap";
+import {Form, Alert} from "react-bootstrap";
 import MDEditor from "@uiw/react-md-editor";
 import IconOption from "../../component/IconOption";
 import {GCC_VERSION, PYTHON_VERSION} from "../../data/version";
@@ -9,7 +9,19 @@ import {toast} from "react-toastify";
 import {FetchPost} from "../../model/Request";
 import {useQuery} from "react-query";
 import moment from "moment";
-import {Box, Flex, FormControl,Button , FormLabel, Input, Stack, useColorModeValue} from "@chakra-ui/react";
+import {
+    Box,
+    Flex,
+    FormControl,
+    Button,
+    FormLabel,
+    Input,
+    Stack,
+    useColorModeValue,
+    Menu,
+    MenuButton, MenuList, MenuItem
+} from "@chakra-ui/react";
+import {BsChatLeftDots} from "react-icons/bs";
 
 function AddAssignmentPage() {
     const [assignmentName, setAssignmentName] = React.useState("");
@@ -26,30 +38,31 @@ function AddAssignmentPage() {
 
     const {data: subjectList} = useQuery(["professor", "subject"]);
 
-
     useEffect(() => {
-        console.log(subject);
-    }, [subject]);
+        if(subjectList?.length ?? 0 > 0) {
+            setSubject(subjectList[0]);
+        }
+    }, [subjectList]);
 
 
     const versionList = useMemo(() => {
         if (language === "gcc")
             return GCC_VERSION.map((ver, i) => (
-                <Dropdown.Item
+                <MenuItem
                     key={`gcc_ver_${i}`}
                     onClick={() => setLanguageVersion(ver)}
                 >
                     {ver}
-                </Dropdown.Item>
+                </MenuItem>
             ));
         if (language === "python")
             return PYTHON_VERSION.map((ver, i) => (
-                <Dropdown.Item
+                <MenuItem
                     key={`python_ver_${i}`}
                     onClick={() => setLanguageVersion(ver)}
                 >
                     {ver}
-                </Dropdown.Item>
+                </MenuItem>
             ));
     }, [language]);
 
@@ -128,23 +141,17 @@ function AddAssignmentPage() {
                     <Stack as="form" onSubmit={handleSubmit} spacing={4}>
                         <FormLabel>과목 선택</FormLabel>
                         <FormControl>
-                            <Dropdown>
-                                <Dropdown.Toggle
-                                    id="dropdown-basic"
-                                    style={{width: "100%"}}
-                                    variant="secondary"
-                                >
+                            <Menu>
+                                <MenuButton as={Button}>
                                     {subject.name}
-                                </Dropdown.Toggle>
-                                <Dropdown.Menu
-                                    style={{width: "100%", overflow: "auto", maxHeight: "300px"}}
-                                >
+                                </MenuButton>
+                                <MenuList >
                                     {subjectList?.map((v, i) => (
-                                        <Dropdown.Item key={`python_v123er_${i}`}
-                                                       onClick={() => setSubject({...v})}>{v.name}</Dropdown.Item>
+                                        <MenuItem key={`python_v123er_${i}`}
+                                                       onClick={() => setSubject({...v})}>{v.name}</MenuItem>
                                     ))}
-                                </Dropdown.Menu>
-                            </Dropdown>
+                                </MenuList>
+                            </Menu>
                         </FormControl>
                         <FormControl>
                             <FormLabel>과제 이름</FormLabel>
@@ -165,7 +172,7 @@ function AddAssignmentPage() {
                         <div
                             style={{display: "flex", justifyContent: "center", width: "80vw"}}
                         >
-                            <FormControl>
+                            <FormControl width={350}>
                                 <FormLabel>언어 선택</FormLabel>
                                 <div>
                                     <IconOption
@@ -183,14 +190,14 @@ function AddAssignmentPage() {
                             </FormControl>
                             <FormControl>
                                 <FormLabel>버전 이미지 선택</FormLabel>
-                                <Dropdown>
-                                    <Dropdown.Toggle id="dropdown-basic">
+                                <Menu>
+                                    <MenuButton as={Button}>
                                         {languageVersion}
-                                    </Dropdown.Toggle>
-                                    <Dropdown.Menu style={{overflow: "auto", maxHeight: "300px"}}>
+                                    </MenuButton>
+                                    <MenuList overflow={"auto"} maxHeight={300}>
                                         {versionList}
-                                    </Dropdown.Menu>
-                                </Dropdown>
+                                    </MenuList>
+                                </Menu>
                             </FormControl>
                         </div>
                         <div>
@@ -254,137 +261,6 @@ function AddAssignmentPage() {
             </Stack>
         </Flex>
     )
-    //
-    // return (
-    //     <div style={{display: "flex", justifyContent: "center"}}>
-    //         <Form style={{marginTop: "10px"}} onSubmit={handleSubmit}>
-    //             <Form.Label>과목 선택</Form.Label>
-    //             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-    //                 <Dropdown>
-    //                     <Dropdown.Toggle
-    //                         id="dropdown-basic"
-    //                         style={{width: "100%"}}
-    //                         variant="secondary"
-    //                     >
-    //                         {subject.name}
-    //                     </Dropdown.Toggle>
-    //                     <Dropdown.Menu
-    //                         style={{width: "100%", overflow: "auto", maxHeight: "300px"}}
-    //                     >
-    //                         {subjectList?.map((v, i) => (
-    //                             <Dropdown.Item key={`python_v123er_${i}`} onClick={() => setSubject({...v})}>{v.name}</Dropdown.Item>
-    //                         ))}
-    //                     </Dropdown.Menu>
-    //                 </Dropdown>
-    //             </Form.Group>
-    //             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-    //                 <Form.Label>과제 이름</Form.Label>
-    //                 <Form.Control
-    //                     type="text"
-    //                     value={assignmentName}
-    //                     onChange={(e) => setAssignmentName(e.target.value)}
-    //                 />
-    //             </Form.Group>
-    //             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-    //                 <Form.Label>과제 설명</Form.Label>
-    //                 <div data-color-mode="light">
-    //                     <MDEditor
-    //                         value={description}
-    //                         onChange={setDescription}
-    //                         color="#fff"
-    //                         height={400}
-    //                     />
-    //                 </div>
-    //             </Form.Group>
-    //             <div
-    //                 style={{display: "flex", justifyContent: "center", width: "80vw"}}
-    //             >
-    //                 <Form.Group
-    //                     className="mb-3"
-    //                     controlId="exampleForm.ControlTextarea1"
-    //                     style={{marginRight: "30px"}}
-    //                 >
-    //                     <Form.Label>언어 선택</Form.Label>
-    //                     <div>
-    //                         <IconOption
-    //                             type={"gcc"}
-    //                             style={{marginRight: "10px"}}
-    //                             select={language === "gcc" ? true : false}
-    //                             onClick={() => setLanguage("gcc")}
-    //                         />
-    //                         <IconOption
-    //                             type={"python"}
-    //                             select={language === "python" ? true : false}
-    //                             onClick={() => setLanguage("python")}
-    //                         />
-    //                     </div>
-    //                 </Form.Group>
-    //                 <Form.Group
-    //                     className="mb-3"
-    //                     controlId="exampleForm.ControlTextarea1"
-    //                     style={{marginRight: "100px"}}
-    //                 >
-    //                     <Form.Label>버전 이미지 선택</Form.Label>
-    //                     <Dropdown>
-    //                         <Dropdown.Toggle id="dropdown-basic">
-    //                             {languageVersion}
-    //                         </Dropdown.Toggle>
-    //                         <Dropdown.Menu style={{overflow: "auto", maxHeight: "300px"}}>
-    //                             {versionList}
-    //                         </Dropdown.Menu>
-    //                     </Dropdown>
-    //                 </Form.Group>
-    //             </div>
-    //             <div>
-    //                 <Alert key={"warning"} variant={"warning"}>
-    //                     스켈레톤 코드는 ZIP 파일만 업로드 가능하며, 테스트케이스 코드는
-    //                     텍스트 형식 파일만 업로드 가능합니다.
-    //                 </Alert>
-    //                 <Form.Group controlId="multipartFile" className="mb-3">
-    //                     <Form.Label>스켈레톤 코드 업로드</Form.Label>
-    //                     <Form.Control
-    //                         type="file"
-    //                         accept="zip,application/octet-stream,application/zip,application/x-zip,application/x-zip-compressed"
-    //                     />
-    //                 </Form.Group>
-    //                 <Form.Group controlId="testInput" className="mb-3">
-    //                     <Form.Label>테스트케이스 인풋 업로드</Form.Label>
-    //                     <Form.Control type="file"/>
-    //                 </Form.Group>
-    //                 <Form.Group controlId="testOutput" className="mb-3">
-    //                     <Form.Label>테스트케이스 아웃풋 업로드</Form.Label>
-    //                     <Form.Control type="file"/>
-    //                 </Form.Group>
-    //             </div>
-    //             <div style={{marginBottom: "20px"}}>
-    //                 <CheckBox
-    //                     label={"보고서 제출 여부"}
-    //                     checked={isReport}
-    //                     onChecked={() => setReport(!isReport)}
-    //                 />
-    //             </div>
-    //             <div style={{marginBottom: "20px"}}>
-    //                 <label>과제 만기일 설정</label>
-    //                 <DatePicker
-    //                     dateFormat="yyyy-MM-dd HH:mm:ss"
-    //                     selected={dueDate}
-    //                     showTimeSelect
-    //                     onChange={(date) => setDueDate(date)}
-    //                 />
-    //             </div>
-    //
-    //             <Button
-    //                 as="input"
-    //                 type="submit"
-    //                 variant="primary"
-    //                 size="lg"
-    //                 style={{width: "100%"}}
-    //                 value="과제 출제"
-    //                 disabled={isPending}
-    //             />
-    //         </Form>
-    //     </div>
-    // );
 }
 
 export default AddAssignmentPage;
