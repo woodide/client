@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useMemo, useRef, useState} from "react";
 import styled from "styled-components";
 import {BsFillChatRightDotsFill} from "react-icons/bs";
 import {AiOutlineClose} from "react-icons/ai";
@@ -9,6 +9,7 @@ import {useRecoilValue} from "recoil";
 import {professorState, studentState} from "../atom/user";
 import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter';
 import {darcula} from 'react-syntax-highlighter/dist/cjs/styles/prism';
+import {useQuery} from "react-query";
 
 const StyleButtonChat = styled.div`
   user-select: none;
@@ -222,11 +223,20 @@ function ToMessage({professor, isSenderProfessor, name, children, time, me}) {
 export function ChattingMain({professor, title, appBarIcon, imageName}) {
     const studentData = useRecoilValue(studentState);
     const professorData = useRecoilValue(professorState);
+    const {data: dbChatList} = useQuery(["chat",imageName]);
+
+    console.log(dbChatList);
+
     const {chatList, send} = useChat({isProfessor: false, roomId: imageName});
 
     const [text, setText] = useState("");
     const [block, setBlock] = useState(false);
 
+
+    const combineChatList = useMemo(() => {
+        if(!dbChatList) return chatList;
+        return [...dbChatList,...gichatList];
+    }, [dbChatList, chatList])
 
     useEffect(() => {
         console.log(chatList);
@@ -269,7 +279,7 @@ export function ChattingMain({professor, title, appBarIcon, imageName}) {
         </div>
 
         <div className={"content"}>
-            {chatList.map((chat, idx) => <ToMessage key={`chat-${idx}`} isSenderProfessor={chat.isProfessor} professor={professor} name={chat.from}
+            {combineChatList.map((chat, idx) => <ToMessage key={`chat-${idx}`} isSenderProfessor={chat.isProfessor} professor={professor} name={chat.from}
                                                     me={chat.from === (professor ? professorData.username : studentData.username)}
                                                     time={chat.time}>{chat.text}</ToMessage>)}
             <div ref={chatRef}/>

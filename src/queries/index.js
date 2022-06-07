@@ -102,7 +102,7 @@ queryClient.setQueryDefaults(["student", "assignment"], {
 queryClient.setQueryDefaults(["student", "report"], {
     queryFn: ({queryKey}) => {
         const containerName = queryKey[2];
-        if(!containerName) return null;
+        if (!containerName) return null;
         return FetchGet({
             isProfessor: false,
             url: "/student/subject/assignment/report",
@@ -116,6 +116,26 @@ queryClient.setQueryDefaults(["student", "report"], {
     select: (response) => {
         return response?.data;
     },
+});
+
+queryClient.setQueryDefaults(["chat"], {
+    queryFn: ({queryKey}) => {
+        const imageName = queryKey[1];
+        if (!imageName) return null;
+        return FetchGet({
+            isProfessor: false,
+            url: `/chat/${imageName}`,
+        });
+    },
+    select: (response) => {
+        return response?.data?.map((chat) => ({
+            from: chat.sender,
+            text: chat.text,
+            time: chat.send_time,
+            isProfessor: chat.professor
+        })) ?? [];
+    },
+    staleTime: Infinity,
 });
 
 export default queryClient;
