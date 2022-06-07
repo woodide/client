@@ -207,7 +207,7 @@ function ToMessage({professor, isSenderProfessor, name, children, time, me}) {
         <div className={`message ${me && "me"}`}>
             <div className={"name"}>
                 {professor && (isSenderProfessor ? `${name} 교수님 ` : `${name}님`)}
-                {!professor && (isSenderProfessor ? `${name} 교수님 ` : "익명님")}ㅎ
+                {!professor && (isSenderProfessor ? `${name} 교수님 ` : "익명님")}
             </div>
             <ReactMarkdown components={CodeBlock} style={{borderRadius: "10px"}}>
                 {children}
