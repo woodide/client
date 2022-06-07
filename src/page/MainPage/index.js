@@ -2,7 +2,7 @@ import React, {useMemo, useState} from "react";
 import {Main,SideBar} from "../../component/SideBar";
 import styled from "styled-components";
 import {Routes, Route, useParams, useNavigate} from "react-router-dom";
-import {Card, Button} from "react-bootstrap";
+import {Card } from "react-bootstrap";
 import MarkdownModalButton from "../../component/MarkdownModalButton";
 import {useQuery} from "react-query";
 import moment from "moment";
@@ -10,6 +10,7 @@ import {FetchPost} from "../../model/Request";
 import {toast} from "react-toastify";
 import { useSetRecoilState} from "recoil";
 import {assignmentState} from "../../atom/user";
+import {Button, Text} from "@chakra-ui/react";
 
 function AssignmentItem({assignmentName, description, dueDate, imageName}) {
     const navigate = useNavigate();
@@ -30,18 +31,20 @@ function AssignmentItem({assignmentName, description, dueDate, imageName}) {
             <Card.Text style={{color: "rgba(0,0,0,0.5)"}}>
                 {"최근 작업일 : 2022-07-01 20:15:38"}
             </Card.Text>
-            <Button variant="primary" onClick={handleConnectContainer}>IDE 이동</Button>
+            <div className={"mt-3"}>
+            <Button colorScheme={"teal"} onClick={handleConnectContainer}>IDE 이동</Button>
             <MarkdownModalButton
                 title="과제 설명 보기"
                 value={description}
                 style={{marginLeft: "5px"}}
             />
-            <Button variant="primary" style={{marginLeft: "5px"}}>
+            <Button colorScheme={"teal"} style={{marginLeft: "5px"}}>
                 Test Case (2 / 4)
             </Button>
-            <Button variant="primary" style={{marginLeft: "5px"}} onClick={() => navigate("/report/123")}>
+            <Button colorScheme={"teal"} style={{marginLeft: "5px"}} onClick={() => navigate(`/report/${imageName}`)}>
                 보고서 작성
             </Button>
+            </div>
         </Card.Body>
     </Card>
 }
@@ -53,23 +56,17 @@ function Subject() {
     const {data: assignmentList} = useQuery(["student", "assignment", code]);
 
     const assignmentElem = useMemo(() => assignmentList?.map((assignment, idx) => <AssignmentItem
-        key={`assign-${idx}`} {...assignment} />), [assignmentList]);
+        key={`assign-${idx}`} {...assignment} />) ?? [], [assignmentList]);
 
+    console.log(assignmentElem);
     return (
         <div>
-            {assignmentElem}
+            {assignmentElem.length === 0 ? <Text>등록된 과제가 없습니다.</Text> : <>{assignmentElem}</>}
         </div>
     );
 }
 
 function MainPage() {
-    const {data: subjectList} = useQuery(["student", "subject"]);
-
-    const subjects = useMemo(() => subjectList?.map(({name, code}) => ({
-        name,
-        link: `/subject/${code}`
-    })) ?? [], [subjectList]);
-
     return (
         <div style={{width: "100%"}}>
             <Main>

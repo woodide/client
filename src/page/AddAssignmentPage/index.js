@@ -74,9 +74,9 @@ function AddAssignmentPage() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const testInput = e.target.testInput.files[0];
-        const testOutput = e.target.testOutput.files[0];
-        const multipartFile = e.target.multipartFile.files[0];
+        const testInput = e.target.testInput?.files[0];
+        const testOutput = e.target.testOutput?.files[0];
+        const multipartFile = e.target.multipartFile?.files[0];
 
         if (assignmentName === "") {
             toast.error("과제 이름을 입력해주세요.");
@@ -209,16 +209,18 @@ function AddAssignmentPage() {
                                 <FormLabel>스켈레톤 코드 업로드</FormLabel>
                                 <Form.Control
                                     type="file"
+                                    name={"multipartFile"}
                                     accept="zip,application/octet-stream,application/zip,application/x-zip,application/x-zip-compressed"
                                 />
                             </FormControl>
                             <FormControl className={"mb-3"}>
                                 <FormLabel>테스트케이스 인풋 업로드</FormLabel>
-                                <Form.Control type="file"/>
+                                <Form.Control type="file"
+                                              name={"testInput"}/>
                             </FormControl>
                             <FormControl className={"mb-3"}>
                                 <FormLabel>테스트케이스 아웃풋 업로드</FormLabel>
-                                <Form.Control type="file"/>
+                                <Form.Control type="file" name={"testOutput"}/>
                             </FormControl>
                         </div>
                         <div style={{marginBottom: "20px"}}>
@@ -245,15 +247,15 @@ function AddAssignmentPage() {
                                 justify={'space-between'}>
                             </Stack>
                             <Button
+                                type={"submit"}
                                 bg={'blue.400'}
-                                type='submit'
                                 color={'white'}
                                 _hover={{
                                     bg: 'blue.500',
                                 }}
                                 disabled={isPending}
                             >
-                                과목 생성
+                                과제 출제
                             </Button>
                         </Stack>
                     </Stack>

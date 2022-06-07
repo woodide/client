@@ -98,4 +98,24 @@ queryClient.setQueryDefaults(["student", "assignment"], {
     },
 });
 
+
+queryClient.setQueryDefaults(["student", "report"], {
+    queryFn: ({queryKey}) => {
+        const containerName = queryKey[2];
+        if(!containerName) return null;
+        return FetchGet({
+            isProfessor: false,
+            url: "/student/subject/assignment/report",
+            config: {
+                params: {
+                    containerName,
+                },
+            },
+        });
+    },
+    select: (response) => {
+        return response?.data;
+    },
+});
+
 export default queryClient;

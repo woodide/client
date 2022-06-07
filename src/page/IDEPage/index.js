@@ -50,9 +50,10 @@ function IDEPage() {
         },
     }), {
         onSuccess: (response) => {
-            const { assignmentName, dueDate, description} = response.data;
+            const { assignmentName, dueDate, description, containerName} = response.data;
             setAssignment({
-                assignmentName: assignmentName,
+                containerName,
+                assignmentName,
                 dueDate: new Date(dueDate),
                 description: description,
             });

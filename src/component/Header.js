@@ -1,18 +1,30 @@
 import React, {useEffect} from "react";
-import {Navbar, Container, Nav, Button} from "react-bootstrap";
+import {Navbar, Container, Nav,} from "react-bootstrap";
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import {useRecoilState, useRecoilValue} from "recoil";
 import {assignmentState, studentState} from "../atom/user";
 import MarkdownModalButton from "./MarkdownModalButton";
 import useRemainTimer from "../hook/useRemainTimer";
-import {Box, Flex, IconButton, Stack, Text, useBreakpointValue, useColorModeValue} from "@chakra-ui/react";
+import {Button} from "@chakra-ui/react";
 import {CgTrees} from "react-icons/cg";
+import {FetchPost} from "../model/Request";
 
 function AssignmentBar() {
-    const {assignmentName, dueDate, description} = useRecoilValue(assignmentState);
+    const {containerName, assignmentName, dueDate, description} = useRecoilValue(assignmentState);
     const navigate = useNavigate();
-
     const remainDueDate = useRemainTimer(new Date(dueDate));
+
+    const handleSubmit = async () => {
+       const response = await FetchPost({
+           isProfessor:false,
+           url:"/student/subject/assignment/submit",
+           data: {
+               containerName
+           }
+       });
+       console.log(response);
+    };
+
     return <>
         <Nav.Link as={"div"}>
             진행중인 과제 : {assignmentName}
@@ -25,6 +37,7 @@ function AssignmentBar() {
             뒤로가기
         </Nav.Link>
         <MarkdownModalButton title={"과제 설명 보기"} value={description}/>
+        <Button onClick={handleSubmit} marginLeft={2}>채점 및 제출</Button>
     </>
 }
 

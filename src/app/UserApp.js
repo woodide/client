@@ -36,7 +36,7 @@ function UserApp() {
                         <Route path="/*" element={<MainPage/>}/>
                         <Route path="/login" element={<LoginPage/>}/>
                         <Route path="/register" element={<RegisterPage/>}/>
-                        <Route path="/report/:id" element={<ReportPage/>}/>
+                        <Route path="/report/:imageName" element={<ReportPage/>}/>
                         <Route path="/ide/:imageName" element={<IDEPage/>}/>
                         <Route path="/submit" element={<>과제 현황</>}/>
                         <Route path="/login" element={<>로그인 컴포넌트 렌더링</>}/>

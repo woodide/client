@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import Modal from "../component/Modal";
 import ReactMarkdown from "react-markdown";
-import { Card, Button } from "react-bootstrap";
+import { Card } from "react-bootstrap";
+import {Button} from "@chakra-ui/react";
 
 function MarkdownModalButton({ title, value, style }) {
   const [isOpen, setOpen] = useState(false);
   return (
     <>
-      <Button onClick={() => setOpen(true)} style={style}>
+      <Button  colorScheme={"teal"} onClick={() => setOpen(true)} style={style}>
         {title}
       </Button>
       <Modal isOpen={isOpen} onClose={() => setOpen(false)}>
