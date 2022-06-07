@@ -68,7 +68,7 @@ function IDEPage() {
     }
 
     useEffect(() => {
-        mutate(imageName);
+        mutate(imageName); // TODO: 두번 실행됨
     }, [imageName]);
     console.log(isLoading, isSuccess,container);
     if (isLoading || !isSuccess) {

@@ -46,11 +46,9 @@ function LoginPage({ professor }) {
             token, username, email, isProfessor
           });
         } else {
-          if(_professor) {
-            setStudent({
-              token, username, email, isProfessor
-            });
-          }
+          setStudent({
+            token, username, email, isProfessor
+          });
         }
         if (!_professor) {
           navigate("/");
