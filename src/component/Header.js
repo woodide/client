@@ -6,6 +6,7 @@ import {assignmentState, studentState} from "../atom/user";
 import MarkdownModalButton from "./MarkdownModalButton";
 import useRemainTimer from "../hook/useRemainTimer";
 import {Box, Flex, IconButton, Stack, Text, useBreakpointValue, useColorModeValue} from "@chakra-ui/react";
+import {CgTrees} from "react-icons/cg";
 
 function AssignmentBar() {
     const {assignmentName, dueDate, description} = useRecoilValue(assignmentState);
@@ -36,7 +37,12 @@ function Header() {
         <Navbar bg="dark" variant="dark">
             <Container>
                 <Navbar.Brand as={Link} to="/">
-                    WOOD IDE
+                    <div className={"flex"}>
+                        <CgTrees className={"mt-1 mr-1.5"}/>
+                        <div>
+                            WOOD IDE
+                        </div>
+                    </div>
                 </Navbar.Brand>
                 <Nav>
                     {!student ? (
