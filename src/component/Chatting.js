@@ -17,7 +17,7 @@ const StyleButtonChat = styled.div`
   box-shadow: rgb(0 0 0 / 30%) 0px 12px 60px 5px;
   border-radius: 15px;
   backdrop-filter: blur(60px);
-  right: 10px;
+  right: 20px;
   bottom: 30px;
   transition: 0.3s;
 
@@ -202,11 +202,12 @@ const CodeBlock = {
     },
 };
 
-function ToMessage({isProfessor, name, children, time, me}) {
+function ToMessage({professor, isSenderProfessor, name, children, time, me}) {
     return <StyleMessage>
         <div className={`message ${me && "me"}`}>
             <div className={"name"}>
-                {isProfessor ? `${name} 교수님` : "익명님"}
+                {professor && (isSenderProfessor ? `${name} 교수님 ` : `${name}님`)}
+                {!professor && (isSenderProfessor ? `${name} 교수님 ` : "익명님")}ㅎ
             </div>
             <ReactMarkdown components={CodeBlock} style={{borderRadius: "10px"}}>
                 {children}
@@ -268,7 +269,7 @@ export function ChattingMain({professor, title, appBarIcon, imageName}) {
         </div>
 
         <div className={"content"}>
-            {chatList.map((chat, idx) => <ToMessage key={`chat-${idx}`} isProfessor={chat.isProfessor} name={chat.from}
+            {chatList.map((chat, idx) => <ToMessage key={`chat-${idx}`} isSenderProfessor={chat.isProfessor} professor={professor} name={chat.from}
                                                     me={chat.from === (professor ? professorData.username : studentData.username)}
                                                     time={chat.time}>{chat.text}</ToMessage>)}
             <div ref={chatRef}/>
@@ -289,7 +290,7 @@ function Chatting({title, imageName}) {
 
     return (
         <StyleButtonChat className={isOpen ? "show" : "hide"} onClick={() => !isOpen && setOpen(true)}>
-            {!isOpen && <BsFillChatRightDotsFill/>}
+            {!isOpen && <BsFillChatRightDotsFill className={"ml-3"}/>}
             {isOpen && <ChattingMain appBarIcon={<AiOutlineClose onClick={() => setOpen(false)} className={"close"}/>}
                                      title={title} imageName={imageName} height={"320px"}/>}
         </StyleButtonChat>

@@ -31,7 +31,7 @@ function ProfessorChatPage() {
 
 
     const tabList = useMemo(() => assignmentList?.map(({assignmentName}, idx) => <Tab
-        key={`tab-${idx}`}>{assignmentName}</Tab>)  ?? [],[assignmentList]);
+        key={`tab-${idx}`}>{assignmentName} 채팅방</Tab>)  ?? [],[assignmentList]);
     const tabPanelList = useMemo(() => assignmentList?.map(({assignmentName, imageName}, idx) => <TabPanel
         key={`tab-${idx}`} height={"100%"}><Chat assignmentName={assignmentName} imageName={imageName}/></TabPanel>) ?? [],[assignmentList]);
 

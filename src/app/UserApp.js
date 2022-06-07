@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import Header from "../component/Header";
-import {Routes, Route} from "react-router-dom";
+import {Routes, Route, useLocation} from "react-router-dom";
 import MainPage from "../page/MainPage";
 import styled from "styled-components";
 import LoginPage from "../page/LoginPage";
@@ -21,6 +21,7 @@ export const Layout = styled.div`
 
 function UserApp() {
     const [student, setStudent] = useRecoilState(studentState);
+    const location = useLocation();
     useEffect(() => {
         if (student === null && localStorage['student']) {
             setStudent(JSON.parse(localStorage['student']));
@@ -29,7 +30,7 @@ function UserApp() {
 
     return (
         <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')} >
-                <StudentSideBar />
+            {location.pathname.includes("/ide") ? <Header /> : <StudentSideBar />}
                 <Layout>
                     <Routes>
                         <Route path="/*" element={<MainPage/>}/>

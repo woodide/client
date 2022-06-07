@@ -5,6 +5,7 @@ import {useRecoilState, useRecoilValue} from "recoil";
 import {assignmentState, studentState} from "../atom/user";
 import MarkdownModalButton from "./MarkdownModalButton";
 import useRemainTimer from "../hook/useRemainTimer";
+import {Box, Flex, IconButton, Stack, Text, useBreakpointValue, useColorModeValue} from "@chakra-ui/react";
 
 function AssignmentBar() {
     const {assignmentName, dueDate, description} = useRecoilValue(assignmentState);
@@ -37,12 +38,6 @@ function Header() {
                 <Navbar.Brand as={Link} to="/">
                     WOOD IDE
                 </Navbar.Brand>
-                <Nav className="me-auto">
-                    <Nav.Link as={Link} to="/submit">
-                        과제 현황
-                    </Nav.Link>
-                    {/* 로그인 시 삭제 예정 */}
-                </Nav>
                 <Nav>
                     {!student ? (
                         <>
