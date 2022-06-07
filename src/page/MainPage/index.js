@@ -1,5 +1,5 @@
 import React, {useMemo, useState} from "react";
-import SideBar, {Main} from "../../component/SideBar";
+import {Main,SideBar} from "../../component/SideBar";
 import styled from "styled-components";
 import {Routes, Route, useParams, useNavigate} from "react-router-dom";
 import {Card, Button} from "react-bootstrap";

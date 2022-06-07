@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import {Routes, Route} from "react-router-dom";
-import ProfessorHeader from "../component/ProfessorHeader";
+import MainSideBar from "../component/SideBar";
 import AssignmentListPage from "../page/AssignmentListPage";
 import CreateSubjectPage from "../page/CreateSubjectPage";
 import LoginPage from "../page/LoginPage";
@@ -12,9 +12,10 @@ import AddAssignmentPage from "../page/AddAssignmentPage";
 import {useRecoilState} from "recoil";
 import {professorState, studentState} from "../atom/user";
 import ProfessorChatPage from "../page/ProfessorChatPage";
+import {Box, useColorModeValue} from "@chakra-ui/react";
 
 export const Layout = styled.div`
-  height: calc(100vh - 56px);
+  margin-left: 240px;
   display: flex;
   justify-content: center;
 `;
@@ -30,8 +31,8 @@ function ProfessorApp() {
     }, []);
 
     return (
-        <div>
-            <ProfessorHeader/>
+        <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')} >
+            <MainSideBar/>
             <Layout>
                 <Routes>
                     <Route path="/" element={<SubjectListPage/>}/>
@@ -43,7 +44,7 @@ function ProfessorApp() {
                     <Route path="/chat/*" element={<ProfessorChatPage />}/>
                 </Routes>
             </Layout>
-        </div>
+        </Box>
     );
 }
 

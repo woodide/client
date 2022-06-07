@@ -10,6 +10,7 @@ import queryClient from "./queries";
 import "react-toastify/dist/ReactToastify.css";
 import "react-datepicker/dist/react-datepicker.css";
 import {RecoilRoot} from "recoil";
+import {ChakraProvider} from '@chakra-ui/react'
 
 function TestRouting() {
     // Test용 UI 로그인 권한 부여시 알아서 이동
@@ -46,12 +47,14 @@ function App() {
         <RecoilRoot>
             <QueryClientProvider client={queryClient}>
                 <BrowserRouter>
-                    <TestRouting/>
-                    <Routes>
-                        <Route path="/*" element={<UserApp/>}></Route>
-                        <Route path="/professor/*" element={<ProfessorApp/>}></Route>
-                    </Routes>
-                    <ToastContainer/>
+                    <ChakraProvider>
+                        <TestRouting/>
+                        <Routes>
+                            <Route path="/*" element={<UserApp/>}></Route>
+                            <Route path="/professor/*" element={<ProfessorApp/>}></Route>
+                        </Routes>
+                        <ToastContainer/>
+                    </ChakraProvider>
                 </BrowserRouter>
             </QueryClientProvider>
         </RecoilRoot>

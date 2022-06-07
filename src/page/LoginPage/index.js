@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Panel from "../../component/Panel";
@@ -7,6 +6,21 @@ import useForm from "../../hook/useForm";
 import { FetchPost, FetchPostWithoutAuth } from "../../model/Request";
 import {useRecoilState, useSetRecoilState} from "recoil";
 import {studentState,professorState} from "../../atom/user";
+import {
+  Flex,
+  Box,
+  FormControl,
+  FormLabel,
+  Input,
+  Checkbox,
+  Stack,
+  Link,
+  Button,
+  Heading,
+  Text,
+  useColorModeValue,
+} from '@chakra-ui/react';
+
 function LoginPage({ professor }) {
   const navigate = useNavigate();
 
@@ -20,7 +34,7 @@ function LoginPage({ professor }) {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
+  console.log("ASDA");
     try {
       const response = await FetchPostWithoutAuth("/login", value);
       const _professor = professor ? true : false;
@@ -55,32 +69,45 @@ function LoginPage({ professor }) {
   };
 
   return (
-    <Panel>
-      <div style={{ width: "360px" }}>
-        <form onSubmit={handleLogin}>
-          <Form.Label>Email</Form.Label>
-          <Form.Control
-            value={value.email}
-            type="text"
-            name="email"
-            onChange={handleChange}
-          />
-          <Form.Label style={{ marginTop: "10px" }}>Password</Form.Label>
-          <Form.Control
-            value={value.password}
-            type="password"
-            name="password"
-            onChange={handleChange}
-          />
-          <Button
-            as="input"
-            type="submit"
-            style={{ width: "100%", marginTop: "20px" }}
-            value="로그인"
-          />
-        </form>
-      </div>
-    </Panel>
+      <Flex
+          minH={'100vh'}
+          align={'center'}
+          justify={'center'}>
+        <Stack width={400} height={400} py={12} px={6}>
+          <Box
+              rounded={'lg'}
+              bg={useColorModeValue('white', 'gray.700')}
+              boxShadow={'lg'}
+              p={8}>
+            <Stack as="form" onSubmit={handleLogin} spacing={4}>
+              <FormControl  value={value.email} onChange={handleChange}>
+                <FormLabel>이메일</FormLabel>
+                <Input type="email" name="email"   />
+              </FormControl>
+              <FormControl  value={value.password}  onChange={handleChange}>
+                <FormLabel>비밀번호</FormLabel>
+                <Input type="password"  name="password"/>
+              </FormControl>
+              <Stack spacing={3}>
+                <Stack
+                    direction={{ base: 'column', sm: 'row' }}
+                    align={'start'}
+                    justify={'space-between'}>
+                </Stack>
+                <Button
+                    bg={'blue.400'}
+                    type='submit'
+                    color={'white'}
+                    _hover={{
+                      bg: 'blue.500',
+                    }}>
+                  로그인
+                </Button>
+              </Stack>
+            </Stack>
+          </Box>
+        </Stack>
+      </Flex>
   );
 }
 

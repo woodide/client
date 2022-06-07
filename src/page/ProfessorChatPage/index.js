@@ -1,9 +1,9 @@
 import React, {useMemo} from "react";
 import {useQuery} from "react-query";
-import SideBar, {Main} from "../../component/SideBar";
+import {SideBar, Main} from "../../component/SideBar";
 import {Route, Routes, useParams} from "react-router-dom";
 import {ChattingMain} from "../../component/Chatting";
-
+import {GrFormPreviousLink, GrPrevious} from "react-icons/gr";
 function Chat() {
     const {code} = useParams();
     const {data: assignmentList,isSuccess} = useQuery(["professor", "subject", "assignment", code]);
@@ -14,7 +14,7 @@ function Chat() {
     }
 
     return <div style={{boxShadow:"rgb(0 0 0 / 30%) 0px 12px 60px 5px", borderRadius:"15px",height:"100%"}}>
-        <ChattingMain professor title={assignmentList[0].assignmentName} imageName={assignmentList[0].imageName} height={"580px"}/>
+        <ChattingMain professor title={assignmentList[0].assignmentName} imageName={assignmentList[0].imageName} appBarIcon={<GrFormPreviousLink onClick={() => console.log("ASD")} />}/>
     </div>
 }
 

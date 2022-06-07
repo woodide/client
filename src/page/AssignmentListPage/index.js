@@ -7,7 +7,7 @@ import SyntaxHighlighter from "react-syntax-highlighter";
 import ReactMarkdown from "react-markdown";
 import {TEST_CODE} from "./test";
 import MarkdownModalButton from "../../component/MarkdownModalButton";
-import SideBar, {Main} from "../../component/SideBar";
+import {SideBar, Main} from "../../component/SideBar";
 import {Route, Routes, useParams} from "react-router-dom";
 import {useQuery} from "react-query";
 

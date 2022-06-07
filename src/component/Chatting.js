@@ -46,23 +46,6 @@ const StyleButtonChat = styled.div`
     width: 500px;
     height: 600px;
     cursor: default;
-
-    .close {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      cursor: pointer;
-      color: #fff;
-      font-size: 20px;
-
-      &:hover {
-        color: rgba(255, 255, 255, 0.7);
-      }
-
-      &:active {
-        color: rgba(255, 255, 255, 0.3);
-      }
-    }
   }
 `;
 
@@ -71,14 +54,43 @@ const StyleChattingMain = styled.div`
   display: grid;
   grid-template-rows: 40px 1fr 40px;
   height: 100%;
+
   .appbar {
     border-radius: 10px 10px 0 0;
     background: #007ACC;
+    display: flex;
+    justify-content: space-between;
 
     .title {
       margin-left: 10px;
       color: white;
       line-height: 40px;
+    }
+
+    .icon {
+      cursor: pointer;
+      color: #fff;
+     
+      path {
+        stroke: #fff;
+      }
+      font-size: 20px;
+      margin-top: 10px;
+      margin-right: 10px;
+
+      &:hover {
+        color: rgba(255, 255, 255, 0.7);
+        path {
+          stroke: rgba(255, 255, 255, 0.7);
+        }
+      }
+
+      &:active {
+        color: rgba(255, 255, 255, 0.3);
+        path {
+          stroke: rgba(255, 255, 255, 0.3);
+        }
+      }
     }
   }
 
@@ -131,6 +143,7 @@ const StyleChattingMain = styled.div`
 
 const StyleMessage = styled.div`
   clear: both;
+
   .message {
     position: relative;
     margin-bottom: 10px;
@@ -142,12 +155,14 @@ const StyleMessage = styled.div`
     border: 1px solid #97C6E3;
     border-radius: 10px;
     float: left;
+
     &.me {
       float: right;
       background-color: #f8e896;
       border: 1px solid #dfd087;
     }
   }
+
   p {
     word-break: break-all;
     white-space: normal;
@@ -200,7 +215,7 @@ function ToMessage({isProfessor, name, children, time, me}) {
     </StyleMessage>
 }
 
-export function ChattingMain({professor, title, onClose, imageName }) {
+export function ChattingMain({professor, title, appBarIcon, imageName}) {
     const studentData = useRecoilValue(studentState);
     const professorData = useRecoilValue(professorState);
     const {chatList, send} = useChat({isProfessor: false, roomId: imageName});
@@ -246,10 +261,10 @@ export function ChattingMain({professor, title, onClose, imageName }) {
             <div className={"title"}>
                 {title} 오픈 채팅방
             </div>
-            {onClose && <AiOutlineClose onClick={onClose} className={"close"}/>}
+            {appBarIcon && React.cloneElement(appBarIcon, {className: "icon"})}
         </div>
 
-        <div className={"content"} >
+        <div className={"content"}>
             {chatList.map((chat, idx) => <ToMessage key={`chat-${idx}`} isProfessor={chat.isProfessor} name={chat.from}
                                                     me={chat.from === (professor ? professorData.username : studentData.username)}
                                                     time={chat.time}>{chat.text}</ToMessage>)}
@@ -272,7 +287,8 @@ function Chatting({title, imageName}) {
     return (
         <StyleButtonChat className={isOpen ? "show" : "hide"} onClick={() => !isOpen && setOpen(true)}>
             {!isOpen && <BsFillChatRightDotsFill/>}
-            {isOpen && <ChattingMain onClose={() => setOpen(false)} title={title} imageName={imageName} height={"320px"}/>}
+            {isOpen && <ChattingMain appBarIcon={<AiOutlineClose onClick={() => setOpen(false)} className={"close"}/>}
+                                     title={title} imageName={imageName} height={"320px"}/>}
         </StyleButtonChat>
     );
 }
