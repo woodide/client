@@ -98,19 +98,4 @@ queryClient.setQueryDefaults(["student", "assignment"], {
     },
 });
 
-queryClient.setQueryDefaults(["container"], {
-    queryFn: ({queryKey}) => {
-        const imageName = queryKey[1];
-        return FetchPost({
-            isProfessor: false,
-            url: "/container",
-            data: {
-                imageName,
-            },
-        });
-    },
-    select: (response) => {
-        return response?.data ? Number(response?.data?.message) : -1;
-    },
-});
 export default queryClient;

@@ -21,7 +21,8 @@ function useRemainTimer(endDate) {
                 m: `${min >= 10 ? min : "0" + min}`,
                 s: `${sec >= 10 ? sec : "0" + sec}`,
             });
-            if (new Date() > new Date(endDate)) {
+            if (new Date() >= new Date(endDate)) {
+                console.log("END");
                 clearInterval(timeRef.current);
             }
         }, 1000);
@@ -31,7 +32,7 @@ function useRemainTimer(endDate) {
                 clearInterval(timeRef.current);
             }
         };
-    }, []);
+    }, [endDate]);
     return `${remain.h}:${remain.m}:${remain.s}`;
 }
 

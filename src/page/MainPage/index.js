@@ -15,6 +15,7 @@ function AssignmentItem({assignmentName, description, dueDate, imageName}) {
     const navigate = useNavigate();
     const handleConnectContainer = async () => {
         navigate(`/ide/${imageName}`);
+        return;
     }
 
 
