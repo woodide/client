@@ -7,6 +7,8 @@ import ReactMarkdown from "react-markdown";
 import useChat from "../hook/useChat";
 import {useRecoilValue} from "recoil";
 import {studentState} from "../atom/user";
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { darcula } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 
 const StyleButtonChat = styled.div`
   user-select: none;
@@ -153,7 +155,26 @@ const StyleMessage = styled.div`
     font-size: 12px;
   }
 `
-
+const CodeBlock = {
+    code({ node, inline, className, children, ...props }) {
+        const match = /language-(\w+)/.exec(className || '');
+        return !inline && match ? (
+            <SyntaxHighlighter
+                style={darcula}
+                language={match[1]}
+                PreTag="div"
+                className={"border-10"}
+                {...props}
+            >
+                {String(children).replace(/\n$/, '')}
+            </SyntaxHighlighter>
+        ) : (
+            <code className={className} {...props}>
+                {children}
+            </code>
+        );
+    },
+};
 
 function ToMessage({isProfessor, name,children,time,me}) {
     return <StyleMessage>
@@ -161,7 +182,7 @@ function ToMessage({isProfessor, name,children,time,me}) {
                 <div className={"name"}>
                     {isProfessor ? `${name} 교수님` : "익명님"}
                 </div>
-                <ReactMarkdown>
+                <ReactMarkdown components={CodeBlock} style={{borderRadius:"10px"}}>
                     {children}
                 </ReactMarkdown>
                 <div className={"timestamp"}>
@@ -212,7 +233,7 @@ function ChattingMain({title, onClose, imageName}) {
     return <StyleChattingMain>
             <div className={"appbar"}>
                 <div className={"title"}>
-                    {title}
+                    {title} 오픈 채팅방
                 </div>
                 <AiOutlineClose onClick={onClose} className={"close"}/>
             </div>

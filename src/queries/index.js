@@ -1,46 +1,46 @@
-import { QueryClient } from "react-query";
-import { FetchGet } from "../model/Request";
+import {QueryClient} from "react-query";
+import {FetchGet, FetchPost} from "../model/Request";
 
 const queryClient = new QueryClient();
 
 queryClient.setQueryDefaults(["professor", "all_student"], {
-  queryFn: () =>
-    FetchGet({
-      isProfessor: true,
-      url: "/list/student",
-    }),
-  select: (response) => {
-    return (
-      response?.data.map(({ email, username, studentNumber }) => ({
-        email,
-        username,
-        studentNumber,
-      })) ?? []
-    );
-  },
+    queryFn: () =>
+        FetchGet({
+            isProfessor: true,
+            url: "/list/student",
+        }),
+    select: (response) => {
+        return (
+            response?.data.map(({email, username, studentNumber}) => ({
+                email,
+                username,
+                studentNumber,
+            })) ?? []
+        );
+    },
 });
 
 queryClient.setQueryDefaults(["professor", "subject", "student"], {
-  queryFn: ({ queryKey }) => {
-    const code = queryKey[3];
-    return FetchGet({
-      isProfessor: true,
-      url: "/professor/subject/student",
-      config: {
-        params: {
-          code,
-        },
-      },
-    });
-  },
-  select: (response) => {
-    return response?.data;
-  },
+    queryFn: ({queryKey}) => {
+        const code = queryKey[3];
+        return FetchGet({
+            isProfessor: true,
+            url: "/professor/subject/student",
+            config: {
+                params: {
+                    code,
+                },
+            },
+        });
+    },
+    select: (response) => {
+        return response?.data;
+    },
 });
 
 
 queryClient.setQueryDefaults(["professor", "subject", "assignment"], {
-    queryFn: ({ queryKey }) => {
+    queryFn: ({queryKey}) => {
         const code = queryKey[3];
         return FetchGet({
             isProfessor: true,
@@ -58,14 +58,14 @@ queryClient.setQueryDefaults(["professor", "subject", "assignment"], {
 });
 
 queryClient.setQueryDefaults(["professor", "subject"], {
-  queryFn: () =>
-    FetchGet({
-      isProfessor: true,
-      url: "/professor/subject",
-    }),
-  select: (response) => {
-    return response?.data;
-  },
+    queryFn: () =>
+        FetchGet({
+            isProfessor: true,
+            url: "/professor/subject",
+        }),
+    select: (response) => {
+        return response?.data;
+    },
 });
 
 
@@ -81,7 +81,7 @@ queryClient.setQueryDefaults(["student", "subject"], {
 });
 
 queryClient.setQueryDefaults(["student", "assignment"], {
-    queryFn: ({ queryKey }) => {
+    queryFn: ({queryKey}) => {
         const code = queryKey[2];
         return FetchGet({
             isProfessor: false,
@@ -95,6 +95,22 @@ queryClient.setQueryDefaults(["student", "assignment"], {
     },
     select: (response) => {
         return response?.data;
+    },
+});
+
+queryClient.setQueryDefaults(["container"], {
+    queryFn: ({queryKey}) => {
+        const imageName = queryKey[1];
+        return FetchPost({
+            isProfessor: false,
+            url: "/container",
+            data: {
+                imageName,
+            },
+        });
+    },
+    select: (response) => {
+        return response?.data ? Number(response?.data?.message) : -1;
     },
 });
 export default queryClient;

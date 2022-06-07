@@ -1,5 +1,5 @@
 import axios from "axios";
-import { SERVER_URL } from "../config";
+import {HOST_URL, SERVER_URL} from "../config";
 
 
 const getAuth = (isProfessor) => JSON.parse(localStorage[isProfessor ? "professor" : "student"]).token;
@@ -25,6 +25,14 @@ export function FetchGet({ isProfessor, url, config }) {
     headers: {
       ...config?.headers,
       Authorization: getAuth(isProfessor),
+    },
+  });
+}
+
+export function isContainerConnect( port) {
+  return axios.get(`${HOST_URL}:${port}/`, {
+    headers: {
+      Authorization: getAuth(false),
     },
   });
 }

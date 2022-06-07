@@ -13,24 +13,8 @@ import {assignmentState} from "../../atom/user";
 
 function AssignmentItem({assignmentName, description, dueDate, imageName}) {
     const navigate = useNavigate();
-    const setAssignment = useSetRecoilState(assignmentState);
     const handleConnectContainer = async () => {
-        const response = await FetchPost({
-            isProfessor: false,
-            url: "/container",
-            data: {
-                imageName
-            }
-        });
-
-        if (response.status !== 201) {
-            toast.error("컨테이너 생성 실패");
-            return;
-        }
-        setAssignment({
-            assignmentName, description, dueDate
-        })
-        navigate(`/ide/${imageName}/${response.data?.message}`);
+        navigate(`/ide/${imageName}`);
     }
 
 
