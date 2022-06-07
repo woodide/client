@@ -235,7 +235,7 @@ export function ChattingMain({professor, title, appBarIcon, imageName}) {
 
     const combineChatList = useMemo(() => {
         if(!dbChatList) return chatList;
-        return [...dbChatList,...gichatList];
+        return [...dbChatList,...chatList];
     }, [dbChatList, chatList])
 
     useEffect(() => {
