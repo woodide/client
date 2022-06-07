@@ -2,7 +2,6 @@ import React, { useMemo } from "react";
 import Table from "../component/Table";
 import SelectBox, { SelectItem } from "../component/SelectBox";
 import CheckBox from "../component/CheckBox";
-import { Form, Button } from "react-bootstrap";
 import { useQuery } from "react-query";
 
 function StudentTable({ addList, setAddList, subject }) {

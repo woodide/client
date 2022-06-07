@@ -34,8 +34,10 @@ const StyleSelectItem = styled.div`
 export function SelectItem({ value, onClick }) {
   return (
     <StyleSelectItem onClick={onClick}>
-      {value}
-      <AiFillCloseCircle style={{ marginLeft: "1px" }} />
+        <div style={{display:"inline-block"}}>
+            {value}
+        </div>
+      <AiFillCloseCircle style={{ marginLeft: "5px",display:"inline-block" }} />
     </StyleSelectItem>
   );
 }

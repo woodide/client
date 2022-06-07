@@ -34,7 +34,6 @@ function LoginPage({ professor }) {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-  console.log("ASDA");
     try {
       const response = await FetchPostWithoutAuth("/login", value);
       const _professor = professor ? true : false;
