@@ -72,10 +72,6 @@ function MainPage() {
 
     return (
         <div style={{width: "100%"}}>
-            <SideBar
-                title="수강중인 수업"
-                subjects={subjects}
-            />
             <Main>
                 <Routes>
                     <Route path="/subject/:code" element={<Subject/>}/>

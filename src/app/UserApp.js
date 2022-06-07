@@ -10,6 +10,8 @@ import IDEPage from "../page/IDEPage";
 import ReportPage from "../page/ReportPage";
 import {RecoilRoot, useRecoilState} from "recoil";
 import {studentState} from "../atom/user";
+import StudentSideBar from "../component/StudentSideBar";
+import {Box, useColorModeValue} from "@chakra-ui/react";
 
 export const Layout = styled.div`
   height: calc(100vh - 56px);
@@ -18,7 +20,6 @@ export const Layout = styled.div`
 `;
 
 function UserApp() {
-
     const [student, setStudent] = useRecoilState(studentState);
     useEffect(() => {
         if (student === null && localStorage['student']) {
@@ -27,8 +28,8 @@ function UserApp() {
     }, []);
 
     return (
-            <div>
-                <Header/>
+        <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')} >
+                <StudentSideBar />
                 <Layout>
                     <Routes>
                         <Route path="/*" element={<MainPage/>}/>
@@ -40,7 +41,7 @@ function UserApp() {
                         <Route path="/login" element={<>로그인 컴포넌트 렌더링</>}/>
                     </Routes>
                 </Layout>
-            </div>
+        </Box>
     );
 }
 
