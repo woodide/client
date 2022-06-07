@@ -25,7 +25,6 @@ function ProfessorHeader() {
           <Nav.Link as={Link} to="/professor/chat">
             과제 채팅 관리
           </Nav.Link>
-          {/* 로그인 시 삭제 예정 */}
         </Nav>
         <Nav>
           {!professor ? (

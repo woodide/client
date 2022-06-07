@@ -70,14 +70,14 @@ const StyleChattingMain = styled.div`
     .icon {
       cursor: pointer;
       color: #fff;
-     
+      
       path {
         stroke: #fff;
       }
       font-size: 20px;
+      
       margin-top: 10px;
       margin-right: 10px;
-
       &:hover {
         color: rgba(255, 255, 255, 0.7);
         path {
@@ -126,6 +126,9 @@ const StyleChattingMain = styled.div`
       background: #007ACC;
       color: white;
 
+      svg {
+        margin-left: 13px;
+      }
       &:hover {
         svg {
           color: rgba(0, 0, 0, 0.3);

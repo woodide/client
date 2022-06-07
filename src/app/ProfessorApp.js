@@ -41,7 +41,7 @@ function ProfessorApp() {
                     <Route path="/create_subject" element={<CreateSubjectPage/>}/>
                     <Route path="/add_assignment" element={<AddAssignmentPage/>}/>
                     <Route path="/assignment/*" element={<AssignmentListPage/>}/>
-                    <Route path="/chat/*" element={<ProfessorChatPage />}/>
+                    <Route path="/chat/:code" element={<ProfessorChatPage />}/>
                 </Routes>
             </Layout>
         </Box>

@@ -4,41 +4,57 @@ import {SideBar, Main} from "../../component/SideBar";
 import {Route, Routes, useParams} from "react-router-dom";
 import {ChattingMain} from "../../component/Chatting";
 import {GrFormPreviousLink, GrPrevious} from "react-icons/gr";
-function Chat() {
-    const {code} = useParams();
-    const {data: assignmentList,isSuccess} = useQuery(["professor", "subject", "assignment", code]);
+import {
+    Flex,
+    Tab,
+    Tabs,
+    Menu,
+    MenuButton,
+    MenuItem,
+    MenuList,
+    Stack,
+    TabList,
+    TabPanel,
+    TabPanels, Text
+} from "@chakra-ui/react";
 
-    console.log(assignmentList);
-    if(!isSuccess) {
-        return <div>Loading ...</div>
-    }
-
-    return <div style={{boxShadow:"rgb(0 0 0 / 30%) 0px 12px 60px 5px", borderRadius:"15px",height:"100%"}}>
-        <ChattingMain professor title={assignmentList[0].assignmentName} imageName={assignmentList[0].imageName} appBarIcon={<GrFormPreviousLink onClick={() => console.log("ASD")} />}/>
+function Chat({assignmentName, imageName}) {
+    return <div style={{boxShadow: "rgb(0 0 0 / 30%) 0px 12px 60px 5px", borderRadius: "15px", height: "100%"}}>
+        <ChattingMain professor title={assignmentName} imageName={imageName}/>
     </div>
 }
 
 
 function ProfessorChatPage() {
-    const {data: subjectList} = useQuery(["professor", "subject"]);
+    const {code} = useParams();
+    const {data: assignmentList, isLoading} = useQuery(["professor", "subject", "assignment", code]);
 
-    const subjects = useMemo(() => subjectList?.map(({name, code}) => ({
-        name,
-        link: `/professor/chat/${code}`
-    })) ?? [], [subjectList]);
 
+    const tabList = useMemo(() => assignmentList?.map(({assignmentName}, idx) => <Tab
+        key={`tab-${idx}`}>{assignmentName}</Tab>)  ?? [],[assignmentList]);
+    const tabPanelList = useMemo(() => assignmentList?.map(({assignmentName, imageName}, idx) => <TabPanel
+        key={`tab-${idx}`} height={"100%"}><Chat assignmentName={assignmentName} imageName={imageName}/></TabPanel>) ?? [],[assignmentList]);
+
+    if (isLoading) {
+        return <div>Loading ...</div>
+    }
     return (
-        <div style={{width: "100%"}}>
-            <SideBar
-                title="진행중인 수업"
-                subjects={subjects}
-            />
-            <Main>
-                <Routes>
-                    <Route path=":code" element={<Chat/>}/>
-                </Routes>
-            </Main>
-        </div>
+        <Flex
+            minH={'100vh'}
+            align={'center'}
+            justify={'center'}>
+            <Stack width={1200} height={800} py={12} px={6}>
+                {tabList.length === 0 ? <Text textAlign={"center"}>출제된 과제가 없습니다.</Text> : <Tabs height={"100%"}>
+                    <TabList>
+                        {tabList}
+                    </TabList>
+                    <TabPanels height={"100%"}>
+                        {tabPanelList}
+                    </TabPanels>
+                </Tabs>}
+
+            </Stack>
+        </Flex>
     );
 }
 

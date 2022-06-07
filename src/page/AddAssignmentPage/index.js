@@ -205,18 +205,18 @@ function AddAssignmentPage() {
                                 스켈레톤 코드는 ZIP 파일만 업로드 가능하며, 테스트케이스 코드는
                                 텍스트 형식 파일만 업로드 가능합니다.
                             </Alert>
-                            <FormControl>
+                            <FormControl className={"mb-3"}>
                                 <FormLabel>스켈레톤 코드 업로드</FormLabel>
                                 <Form.Control
                                     type="file"
                                     accept="zip,application/octet-stream,application/zip,application/x-zip,application/x-zip-compressed"
                                 />
                             </FormControl>
-                            <FormControl>
+                            <FormControl className={"mb-3"}>
                                 <FormLabel>테스트케이스 인풋 업로드</FormLabel>
                                 <Form.Control type="file"/>
                             </FormControl>
-                            <FormControl >
+                            <FormControl className={"mb-3"}>
                                 <FormLabel>테스트케이스 아웃풋 업로드</FormLabel>
                                 <Form.Control type="file"/>
                             </FormControl>

@@ -107,8 +107,8 @@ function Assignment() {
 
     console.log(assignmentList);
 
-    const assignmentData = useMemo(() => assignmentList?.map(({assignmentName, description, dueDate, imageName},idx) =>
-        <SubjectList key={`subjectList-${idx}`} eventKey={imageName} title={assignmentName}/>) ?? [] , [assignmentList]);
+    const assignmentData = useMemo(() => assignmentList?.map(({assignmentName, description, dueDate, imageName}, idx) =>
+        <SubjectList key={`subjectList-${idx}`} eventKey={imageName} title={assignmentName}/>) ?? [], [assignmentList]);
 
     return (
         <div>
@@ -129,16 +129,10 @@ function AssignmentListPage() {
 
 
     return (
-        <div style={{width: "100%"}}>
-            <SideBar
-                title="진행중인 수업"
-                subjects={subjects}
-            />
-            <Main>
-                <Routes>
-                    <Route path=":code" element={<Assignment/>}/>
-                </Routes>
-            </Main>
+        <div style={{width: "80vw"}}>
+            <Routes>
+                <Route path=":code" element={<Assignment/>}/>
+            </Routes>
         </div>
     );
 }
