@@ -1,14 +1,14 @@
 import React, {useEffect, useRef, useState} from "react";
 import styled from "styled-components";
-import { BsFillChatRightDotsFill } from "react-icons/bs";
+import {BsFillChatRightDotsFill} from "react-icons/bs";
 import {AiOutlineClose} from "react-icons/ai";
 import {IoMdSend} from "react-icons/io";
 import ReactMarkdown from "react-markdown";
 import useChat from "../hook/useChat";
 import {useRecoilValue} from "recoil";
-import {studentState} from "../atom/user";
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { darcula } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+import {professorState, studentState} from "../atom/user";
+import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter';
+import {darcula} from 'react-syntax-highlighter/dist/cjs/styles/prism';
 
 const StyleButtonChat = styled.div`
   user-select: none;
@@ -16,7 +16,6 @@ const StyleButtonChat = styled.div`
   position: absolute;
   box-shadow: rgb(0 0 0 / 30%) 0px 12px 60px 5px;
   border-radius: 15px;
-  background-color: #EFEFEF;
   backdrop-filter: blur(60px);
   right: 10px;
   bottom: 30px;
@@ -44,8 +43,8 @@ const StyleButtonChat = styled.div`
 
   &.show {
     transition: 0.3s;
-    width: 300px;
-    height: 400px;
+    width: 500px;
+    height: 600px;
     cursor: default;
 
     .close {
@@ -69,94 +68,103 @@ const StyleButtonChat = styled.div`
 
 
 const StyleChattingMain = styled.div`
+  display: grid;
+  grid-template-rows: 40px 1fr 40px;
+  height: 100%;
   .appbar {
     border-radius: 10px 10px 0 0;
-    height: 40px;
     background: #007ACC;
-    
+
     .title {
       margin-left: 10px;
       color: white;
-      line-height: 40px;  
+      line-height: 40px;
     }
   }
-  
-  
+
+
   .content {
-   padding:10px;
+    padding: 10px;
     overflow: auto;
-    height: 320px;
+    background-color: #EFEFEF;
+    height: 100%;
   }
+
   .send {
-    position: absolute;
-    height: 40px;
     border-radius: 0 0 10px 10px;
-    bottom: 0px;
-    width:100%;
+    width: 100%;
     display: flex;
+
     textarea {
-        height: 40px;
-        resize: none;
-        outline: none;
-        border: none;
-        flex: 1;
-        padding-top:5px;
-        padding-left: 10px;
-        border-radius: 0 0 0 10px;
-      }
-    
-      .sendButton {
-        outline: none;
-        border: none;
-        width: 40px;
-        border-radius: 0 0 10px 0;
-        background:  #007ACC;
-        color:white;
-        
-        &:hover {
-          svg {
-            color:rgba(0,0,0,0.3);
-          }
-        }
-        &:active {
-          svg {
-            color:rgba(0,0,0,0.6);
-          }
+      height: 40px;
+      resize: none;
+      outline: none;
+      border: none;
+      flex: 1;
+      padding-top: 5px;
+      padding-left: 10px;
+      border-radius: 0 0 0 10px;
+    }
+
+    .sendButton {
+      outline: none;
+      border: none;
+      width: 40px;
+      border-radius: 0 0 10px 0;
+      background: #007ACC;
+      color: white;
+
+      &:hover {
+        svg {
+          color: rgba(0, 0, 0, 0.3);
         }
       }
+
+      &:active {
+        svg {
+          color: rgba(0, 0, 0, 0.6);
+        }
+      }
+    }
   }
 `;
 
 const StyleMessage = styled.div`
+  clear: both;
   .message {
     position: relative;
     margin-bottom: 10px;
     padding: 10px;
     background-color: #A8DDFD;
-    width: 200px;
+    max-width: 75%;
     text-align: left;
     font-size: 14px;
     border: 1px solid #97C6E3;
     border-radius: 10px;
-    
+    float: left;
     &.me {
-      margin-left: 80px;
+      float: right;
       background-color: #f8e896;
       border: 1px solid #dfd087;
     }
   }
-  
-  .name{
+  p {
+    word-break: break-all;
+    white-space: normal;
+    user-select: text;
+  }
+
+  .name {
     font-weight: bold;
   }
-  
+
   .timestamp {
     color: grey;
     font-size: 12px;
   }
 `
 const CodeBlock = {
-    code({ node, inline, className, children, ...props }) {
+    code({node, inline, className, children, ...props}) {
         const match = /language-(\w+)/.exec(className || '');
         return !inline && match ? (
             <SyntaxHighlighter
@@ -176,48 +184,51 @@ const CodeBlock = {
     },
 };
 
-function ToMessage({isProfessor, name,children,time,me}) {
+function ToMessage({isProfessor, name, children, time, me}) {
     return <StyleMessage>
         <div className={`message ${me && "me"}`}>
-                <div className={"name"}>
-                    {isProfessor ? `${name} 교수님` : "익명님"}
-                </div>
-                <ReactMarkdown components={CodeBlock} style={{borderRadius:"10px"}}>
-                    {children}
-                </ReactMarkdown>
-                <div className={"timestamp"}>
-                    {time}
-                </div>
+            <div className={"name"}>
+                {isProfessor ? `${name} 교수님` : "익명님"}
             </div>
+            <ReactMarkdown components={CodeBlock} style={{borderRadius: "10px"}}>
+                {children}
+            </ReactMarkdown>
+            <div className={"timestamp"}>
+                {time}
+            </div>
+        </div>
     </StyleMessage>
 }
-function ChattingMain({title, onClose, imageName}) {
-    const student = useRecoilValue(studentState);
-    const {chatList, send} = useChat({ isProfessor: false,roomId:imageName});
 
-    const [text,setText] = useState("");
-    const [block,setBlock] = useState(false);
+export function ChattingMain({professor, title, onClose, imageName }) {
+    const studentData = useRecoilValue(studentState);
+    const professorData = useRecoilValue(professorState);
+    const {chatList, send} = useChat({isProfessor: false, roomId: imageName});
+
+    const [text, setText] = useState("");
+    const [block, setBlock] = useState(false);
 
 
     useEffect(() => {
-            console.log(chatList);
+        console.log(chatList);
     }, [chatList]);
 
     const handleSend = () => {
         setText("");
-        if(block === true) return;
-        if(text === "") return;
+        if (block === true) return;
+        if (text === "") return;
 
         setBlock(true);
-        send({from: student.username, text });
+
+        send({from: (professor ? professorData.username : studentData.username), text, isProfessor: professor});
 
         setTimeout(() => { // 메시지 빠르게 보내기 금지.
             setBlock(false);
         }, 500);
     }
 
-    const safeEnter = (e) =>  {
-        if(e.key === "Enter" && !e.shiftKey) { // Shift + Enter
+    const safeEnter = (e) => {
+        if (e.key === "Enter" && !e.shiftKey) { // Shift + Enter
             e.preventDefault();
             handleSend();
         }
@@ -226,41 +237,44 @@ function ChattingMain({title, onClose, imageName}) {
     const chatRef = useRef(null);
 
     useEffect(() => {
-        chatRef.current.scrollIntoView({ behavior: 'smooth' });
+        chatRef.current.scrollIntoView({behavior: 'smooth'});
     });
 
 
     return <StyleChattingMain>
-            <div className={"appbar"}>
-                <div className={"title"}>
-                    {title} 오픈 채팅방
-                </div>
-                <AiOutlineClose onClick={onClose} className={"close"}/>
+        <div className={"appbar"}>
+            <div className={"title"}>
+                {title} 오픈 채팅방
             </div>
+            {onClose && <AiOutlineClose onClick={onClose} className={"close"}/>}
+        </div>
 
-        <div className={"content"}>
-            {chatList.map((chat,idx) => <ToMessage key={`chat-${idx}`} isProfessor={chat.isProfessor} name={chat.from} me={chat.from === student.username} time={chat.time}>{chat.text}</ToMessage>)}
+        <div className={"content"} >
+            {chatList.map((chat, idx) => <ToMessage key={`chat-${idx}`} isProfessor={chat.isProfessor} name={chat.from}
+                                                    me={chat.from === (professor ? professorData.username : studentData.username)}
+                                                    time={chat.time}>{chat.text}</ToMessage>)}
             <div ref={chatRef}/>
         </div>
         <div className={"send"}>
-            <textarea placeholder={"Send Message"} value={text} onChange={(e) => setText((e.target.value))} onKeyDown={safeEnter}/>
+            <textarea placeholder={"Send Message"} value={text} onChange={(e) => setText((e.target.value))}
+                      onKeyDown={safeEnter}/>
             <button className={"sendButton"} onClick={handleSend}>
-                <IoMdSend />
+                <IoMdSend/>
             </button>
         </div>
     </StyleChattingMain>
 }
 
 
-function Chatting({title,imageName}) {
-    const [isOpen,setOpen] = useState(false);
+function Chatting({title, imageName}) {
+    const [isOpen, setOpen] = useState(false);
 
     return (
-        <StyleButtonChat className={isOpen ? "show" : "hide"} onClick={() => !isOpen && setOpen(true)} >
-            {!isOpen && <BsFillChatRightDotsFill />}
-            {isOpen && <ChattingMain onClose={() => setOpen(false)} title={title} imageName={imageName}/>}
+        <StyleButtonChat className={isOpen ? "show" : "hide"} onClick={() => !isOpen && setOpen(true)}>
+            {!isOpen && <BsFillChatRightDotsFill/>}
+            {isOpen && <ChattingMain onClose={() => setOpen(false)} title={title} imageName={imageName} height={"320px"}/>}
         </StyleButtonChat>
-      );
+    );
 }
 
 

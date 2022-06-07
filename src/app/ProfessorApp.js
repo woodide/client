@@ -11,6 +11,7 @@ import styled from "styled-components";
 import AddAssignmentPage from "../page/AddAssignmentPage";
 import {useRecoilState} from "recoil";
 import {professorState, studentState} from "../atom/user";
+import ProfessorChatPage from "../page/ProfessorChatPage";
 
 export const Layout = styled.div`
   height: calc(100vh - 56px);
@@ -23,6 +24,7 @@ function ProfessorApp() {
     const [professor, setProfessor] = useRecoilState(professorState);
     useEffect(() => {
         if (professor === null && localStorage['professor']) {
+            console.log(JSON.parse(localStorage['professor']));
             setProfessor(JSON.parse(localStorage['professor']));
         }
     }, []);
@@ -38,6 +40,7 @@ function ProfessorApp() {
                     <Route path="/create_subject" element={<CreateSubjectPage/>}/>
                     <Route path="/add_assignment" element={<AddAssignmentPage/>}/>
                     <Route path="/assignment/*" element={<AssignmentListPage/>}/>
+                    <Route path="/chat/*" element={<ProfessorChatPage />}/>
                 </Routes>
             </Layout>
         </div>

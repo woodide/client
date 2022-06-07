@@ -8,7 +8,7 @@ function useChat({isProfessor, roomId}) {
     const [chatList, setChatList] = useState([]);
 
 
-    const send = useCallback(({from, text}) => {
+    const send = useCallback(({from, text, isProfessor}) => {
         if (!stompRef.current.connected) {
             return;
         }

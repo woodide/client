@@ -22,6 +22,9 @@ function ProfessorHeader() {
           <Nav.Link as={Link} to="/professor/assignment">
             출제 된 과제 현황
           </Nav.Link>
+          <Nav.Link as={Link} to="/professor/chat">
+            과제 채팅 관리
+          </Nav.Link>
           {/* 로그인 시 삭제 예정 */}
         </Nav>
         <Nav>
