@@ -12,7 +12,7 @@ function ReportPage() {
     const navigate = useNavigate();
     const [report, setReport] = useState();
 
-    const {data: container,isLoading,isSuccess} = useQuery(["container",imageName]);
+    const {data: container, isLoading,isSuccess} = useQuery(["get_container",imageName]);
 
     useQuery(["student", "report", container?.data?.containerName], {
         onSuccess: (data) => {
@@ -38,6 +38,9 @@ function ReportPage() {
 
     if (isLoading || !isSuccess) {
         return <div>Loading ...</div>
+    }
+    if(!container) {
+        return <div>과제를 시작해주세요.</div>
     }
     const {containerName, assignmentName} = container;
     return <Flex

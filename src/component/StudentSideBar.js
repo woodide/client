@@ -87,7 +87,8 @@ const SidebarContent = ({ ...rest }) => {
           </Text>
           {subjectSubMenu}
           <NavItem
-            as={"button"}
+            as={ReactLink}
+            to={"/login"}
             key={"로그아웃"}
             icon={TbLogout}
             position={"absolute"}

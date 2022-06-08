@@ -9,7 +9,6 @@ import {Button, IconButton} from "@chakra-ui/react";
 import {CgTrees} from "react-icons/cg";
 import {FetchPost} from "../model/Request";
 import {GrPrevious} from "react-icons/gr";
-
 function AssignmentBar() {
     const {containerName, assignmentName, dueDate, description} = useRecoilValue(assignmentState);
     const navigate = useNavigate();
@@ -72,7 +71,7 @@ function Header() {
                         </>
                     ) : <>
                         {location.pathname.includes("/ide") ? <AssignmentBar/> :
-                            <Nav.Link as={"div"} style={{cursor: "pointer"}}
+                            <Nav.Link as={Link} to={"/"} style={{cursor: "pointer"}}
                                       onClick={() => {
                                           delete localStorage['student'];
                                           setStudent(null);

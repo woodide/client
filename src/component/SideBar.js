@@ -227,7 +227,8 @@ const SidebarContent = ({ ...rest }) => {
         </>
       ) : (
         <NavItem
-          as={"button"}
+          as={ReactLink}
+          to={"/professor/login"}
           key={"로그아웃"}
           icon={TbLogout}
           position={"absolute"}

@@ -8,6 +8,7 @@
     "@chakra-ui/theme-tools": "^2.0.2",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
+    "@projectstorm/react-diagrams": "^6.7.4",
     "@stomp/stompjs": "^6.1.2",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",

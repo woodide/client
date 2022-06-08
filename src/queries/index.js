@@ -118,6 +118,58 @@ queryClient.setQueryDefaults(["student", "report"], {
     },
 });
 
+
+queryClient.setQueryDefaults(["student", "result"], {
+    queryFn: ({queryKey}) => {
+        const containerName = queryKey[2];
+        if (!containerName) return null;
+        return Promise.all([FetchGet({
+            isProfessor: false,
+            url: "/student/subject/assignment/result",
+            config: {
+                params: {
+                    containerName,
+                },
+            },
+        }), FetchGet({
+            isProfessor: false,
+            url: "/student/subject/assignment/result/best",
+            config: {
+                params: {
+                    containerName,
+                },
+            },
+        })]);
+    },
+    select: ([result,best]) => {
+        return {
+            result: result?.data,
+            best: best?.data,
+        }
+    },
+});
+
+
+queryClient.setQueryDefaults(["get_container"], {
+    queryFn: ({queryKey}) => {
+        const imageName = queryKey[1];
+        if (!imageName) return null;
+        return FetchGet({
+            isProfessor: false,
+            url: `/container`,
+            config: {
+                params: {
+                    imageName
+                },
+            },
+        });
+    },
+    select: (response) => {
+        return response?.data;
+    },
+});
+
+
 queryClient.setQueryDefaults(["container"], {
     queryFn: ({queryKey}) => {
         const imageName = queryKey[1];

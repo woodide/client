@@ -11,6 +11,8 @@ import {toast} from "react-toastify";
 import { useSetRecoilState} from "recoil";
 import {assignmentState} from "../../atom/user";
 import {Button, Text} from "@chakra-ui/react";
+import ModalButton from "../../component/ModalButton";
+import SubmitListModal from "../../component/SubmitList";
 
 function AssignmentItem({assignmentName, description, dueDate, imageName}) {
     const navigate = useNavigate();
@@ -19,7 +21,10 @@ function AssignmentItem({assignmentName, description, dueDate, imageName}) {
         return;
     }
 
+    const {data : container} = useQuery(["get_container",imageName]);
+    const {data : resultData} = useQuery(["student", "result", container?.containerName]);
 
+    console.log((resultData?.result?.length ?? 0) > 1 && resultData.result[resultData.result - 1]);
     return <Card style={{width: "100%"}}>
         <Card.Header>Assignment</Card.Header>
         <Card.Body>
@@ -29,7 +34,7 @@ function AssignmentItem({assignmentName, description, dueDate, imageName}) {
                 {`과제 만료일 : ${moment(dueDate).format("yyyy-MM-DD H:mm")}`}
             </Card.Text>
             <Card.Text style={{color: "rgba(0,0,0,0.5)"}}>
-                {"최근 작업일 : 2022-07-01 20:15:38"}
+                {(resultData?.result?.length ?? 0) > 1 ? `최근 제출일 : ${moment(resultData.result[resultData.result.length - 1]?.submitTime).format("yyyy-MM-DD HH:mm")}` : "최근 제출일 : 없음"}
             </Card.Text>
             <div className={"mt-3"}>
             <Button  bg={'blue.400'}
@@ -45,15 +50,9 @@ function AssignmentItem({assignmentName, description, dueDate, imageName}) {
                 }}
                 title="과제 설명 보기"
                 value={description}
-                style={{marginLeft: "5px"}}
+                style={{marginLeft: "5px",marginRight:"5px"}}
             />
-            <Button  bg={'blue.400'}
-                     color={'white'}
-                     _hover={{
-                         bg: 'blue.500',
-                     }} style={{marginLeft: "5px"}}>
-                Test Case (2 / 4)
-            </Button>
+               <SubmitListModal value={"제출 내역"} containerName={container?.containerName}/>
             <Button  bg={'blue.400'}
                      color={'white'}
                      _hover={{

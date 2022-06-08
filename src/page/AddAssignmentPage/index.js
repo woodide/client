@@ -28,6 +28,7 @@ function AddAssignmentPage() {
     const [description, setDescription] = React.useState("# PA2: Simulator");
     const [language, setLanguage] = React.useState("gcc");
     const [languageVersion, setLanguageVersion] = React.useState("");
+    const [targetName, setTargetName] = React.useState("");
     const [subject, setSubject] = React.useState({
         code: "",
         name: ""
@@ -104,6 +105,7 @@ function AddAssignmentPage() {
         formData.append("multipartFile", multipartFile);
         formData.append("testInput", testInput);
         formData.append("testOutput", testOutput);
+        formData.append("targetFileName", targetName);
 
 
         const fetch = async () => {
@@ -210,6 +212,11 @@ function AddAssignmentPage() {
                                 />
                             </FormControl>
                             <FormControl className={"mb-3"}>
+                                <FormLabel>채점될 타겟 파일이름</FormLabel>
+                                <Input type="text" value={targetName}
+                                       onChange={(e) => setTargetName(e.target.value)}/>
+                            </FormControl>
+                            <FormControl className={"mb-3"}>
                                 <FormLabel>테스트케이스 인풋 업로드</FormLabel>
                                 <Form.Control type="file"
                                               name={"testInput"}/>
@@ -218,13 +225,6 @@ function AddAssignmentPage() {
                                 <FormLabel>테스트케이스 아웃풋 업로드</FormLabel>
                                 <Form.Control type="file" name={"testOutput"}/>
                             </FormControl>
-                        </div>
-                        <div style={{marginBottom: "20px"}}>
-                            <CheckBox
-                                label={"보고서 제출 여부"}
-                                checked={isReport}
-                                onChecked={() => setReport(!isReport)}
-                            />
                         </div>
                         <div style={{marginBottom: "20px"}}>
                             <FormLabel>과제 만기일 설정</FormLabel>

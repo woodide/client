@@ -36,7 +36,7 @@ function ProfessorHeader() {
                   회원가입
                 </Nav.Link>
               </>
-          ) : <Nav.Link as={"div"} style={{cursor:"pointer"}} onClick={() =>  {
+          ) : <Nav.Link as={Link} to={"/professor/login"} style={{cursor:"pointer"}} onClick={() =>  {
             delete localStorage['professor'];
             setProfessor(null);
           }}>

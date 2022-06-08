@@ -16,10 +16,11 @@ const customStyles = {
 // Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
 ReactModal.setAppElement("#root");
 
-function Modal({ children, isOpen, onClose }) {
+function Modal({ children, isOpen, onClose,className }) {
   return (
     <ReactModal
       isOpen={isOpen}
+      className={className}
       onRequestClose={onClose}
       style={customStyles}
       contentLabel="Example Modal"
