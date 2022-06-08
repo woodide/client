@@ -6,8 +6,9 @@ function useRemainTimer(endDate) {
         m: "00",
         s: "00"
     });
+    const [isDue,setDue] = useState(false);
     useEffect(() => {
-        console.log("AA",endDate)
+        if(!endDate) return;
         const timer = setInterval(() => {
             const diffTime = Math.abs(endDate - new Date().getTime());
 
@@ -22,6 +23,7 @@ function useRemainTimer(endDate) {
                 s: `${sec >= 10 ? sec : "0" + sec}`,
             });
             if (new Date() >= new Date(endDate)) {
+                setDue(true);
                 console.log("END");
                 setRemain({
                     h: "00",
@@ -36,7 +38,10 @@ function useRemainTimer(endDate) {
             clearInterval(timer);
         };
     }, [endDate]);
-    return `${remain.h}:${remain.m}:${remain.s}`;
+    return {
+        time: `${remain.h}:${remain.m}:${remain.s}`,
+        isDue,
+    };
 }
 
 export default useRemainTimer;

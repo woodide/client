@@ -16,7 +16,7 @@ import {FetchPost} from "../model/Request";
 import Modal from "./Modal";
 import saveFileFromString from "../utils/saveFileFromString";
 
-export function SubmitModal({containerName, value, marginLeft}) {
+export function SubmitModal({containerName, value, marginLeft,disabled}) {
     const [isOpen, setOpen] = useState(false);
 
     const {mutate, isLoading, data: result} = useMutation((containerName) => FetchPost({
@@ -34,6 +34,7 @@ export function SubmitModal({containerName, value, marginLeft}) {
     return (
         <>
             <Button bg={'blue.400'}
+                    disabled={disabled}
                     color={'white'}
                     _hover={{
                         bg: 'blue.500',

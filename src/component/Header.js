@@ -10,21 +10,22 @@ import {CgTrees} from "react-icons/cg";
 import {FetchPost} from "../model/Request";
 import {GrPrevious} from "react-icons/gr";
 import {SubmitModal} from "./SubmitList";
+
 function AssignmentBar() {
     const {containerName, assignmentName, dueDate, description} = useRecoilValue(assignmentState);
     const navigate = useNavigate();
-    const remainDueDate = useRemainTimer(dueDate);
+    const {time, isDue} = useRemainTimer(dueDate);
 
     return <>
 
-        <Button marginLeft={2} >진행중인 과제 : {assignmentName}</Button>
-        <Button marginLeft={2} marginRight={2} width={185}>남은 시간 {remainDueDate}</Button>
+        <Button marginLeft={2}>진행중인 과제 : {assignmentName}</Button>
+        <Button marginLeft={2} marginRight={2} width={185}>남은 시간 {time}</Button>
         <MarkdownModalButton title={"과제 설명 보기"} value={description}/>
-        <SubmitModal value={"채점 및 제출"} marginLeft={2} containerName={containerName}/>
+        <SubmitModal value={"채점 및 제출"} marginLeft={2} containerName={containerName} disabled={isDue}/>
 
         <IconButton
             marginLeft={5}
-            icon={<GrPrevious />}
+            icon={<GrPrevious/>}
             onClick={() => navigate(-1)}
         />
     </>
