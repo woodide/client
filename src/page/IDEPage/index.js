@@ -37,20 +37,10 @@ const IDEFrame = styled.iframe`
  */
 function IDEPage() {
     const {imageName} = useParams();
-    const {
-        mutate,
-        data: container,
-        isLoading,
-        isSuccess
-    } = useMutation((imageName) => FetchPost({
-        isProfessor: false,
-        url: "/container",
-        data: {
-            imageName,
-        },
-    }), {
-        onSuccess: (response) => {
-            const { assignmentName, dueDate, description, containerName} = response.data;
+
+    const {data: container,isLoading,isSuccess} = useQuery(["container",imageName],{
+        onSuccess: (data) => {
+            const { assignmentName, dueDate, description, containerName} = data;
             setAssignment({
                 containerName,
                 assignmentName,
@@ -60,6 +50,7 @@ function IDEPage() {
         }
     });
 
+
     const setAssignment = useSetRecoilState(assignmentState);
     const student = useRecoilValue(studentState);
     const navigate = useNavigate();
@@ -67,14 +58,11 @@ function IDEPage() {
         navigate("/login");
     }
 
-    useEffect(() => {
-        mutate(imageName); // TODO: 두번 실행됨
-    }, [imageName]);
     console.log(isLoading, isSuccess,container);
     if (isLoading || !isSuccess) {
         return <div>Loading ...</div>
     }
-    const {portNum, assignmentName, dueDate, description} = container.data;
+    const {portNum, assignmentName, dueDate, description} = container;
     return <div style={{width: "100%",height:"100%"}}>
         <IDEFrame src={`${HOST_URL}:${portNum}/?folder=/config/workspace`} frameBorder={0}/>
         <Chatting imageName={imageName} title={assignmentName}/>

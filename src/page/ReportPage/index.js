@@ -12,27 +12,13 @@ function ReportPage() {
     const navigate = useNavigate();
     const [report, setReport] = useState();
 
-    const {
-        mutate,
-        data: container,
-        isLoading,
-        isSuccess
-    } = useMutation((imageName) => FetchPost({
-        isProfessor: false,
-        url: "/container",
-        data: {
-            imageName,
-        },
-    }));
+    const {data: container,isLoading,isSuccess} = useQuery(["container",imageName]);
 
     useQuery(["student", "report", container?.data?.containerName], {
         onSuccess: (data) => {
             setReport(data?.content);
         }
     });
-    useEffect(() => {
-        mutate(imageName);
-    }, [imageName]);
 
     const handleSave = async (containerName) => {
         const response = await FetchPost({
@@ -53,7 +39,7 @@ function ReportPage() {
     if (isLoading || !isSuccess) {
         return <div>Loading ...</div>
     }
-    const {containerName, assignmentName} = container.data;
+    const {containerName, assignmentName} = container;
     return <Flex
         minH={'100vh'}
         align={'center'}

@@ -118,6 +118,25 @@ queryClient.setQueryDefaults(["student", "report"], {
     },
 });
 
+queryClient.setQueryDefaults(["container"], {
+    queryFn: ({queryKey}) => {
+        const imageName = queryKey[1];
+        if (!imageName) return null;
+        return FetchPost({
+            isProfessor: false,
+            url: `/container`,
+            data: {
+                imageName,
+            },
+        });
+    },
+    select: (response) => {
+        return response?.data;
+    },
+    staleTime: Infinity,
+});
+
+
 queryClient.setQueryDefaults(["chat"], {
     queryFn: ({queryKey}) => {
         const imageName = queryKey[1];
@@ -137,5 +156,6 @@ queryClient.setQueryDefaults(["chat"], {
     },
     staleTime: Infinity,
 });
+
 
 export default queryClient;
