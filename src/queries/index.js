@@ -117,7 +117,6 @@ queryClient.setQueryDefaults(["student", "assignment"], {
     },
 });
 
-
 queryClient.setQueryDefaults(["student", "report"], {
     queryFn: ({queryKey}) => {
         const containerName = queryKey[2];

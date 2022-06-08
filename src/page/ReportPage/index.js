@@ -12,9 +12,8 @@ function ReportPage() {
     const navigate = useNavigate();
     const [report, setReport] = useState();
 
-    const {data: container, isLoading,isSuccess} = useQuery(["get_container",imageName]);
-
-    useQuery(["student", "report", container?.data?.containerName], {
+    const {data: container, isLoading,isSuccess} = useQuery(["get_container", imageName]);
+    useQuery(["student" ,"report", container?.containerName], {
         onSuccess: (data) => {
             setReport(data?.content);
         }
