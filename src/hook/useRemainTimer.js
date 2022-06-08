@@ -6,9 +6,9 @@ function useRemainTimer(endDate) {
         m: "00",
         s: "00"
     });
-    const timeRef = useRef(null);
     useEffect(() => {
-        timeRef.current = setInterval(() => {
+        console.log("AA",endDate)
+        const timer = setInterval(() => {
             const diffTime = Math.abs(endDate - new Date().getTime());
 
             const hour = Math.floor(Math.abs(diffTime / (1000 * 60 * 60)));
@@ -23,14 +23,17 @@ function useRemainTimer(endDate) {
             });
             if (new Date() >= new Date(endDate)) {
                 console.log("END");
-                clearInterval(timeRef.current);
+                setRemain({
+                    h: "00",
+                    m: "00",
+                    s: "00"
+                })
+                clearInterval(timer);
             }
         }, 1000);
 
         return () => {
-            if (timeRef.current) {
-                clearInterval(timeRef.current);
-            }
+            clearInterval(timer);
         };
     }, [endDate]);
     return `${remain.h}:${remain.m}:${remain.s}`;

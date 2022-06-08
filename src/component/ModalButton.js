@@ -4,12 +4,14 @@ import ReactMarkdown from "react-markdown";
 import {Card} from "react-bootstrap";
 import {Button} from "@chakra-ui/react";
 
-function ModalButton({value, children, style,className, bg, color, _hover}) {
+function ModalButton({value, children, style,className, bg, color, _hover,isLoading ,marginLeft,onClick}) {
     const [isOpen, setOpen] = useState(false);
     return (
         <>
             <Button bg={bg}
+                    isLoading={isLoading}
                     color={color}
+                    marginLeft={marginLeft}
                     _hover={_hover} onClick={() => setOpen(true)} style={style}>
                 {value}
             </Button>

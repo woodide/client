@@ -9,32 +9,19 @@ import {Button, IconButton} from "@chakra-ui/react";
 import {CgTrees} from "react-icons/cg";
 import {FetchPost} from "../model/Request";
 import {GrPrevious} from "react-icons/gr";
+import {SubmitModal} from "./SubmitList";
 function AssignmentBar() {
     const {containerName, assignmentName, dueDate, description} = useRecoilValue(assignmentState);
     const navigate = useNavigate();
-    const remainDueDate = useRemainTimer(new Date(dueDate));
-
-    const handleSubmit = async () => {
-       const response = await FetchPost({
-           isProfessor:false,
-           url:"/student/subject/assignment/submit",
-           data: {
-               containerName
-           }
-       });
-       console.log(response);
-    };
+    const remainDueDate = useRemainTimer(dueDate);
 
     return <>
 
         <Button marginLeft={2} >진행중인 과제 : {assignmentName}</Button>
         <Button marginLeft={2} marginRight={2} width={185}>남은 시간 {remainDueDate}</Button>
         <MarkdownModalButton title={"과제 설명 보기"} value={description}/>
-        <Button onClick={handleSubmit}  marginLeft={2}  bg={'blue.400'}
-                color={'white'}
-                _hover={{
-                    bg: 'blue.500',
-                }}>채점 및 제출</Button>
+        <SubmitModal value={"채점 및 제출"} marginLeft={2} containerName={containerName}/>
+
         <IconButton
             marginLeft={5}
             icon={<GrPrevious />}
