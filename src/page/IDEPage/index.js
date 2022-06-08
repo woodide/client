@@ -75,7 +75,7 @@ function IDEPage() {
         return <div>Loading ...</div>
     }
     const {portNum, assignmentName, dueDate, description} = container.data;
-    return <div style={{width: "100%"}}>
+    return <div style={{width: "100%",height:"100%"}}>
         <IDEFrame src={`${HOST_URL}:${portNum}/?folder=/config/workspace`} frameBorder={0}/>
         <Chatting imageName={imageName} title={assignmentName}/>
     </div>;

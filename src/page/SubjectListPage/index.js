@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from "react";
-import { Accordion, Button } from "react-bootstrap";
+import { Accordion  } from "react-bootstrap";
 import StudentTable from "../../widget/StudentTable";
 import {useQuery} from "react-query";
 import {FetchPost} from "../../model/Request";
 import {toast} from "react-toastify";
+import {Button} from "@chakra-ui/react";
 
 function SubjectList({ code, name }) {
   const [addList, setAddList] = useState({});
@@ -48,7 +49,12 @@ function SubjectList({ code, name }) {
             marginTop: "30px",
           }}
         >
-            <Button onClick={handleAdd} >저장</Button>
+            <Button onClick={handleAdd}   bg={'blue.400'}
+                    type='submit'
+                    color={'white'}
+                    _hover={{
+                        bg: 'blue.500',
+                    }} >저장</Button>
         </div>
       </Accordion.Body>
     </Accordion.Item>

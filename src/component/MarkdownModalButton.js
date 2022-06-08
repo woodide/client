@@ -8,7 +8,11 @@ function MarkdownModalButton({ title, value, style }) {
   const [isOpen, setOpen] = useState(false);
   return (
     <>
-      <Button  colorScheme={"teal"} onClick={() => setOpen(true)} style={style}>
+      <Button   bg={'blue.400'}
+                color={'white'}
+                _hover={{
+                    bg: 'blue.500',
+                }} onClick={() => setOpen(true)} style={style}>
         {title}
       </Button>
       <Modal isOpen={isOpen} onClose={() => setOpen(false)}>

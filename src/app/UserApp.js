@@ -14,9 +14,14 @@ import StudentSideBar from "../component/StudentSideBar";
 import {Box, useColorModeValue} from "@chakra-ui/react";
 
 export const Layout = styled.div`
-  height: calc(100vh - 56px);
-  display: flex;
-  justify-content: center;
+  &.ide {
+    height: calc(100vh - 56px);
+    margin-left: 0;
+    padding: 0;
+  }
+  margin-left: 260px;
+  height: 100vh;
+  padding: 14px;
 `;
 
 function UserApp() {
@@ -28,10 +33,11 @@ function UserApp() {
         }
     }, []);
 
+    const isIDE = location.pathname.includes("/ide");
     return (
         <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')} >
-            {location.pathname.includes("/ide") ? <Header /> : <StudentSideBar />}
-                <Layout>
+            {isIDE ? <Header /> : <StudentSideBar />}
+                <Layout className={isIDE && "ide"}>
                     <Routes>
                         <Route path="/*" element={<MainPage/>}/>
                         <Route path="/login" element={<LoginPage/>}/>

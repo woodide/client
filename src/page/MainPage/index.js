@@ -32,16 +32,28 @@ function AssignmentItem({assignmentName, description, dueDate, imageName}) {
                 {"최근 작업일 : 2022-07-01 20:15:38"}
             </Card.Text>
             <div className={"mt-3"}>
-            <Button colorScheme={"teal"} onClick={handleConnectContainer}>IDE 이동</Button>
+            <Button  bg={'blue.400'}
+                     color={'white'}
+                     _hover={{
+                         bg: 'blue.500',
+                     }} onClick={handleConnectContainer}>IDE 이동</Button>
             <MarkdownModalButton
                 title="과제 설명 보기"
                 value={description}
                 style={{marginLeft: "5px"}}
             />
-            <Button colorScheme={"teal"} style={{marginLeft: "5px"}}>
+            <Button  bg={'blue.400'}
+                     color={'white'}
+                     _hover={{
+                         bg: 'blue.500',
+                     }} style={{marginLeft: "5px"}}>
                 Test Case (2 / 4)
             </Button>
-            <Button colorScheme={"teal"} style={{marginLeft: "5px"}} onClick={() => navigate(`/report/${imageName}`)}>
+            <Button  bg={'blue.400'}
+                     color={'white'}
+                     _hover={{
+                         bg: 'blue.500',
+                     }} style={{marginLeft: "5px"}} onClick={() => navigate(`/report/${imageName}`)}>
                 보고서 작성
             </Button>
             </div>
@@ -69,11 +81,9 @@ function Subject() {
 function MainPage() {
     return (
         <div style={{width: "100%"}}>
-            <Main>
                 <Routes>
                     <Route path="/subject/:code" element={<Subject/>}/>
                 </Routes>
-            </Main>
         </div>
     );
 }

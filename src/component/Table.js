@@ -263,11 +263,11 @@ const Paginations = styled.div`
       &.select {
         color: white;
         font-weight: 700;
-        background: #1879c3 0% 0% no-repeat padding-box;
+        background: #4299e1 0% 0% no-repeat padding-box;
       }
     }
     .btnEach:hover {
-      background: #1879c3 0% 0% no-repeat padding-box;
+      background: #4299e1 0% 0% no-repeat padding-box;
       transition: 0.2s;
       color: white;
       box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);

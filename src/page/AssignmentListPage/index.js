@@ -1,5 +1,5 @@
 import React, {useMemo, useState} from "react";
-import {Accordion, Button} from "react-bootstrap";
+import {Accordion } from "react-bootstrap";
 import Modal from "../../component/Modal";
 import Table, {GreaterColumnFilter} from "../../component/Table";
 import {docco} from "react-syntax-highlighter/dist/esm/styles/hljs";
@@ -10,12 +10,17 @@ import MarkdownModalButton from "../../component/MarkdownModalButton";
 import {SideBar, Main} from "../../component/SideBar";
 import {Route, Routes, useParams} from "react-router-dom";
 import {useQuery} from "react-query";
+import {Button} from "@chakra-ui/react";
 
 function CodeView({code}) {
     const [isOpen, setOpen] = useState(false);
     return (
         <>
-            <Button onClick={() => setOpen(true)}>코드 보기</Button>
+            <Button  bg={'blue.400'}
+                     color={'white'}
+                     _hover={{
+                         bg: 'blue.500',
+                     }} onClick={() => setOpen(true)}>코드 보기</Button>
             <Modal isOpen={isOpen} onClose={() => setOpen(false)}>
                 <SyntaxHighlighter language="c" style={docco}>
                     {TEST_CODE}

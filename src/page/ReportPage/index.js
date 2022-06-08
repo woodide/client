@@ -76,7 +76,11 @@ function ReportPage() {
                     />
                 </Stack>
                 <div style={{float: "right", marginTop: "10px"}}>
-                    <Button style={{width: "100px"}} colorScheme={"teal"} onClick={() => handleSave(containerName)}>저장</Button>
+                    <Button style={{width: "100px"}}  bg={'blue.400'}
+                            color={'white'}
+                            _hover={{
+                                bg: 'blue.500',
+                            }} onClick={() => handleSave(containerName)}>저장</Button>
                     <Button onClick={() => navigate(-1)} style={{width: "100px", marginLeft: "5px"}}>이전</Button>
                 </div>
             </Box>

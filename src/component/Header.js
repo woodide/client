@@ -37,7 +37,7 @@ function AssignmentBar() {
             뒤로가기
         </Nav.Link>
         <MarkdownModalButton title={"과제 설명 보기"} value={description}/>
-        <Button onClick={handleSubmit} marginLeft={2}>채점 및 제출</Button>
+        <Button onClick={handleSubmit}  marginLeft={2}>채점 및 제출</Button>
     </>
 }
 
