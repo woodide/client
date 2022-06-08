@@ -38,6 +38,11 @@ function AssignmentItem({assignmentName, description, dueDate, imageName}) {
                          bg: 'blue.500',
                      }} onClick={handleConnectContainer}>IDE 이동</Button>
             <MarkdownModalButton
+                bg={'blue.400'}
+                color={'white'}
+                _hover={{
+                    bg: 'blue.500',
+                }}
                 title="과제 설명 보기"
                 value={description}
                 style={{marginLeft: "5px"}}

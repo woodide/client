@@ -74,10 +74,10 @@ export const NavItem = ({
         role="group"
         cursor="pointer"
         _hover={{
-          bg: "cyan.400",
+          bg: "blue.400",
           color: "white",
         }}
-        bg={select && "cyan.400"}
+        bg={select && "blue.400"}
         color={select && "white"}
         {...rest}
       >

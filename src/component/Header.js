@@ -5,9 +5,10 @@ import {useRecoilState, useRecoilValue} from "recoil";
 import {assignmentState, studentState} from "../atom/user";
 import MarkdownModalButton from "./MarkdownModalButton";
 import useRemainTimer from "../hook/useRemainTimer";
-import {Button} from "@chakra-ui/react";
+import {Button, IconButton} from "@chakra-ui/react";
 import {CgTrees} from "react-icons/cg";
 import {FetchPost} from "../model/Request";
+import {GrPrevious} from "react-icons/gr";
 
 function AssignmentBar() {
     const {containerName, assignmentName, dueDate, description} = useRecoilValue(assignmentState);
@@ -26,18 +27,20 @@ function AssignmentBar() {
     };
 
     return <>
-        <Nav.Link as={"div"}>
-            진행중인 과제 : {assignmentName}
-        </Nav.Link>
-        <Nav.Link as={"div"}>
-            남은 시간 {remainDueDate}
-        </Nav.Link>
-        <Nav.Link as={"div"} style={{cursor: "pointer"}}
-                  onClick={() => navigate(-1)}>
-            뒤로가기
-        </Nav.Link>
+
+        <Button marginLeft={2} >진행중인 과제 : {assignmentName}</Button>
+        <Button marginLeft={2} marginRight={2} width={185}>남은 시간 {remainDueDate}</Button>
         <MarkdownModalButton title={"과제 설명 보기"} value={description}/>
-        <Button onClick={handleSubmit}  marginLeft={2}>채점 및 제출</Button>
+        <Button onClick={handleSubmit}  marginLeft={2} bg={'blue.400'}
+                color={'white'}
+                _hover={{
+                    bg: 'blue.500',
+                }}>채점 및 제출</Button>
+        <IconButton
+            marginLeft={2}
+            icon={<GrPrevious />}
+            onClick={() => navigate(-1)}
+        />
     </>
 }
 

@@ -23,14 +23,14 @@ const StyleButtonChat = styled.div`
   transition: 0.3s;
 
   &.hide {
-    background: #007ACC;;
+    background: #007ACC;
     width: 60px;
     height: 60px;
     text-align: center;
 
     &:hover {
       svg {
-        color: #383838;
+        color:  color:rgba(255,255,255,0.7);
       }
     }
 
@@ -300,7 +300,7 @@ function Chatting({title, imageName}) {
 
     return (
         <StyleButtonChat className={isOpen ? "show" : "hide"} onClick={() => !isOpen && setOpen(true)}>
-            {!isOpen && <BsFillChatRightDotsFill className={"ml-3"}/>}
+            {!isOpen && <BsFillChatRightDotsFill className={"ml-3.5"}/>}
             {isOpen && <ChattingMain appBarIcon={<AiOutlineClose onClick={() => setOpen(false)} className={"close"}/>}
                                      title={title} imageName={imageName} height={"320px"}/>}
         </StyleButtonChat>
