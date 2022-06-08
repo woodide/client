@@ -65,7 +65,7 @@ function SubjectListPage() {
     const {data: subjectList} = useQuery(["professor", "subject"]);
     console.log(subjectList);
   return (
-    <div style={{ marginTop: "20px",width:"1000px" }}>
+    <div style={{ width:"100%" }}>
       <Accordion defaultActiveKey={subjectList ? subjectList[0]?.code : undefined}>
           {subjectList?.map(({code,name},idx) => <SubjectList key={`subject-${idx}`} code={code} name={name} />)}
       </Accordion>

@@ -128,16 +128,12 @@ function AddAssignmentPage() {
     };
 
     return (
-        <Flex
-            minH={'100vh'}
-            align={'center'}
-            justify={'center'} p={5}>
-            <Stack width={1000}>
+      <div className={"w-full mb-3"}>
                 <Box
                     rounded={'lg'}
                     bg={useColorModeValue('white', 'gray.700')}
                     boxShadow={'lg'}
-                    p={8}>
+                    p={8} marginBottom={10}>
                     <Stack as="form" onSubmit={handleSubmit} spacing={4}>
                         <FormLabel>과목 선택</FormLabel>
                         <FormControl>
@@ -260,8 +256,8 @@ function AddAssignmentPage() {
                         </Stack>
                     </Stack>
                 </Box>
-            </Stack>
-        </Flex>
+          <Stack height={5}/>
+      </div>
     )
 }
 

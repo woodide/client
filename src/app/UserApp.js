@@ -19,6 +19,7 @@ export const Layout = styled.div`
     margin-left: 0;
     padding: 0;
   }
+  overflow: auto;
   margin-left: 260px;
   height: 100vh;
   padding: 14px;

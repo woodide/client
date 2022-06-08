@@ -16,8 +16,11 @@ import {Box, useColorModeValue} from "@chakra-ui/react";
 
 export const Layout = styled.div`
   margin-left: 240px;
+  height: 100vh;
+  padding:14px;
   display: flex;
   justify-content: center;
+  overflow: auto;
 `;
 
 function ProfessorApp() {

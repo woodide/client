@@ -116,7 +116,7 @@ function Assignment() {
         <SubjectList key={`subjectList-${idx}`} eventKey={imageName} title={assignmentName}/>) ?? [], [assignmentList]);
 
     return (
-        <div style={{marginTop:"20px",width:"1000px"}}>
+        <div style={{width:"100%"}}>
             <Accordion defaultActiveKey="0">
                 {assignmentData}
             </Accordion>
