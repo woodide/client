@@ -31,14 +31,14 @@ function SubjectList({imageName, title}) {
     const {data : studentResult} = useQuery(["professor", "result",imageName]);
     console.log(studentResult);
 
-    const studentData = useMemo(() => studentResult?.map(({bestScore,count,executionResult,submitCode, isSubmit,studentNumber,username}) => ({
+    const studentData = useMemo(() => studentResult?.map(({bestScore,count,executionResult,submitCode, isSubmit,studentNumber,username,report}) => ({
         id:studentNumber,
         name: username,
         percent: bestScore + " 점",
         count,
         codeView: <CodeView code={submitCode} />,
         report: (
-            <MarkdownModalButton title={"보고서 보기"} value={"ASDASD"}/>
+            <MarkdownModalButton title={"보고서 보기"} value={report}/>
         ),
     })) ?? [], [studentResult])
 

@@ -81,7 +81,6 @@ function SubmitListModal({containerName, value}) {
             </AccordionButton>
         </h2>
         <AccordionPanel pb={4}>
-
             <div className={"flex justify-between"}>
                 <div>
                     <Text fontSize={"0.8rem"} color={"#939393"}>제출일자
