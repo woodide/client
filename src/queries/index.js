@@ -39,6 +39,25 @@ queryClient.setQueryDefaults(["professor", "subject", "student"], {
 });
 
 
+queryClient.setQueryDefaults(["professor", "result"], {
+    queryFn: ({queryKey}) => {
+        const imageName = queryKey[2];
+        return FetchGet({
+            isProfessor: true,
+            url: "/professor/subject/student/result",
+            config: {
+                params: {
+                    imageName,
+                },
+            },
+        });
+    },
+    select: (response) => {
+        return response?.data;
+    },
+});
+
+
 queryClient.setQueryDefaults(["professor", "subject", "assignment"], {
     queryFn: ({queryKey}) => {
         const code = queryKey[3];

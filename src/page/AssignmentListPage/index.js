@@ -4,10 +4,7 @@ import Modal from "../../component/Modal";
 import Table, {GreaterColumnFilter} from "../../component/Table";
 import {docco} from "react-syntax-highlighter/dist/esm/styles/hljs";
 import SyntaxHighlighter from "react-syntax-highlighter";
-import ReactMarkdown from "react-markdown";
-import {TEST_CODE} from "./test";
 import MarkdownModalButton from "../../component/MarkdownModalButton";
-import {SideBar, Main} from "../../component/SideBar";
 import {Route, Routes, useParams} from "react-router-dom";
 import {useQuery} from "react-query";
 import {Button} from "@chakra-ui/react";
@@ -23,33 +20,29 @@ function CodeView({code}) {
                      }} onClick={() => setOpen(true)}>코드 보기</Button>
             <Modal isOpen={isOpen} onClose={() => setOpen(false)}>
                 <SyntaxHighlighter language="c" style={docco}>
-                    {TEST_CODE}
+                    {code}
                 </SyntaxHighlighter>
             </Modal>
         </>
     );
 }
 
-// function ReportView({ report }) {
-//   const [isOpen, setOpen] = useState(false);
-//   return (
-//     <>
-//       <Button onClick={() => setOpen(true)}>보고서 보기</Button>
-//       <Modal isOpen={isOpen} onClose={() => setOpen(false)}>
-//         <ReactMarkdown>{`
-// # Hello
-// * ASd
+function SubjectList({imageName, title}) {
+    const {data : studentResult} = useQuery(["professor", "result",imageName]);
+    console.log(studentResult);
 
-//         `}</ReactMarkdown>
-//       </Modal>
-//     </>
-//   );
-// }
+    const studentData = useMemo(() => studentResult?.map(({bestScore,count,executionResult,submitCode, isSubmit,studentNumber,username}) => ({
+        id:studentNumber,
+        name: username,
+        percent: bestScore + " 점",
+        count,
+        codeView: <CodeView code={submitCode} />,
+        report: (
+            <MarkdownModalButton title={"보고서 보기"} value={"ASDASD"}/>
+        ),
+    })) ?? [], [studentResult])
 
-function SubjectList({eventKey, title}) {
-    const [addList, setAddList] = useState({});
-
-    const coulumns = useMemo(() => [
+    const columns = useMemo(() => [
         {
             accessor: "id",
             Header: "학번",
@@ -60,7 +53,7 @@ function SubjectList({eventKey, title}) {
         },
         {
             accessor: "percent",
-            Header: "과제 진행률",
+            Header: "과제 점수",
             filter: "percentGreater",
             Filter: GreaterColumnFilter,
         },
@@ -81,25 +74,13 @@ function SubjectList({eventKey, title}) {
     ], []);
 
 
-    const data = useMemo(() => [
-        {
-            id: "201820802",
-            name: "강선규",
-            percent: 70 + " %",
-            count: 10,
-            codeView: <CodeView code={"ASDASD"}/>,
-            report: (
-                <MarkdownModalButton title={"보고서 보기"} value={"ASDASD"}/>
-            ),
-        },
-    ], []);
     return (
-        <Accordion.Item eventKey={eventKey}>
+        <Accordion.Item eventKey={imageName}>
             <Accordion.Header>{title}</Accordion.Header>
             <Accordion.Body>
                 <Table
-                    columns={coulumns}
-                    data={data}
+                    columns={columns}
+                    data={studentData}
                 />
             </Accordion.Body>
         </Accordion.Item>
@@ -110,10 +91,8 @@ function Assignment() {
     const {code} = useParams();
     const {data: assignmentList} = useQuery(["professor", "subject", "assignment", code]);
 
-    console.log(assignmentList);
-
     const assignmentData = useMemo(() => assignmentList?.map(({assignmentName, description, dueDate, imageName}, idx) =>
-        <SubjectList key={`subjectList-${idx}`} eventKey={imageName} title={assignmentName}/>) ?? [], [assignmentList]);
+        <SubjectList key={`subjectList-${idx}`} imageName={imageName} title={assignmentName}/>) ?? [], [assignmentList]);
 
     return (
         <div style={{width:"100%"}}>
@@ -125,14 +104,6 @@ function Assignment() {
 }
 
 function AssignmentListPage() {
-    const {data: subjectList} = useQuery(["professor", "subject"]);
-
-    const subjects = useMemo(() => subjectList?.map(({name, code}) => ({
-        name,
-        link: `/professor/assignment/${code}`
-    })) ?? [], [subjectList]);
-
-
     return (
             <Routes>
                 <Route path=":code" element={<Assignment/>}/>
