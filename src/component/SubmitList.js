@@ -14,11 +14,12 @@ import {
 import moment from "moment";
 import {FetchPost} from "../model/Request";
 import Modal from "./Modal";
+import saveFileFromString from "../utils/saveFileFromString";
 
 export function SubmitModal({containerName, value, marginLeft}) {
     const [isOpen, setOpen] = useState(false);
 
-    const {mutate, isLoading, data : result} = useMutation((containerName) => FetchPost({
+    const {mutate, isLoading, data: result} = useMutation((containerName) => FetchPost({
         isProfessor: false,
         url: "/student/subject/assignment/submit",
         data: {
@@ -43,14 +44,16 @@ export function SubmitModal({containerName, value, marginLeft}) {
             </Button>
             <Modal isOpen={isOpen} onClose={() => setOpen(false)}>
                 <div style={{width: "50vw"}}>
-                    <Text  fontSize={"1.5rem"} fontWeight={"bold"} color={result?.data?.score == 100 ? "MediumSeaGreen" : "crimson"}>
+                    <Text fontSize={"1.5rem"} fontWeight={"bold"}
+                          color={result?.data?.score == 100 ? "MediumSeaGreen" : "crimson"}>
                         {result?.data?.score == 100 ? "Success" : "Fail"}
                     </Text>
                     <Text fontSize={"1.25rem"} fontWeight={"bold"}>점수 : ({result?.data?.score} / 100)</Text>
 
                     <br/>
                     <Text fontSize={"1.25rem"}>출력 결과</Text>
-                    <pre className={"bg-gray-300 rounded p-1"}>{result?.data?.executionResult ? result?.data?.executionResult : "출력결과 없음"}</pre>
+                    <pre
+                        className={"bg-gray-300 rounded p-1"}>{result?.data?.executionResult ? result?.data?.executionResult : "출력결과 없음"}</pre>
                 </div>
             </Modal>
         </>
@@ -60,7 +63,7 @@ export function SubmitModal({containerName, value, marginLeft}) {
 
 function SubmitListModal({containerName, value}) {
     const {data} = useQuery(["student", "result", containerName]);
-
+    console.log(data?.result);
     const resultList = useMemo(() => data?.result?.map((res, idx) => <AccordionItem key={`submit-${idx}`}>
         <h2>
             <AccordionButton>
@@ -77,10 +80,16 @@ function SubmitListModal({containerName, value}) {
                 <AccordionIcon/>
             </AccordionButton>
         </h2>
-        <AccordionPanel pb={4} >
-            <Text fontSize={"0.8rem"} color={"#939393"}>제출일자
-                : {moment(new Date(res.submitTime)).format("yyyy-MM-DD HH:mm:ss")}</Text>
-            <Text fontSize={"1.25rem"}>점수 : ({res.score} / 100)</Text>
+        <AccordionPanel pb={4}>
+
+            <div className={"flex justify-between"}>
+                <div>
+                    <Text fontSize={"0.8rem"} color={"#939393"}>제출일자
+                        : {moment(new Date(res.submitTime)).format("yyyy-MM-DD HH:mm:ss")}</Text>
+                    <Text fontSize={"1.25rem"}>점수 : ({res.score} / 100)</Text>
+                </div>
+                <Button onClick={() => {console.log(res.submitCode);saveFileFromString(res.submitCode, res.filename)}} >코드 저장</Button>
+            </div>
             <br/>
             <Text fontSize={"1.25rem"}>출력 결과</Text>
             <pre className={"bg-gray-300 rounded p-1"}>{res.executionResult ? res.executionResult : "출력결과 없음"}</pre>
