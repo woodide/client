@@ -31,13 +31,15 @@ function AssignmentBar() {
         <Button marginLeft={2} >진행중인 과제 : {assignmentName}</Button>
         <Button marginLeft={2} marginRight={2} width={185}>남은 시간 {remainDueDate}</Button>
         <MarkdownModalButton title={"과제 설명 보기"} value={description}/>
-        <Button onClick={handleSubmit}  marginLeft={2} bg={'blue.400'}
+        <Button onClick={handleSubmit}  marginLeft={2} marginRight={4} bg={'blue.400'}
                 color={'white'}
                 _hover={{
                     bg: 'blue.500',
                 }}>채점 및 제출</Button>
         <IconButton
             marginLeft={2}
+            position={"absolute"}
+            right={4}
             icon={<GrPrevious />}
             onClick={() => navigate(-1)}
         />
