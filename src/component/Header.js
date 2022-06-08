@@ -17,12 +17,10 @@ function AssignmentBar() {
     const {time, isDue} = useRemainTimer(dueDate);
 
     return <>
-
         <Button marginLeft={2}>진행중인 과제 : {assignmentName}</Button>
         <Button marginLeft={2} marginRight={2} width={185}>남은 시간 {time}</Button>
         <MarkdownModalButton title={"과제 설명 보기"} value={description}/>
         <SubmitModal value={"채점 및 제출"} marginLeft={2} containerName={containerName} disabled={isDue}/>
-
         <IconButton
             marginLeft={5}
             icon={<GrPrevious/>}

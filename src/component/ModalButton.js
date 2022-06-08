@@ -1,7 +1,5 @@
 import React, {useState} from "react";
 import Modal from "../component/Modal";
-import ReactMarkdown from "react-markdown";
-import {Card} from "react-bootstrap";
 import {Button} from "@chakra-ui/react";
 
 function ModalButton({value, children, style,className, bg, color, _hover,isLoading ,marginLeft,onClick}) {
