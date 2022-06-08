@@ -31,15 +31,13 @@ function AssignmentBar() {
         <Button marginLeft={2} >진행중인 과제 : {assignmentName}</Button>
         <Button marginLeft={2} marginRight={2} width={185}>남은 시간 {remainDueDate}</Button>
         <MarkdownModalButton title={"과제 설명 보기"} value={description}/>
-        <Button onClick={handleSubmit}  marginLeft={2} marginRight={4} bg={'blue.400'}
+        <Button onClick={handleSubmit}  marginLeft={2}  bg={'blue.400'}
                 color={'white'}
                 _hover={{
                     bg: 'blue.500',
                 }}>채점 및 제출</Button>
         <IconButton
-            marginLeft={2}
-            position={"absolute"}
-            right={4}
+            marginLeft={5}
             icon={<GrPrevious />}
             onClick={() => navigate(-1)}
         />
@@ -53,7 +51,7 @@ function Header() {
 
     return (
         <Navbar bg="dark" variant="dark">
-            <Container>
+            <div className={"flex justify-between w-full ml-5 mr-5"}>
                 <Navbar.Brand as={Link} to="/">
                     <div className={"flex"}>
                         <CgTrees className={"mt-1 mr-1.5"}/>
@@ -85,7 +83,7 @@ function Header() {
 
                     </>}
                 </Nav>
-            </Container>
+            </div>
         </Navbar>
     );
 }
