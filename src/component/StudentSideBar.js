@@ -38,7 +38,7 @@ const SidebarContent = ({ ...rest }) => {
           {subject.name} ({subject.code})
         </NavItem>
       )) ?? [],
-    [subjectList]
+    [subjectList,location]
   );
 
   return (

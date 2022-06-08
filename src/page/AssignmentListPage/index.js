@@ -111,7 +111,7 @@ function Assignment() {
         <SubjectList key={`subjectList-${idx}`} eventKey={imageName} title={assignmentName}/>) ?? [], [assignmentList]);
 
     return (
-        <div>
+        <div style={{marginTop:"20px",width:"1000px"}}>
             <Accordion defaultActiveKey="0">
                 {assignmentData}
             </Accordion>
@@ -129,12 +129,9 @@ function AssignmentListPage() {
 
 
     return (
-
-        <div style={{width: "80vw", marginTop:"20px"}}>
             <Routes>
                 <Route path=":code" element={<Assignment/>}/>
             </Routes>
-        </div>
     );
 }
 

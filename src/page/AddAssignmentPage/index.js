@@ -132,7 +132,7 @@ function AddAssignmentPage() {
             minH={'100vh'}
             align={'center'}
             justify={'center'} p={5}>
-            <Stack >
+            <Stack width={1000}>
                 <Box
                     rounded={'lg'}
                     bg={useColorModeValue('white', 'gray.700')}
@@ -170,7 +170,7 @@ function AddAssignmentPage() {
                             </div>
                         </FormControl>
                         <div
-                            style={{display: "flex", justifyContent: "center", width: "80vw"}}
+                            style={{display: "flex", justifyContent: "center"}}
                         >
                             <FormControl width={350}>
                                 <FormLabel>언어 선택</FormLabel>

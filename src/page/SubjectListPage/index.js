@@ -48,7 +48,7 @@ function SubjectList({ code, name }) {
             marginTop: "30px",
           }}
         >
-            <Button onClick={handleAdd} style={{width:"2햣 ㅁ00px"}}>저장</Button>
+            <Button onClick={handleAdd} >저장</Button>
         </div>
       </Accordion.Body>
     </Accordion.Item>
@@ -59,7 +59,7 @@ function SubjectListPage() {
     const {data: subjectList} = useQuery(["professor", "subject"]);
     console.log(subjectList);
   return (
-    <div style={{ width: "80vw", marginTop: "20px" }}>
+    <div style={{ marginTop: "20px",width:"1000px" }}>
       <Accordion defaultActiveKey={subjectList ? subjectList[0]?.code : undefined}>
           {subjectList?.map(({code,name},idx) => <SubjectList key={`subject-${idx}`} code={code} name={name} />)}
       </Accordion>
