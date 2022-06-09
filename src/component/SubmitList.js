@@ -64,7 +64,6 @@ export function SubmitModal({containerName, value, marginLeft,disabled}) {
 
 function SubmitListModal({containerName, value}) {
     const {data} = useQuery(["student", "result", containerName]);
-    console.log(data?.result);
     const resultList = useMemo(() => data?.result?.map((res, idx) => <AccordionItem key={`submit-${idx}`}>
         <h2>
             <AccordionButton>
@@ -88,7 +87,7 @@ function SubmitListModal({containerName, value}) {
                         : {moment(new Date(res.submitTime)).format("yyyy-MM-DD HH:mm:ss")}</Text>
                     <Text fontSize={"1.25rem"}>점수 : ({res.score} / 100)</Text>
                 </div>
-                <Button onClick={() => {console.log(res.submitCode);saveFileFromString(res.submitCode, res.filename)}} >코드 저장</Button>
+                <Button onClick={() => saveFileFromString(res.submitCode, res.filename)} >코드 저장</Button>
             </div>
             <br/>
             <Text fontSize={"1.25rem"}>출력 결과</Text>

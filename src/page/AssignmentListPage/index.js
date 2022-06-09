@@ -64,7 +64,6 @@ function ReportView({email, imageName}) {
 
 function SubjectList({imageName, title}) {
     const {data: studentResult} = useQuery(["professor", "result", imageName]);
-    console.log(studentResult,imageName);
 
     const studentData = useMemo(() => studentResult?.map(({
                                                               bestScore,

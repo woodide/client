@@ -58,7 +58,6 @@ function IDEPage() {
         navigate("/login");
     }
 
-    console.log(isLoading, isSuccess,container);
     if (isLoading || !isSuccess) {
         return <div>Loading ...</div>
     }
